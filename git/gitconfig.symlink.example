@@ -1,0 +1,43 @@
+# Sample gitconfig
+#
+
+[user]
+        name = AUTHORNAME
+        email = AUTHOREMAIL
+[credential]
+        helper = GIT_CREDENTIAL_HELPER
+[alias]
+        a = add
+        all = add -A
+        st = status
+        ci = commit
+        ca = commit --amend
+        br = branch
+        co = checkout
+        df = diff
+        dfc = diff --cached
+        lg = log -p
+        pl = pull
+        ps = push
+        undo =  reset --soft HEAD^
+        count   = !git shortlog -sne
+[color]
+        diff = auto
+        status = auto
+        branch = auto
+        ui = true
+[core]
+        excludesfile = ~/.gitignore
+        editor = vim
+[apply]
+        whitespace = nowarn
+[mergetool]
+        keepBackup = false
+[difftool]
+        prompt = false
+[help]
+        autocorrect = 1
+[pull]
+        default = current
+[push]
+        default = current
