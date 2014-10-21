@@ -38,3 +38,5 @@ do
 done
 
 unset config_files
+
+source $ZSH/oh-my-zsh.sh
