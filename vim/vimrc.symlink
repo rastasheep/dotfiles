@@ -115,8 +115,8 @@ set foldmethod=syntax
 set foldlevel=100
 set foldcolumn=0
 
-" Ag vim
-let g:ackprg="ag --nogroup --nocolor --column --ignore-dir .bundle"
+" Ack vim
+let g:ackprg="ack --nogroup --nocolor --column --ignore-dir .bundle"
 
 " Look and Feel settings
 " let base16colorspace=256
