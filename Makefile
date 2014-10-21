@@ -26,4 +26,4 @@ install_homebrew:
 	homebrew/install.sh
 
 clean:
-	echo "TODO"
+	git add . && git reset --hard HEAD
