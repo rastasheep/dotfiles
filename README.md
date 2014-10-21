@@ -1,4 +1,4 @@
-# holman does dotfiles
+# rastasheep does dotfiles, holman style
 
 ## dotfiles
 
@@ -19,9 +19,9 @@ subject](http://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/).
 Run this:
 
 ```sh
-git clone https://github.com/holman/dotfiles.git ~/.dotfiles
+git clone https://github.com/rastasheep/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-script/bootstrap
+make linux # or mac
 ```
 
 This will symlink the appropriate files in `.dotfiles` to your home directory.
@@ -75,7 +75,7 @@ said, I do use this as *my* dotfiles, so there's a good chance I may break
 something if I forget to make a check for a dependency.
 
 If you're brand-new to the project and run into any blockers, please
-[open an issue](https://github.com/holman/dotfiles/issues) on this repository
+[open an issue](https://github.com/rastasheep/dotfiles/issues) on this repository
 and I'd love to get it fixed for you!
 
 ## thanks
