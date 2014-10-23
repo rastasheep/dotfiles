@@ -2,41 +2,44 @@
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 """""""""""
-" Bundles "
+" Plugins "
 """""""""""
-Bundle "gmarik/vundle"
-Bundle "tpope/vim-rails"
-Bundle "tpope/vim-cucumber"
-Bundle "tpope/vim-fugitive"
-Bundle "tpope/vim-surround"
-Bundle "tpope/vim-endwise"
-Bundle "tpope/vim-repeat"
-Bundle "scrooloose/nerdtree"
-Bundle "scrooloose/nerdcommenter"
-" Bundle "Lokaltog/vim-powerline"
-Bundle "Lokaltog/vim-easymotion"
+Plugin 'gmarik/Vundle.vim'
 
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "garbas/vim-snipmate"
-Bundle "honza/vim-snippets"
+" Plugins
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-cucumber'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-repeat'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
+" Plugin 'Lokaltog/vim-powerline'
+Plugin 'Lokaltog/vim-easymotion'
 
-Bundle "thisivan/vim-bufexplorer"
-Bundle "mattn/gist-vim"
-Bundle "godlygeek/tabular"
-Bundle "gregsexton/MatchTag"
-" Bundle "chriskempson/tomorrow-theme"
-Bundle "Townk/vim-autoclose"
-Bundle "wincent/Command-T"
-Bundle "kchmck/vim-coffee-script"
-Bundle "airblade/vim-gitgutter"
-Bundle "renderedtext/vim-bdd"
-Bundle 'chriskempson/base16-vim'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
 
+Plugin 'thisivan/vim-bufexplorer'
+Plugin 'mattn/gist-vim'
+Plugin 'godlygeek/tabular'
+Plugin 'gregsexton/MatchTag'
+" Plugin "chriskempson/tomorrow-theme'
+Plugin 'Townk/vim-autoclose'
+Plugin 'wincent/Command-T'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'renderedtext/vim-bdd'
+Plugin 'chriskempson/base16-vim'
+
+call vundle#end()
 
 filetype plugin indent on
 
@@ -194,10 +197,6 @@ set expandtab
   " Paste Mode <F3>
   nnoremap <silent> <F3> :call Paste_on_off()<CR>
   set pastetoggle=<F3>
-
-	" Repurpose left and right arrow keys to move between the buffers
-	nnoremap <silent> <Down>   :bn<CR>
-	nnoremap <silent> <Up>  :bp<CR>
 
 	" Indent visual selected code without unselecting
 	" As seen in vimcasts.org
