@@ -21,6 +21,7 @@
         ps = push
         undo =  reset --soft HEAD^
         count   = !git shortlog -sne
+        pr = "!f() { git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1; }; f"
 [color]
         diff = auto
         status = auto
