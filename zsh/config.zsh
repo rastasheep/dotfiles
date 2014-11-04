@@ -13,7 +13,7 @@ SAVEHIST=10000
 
 DISABLE_AUTO_TITLE="true"
 
-plugins=(git zeus)
+plugins=(zeus)
 
 setopt NO_BG_NICE # don't nice background tasks
 setopt NO_HUP

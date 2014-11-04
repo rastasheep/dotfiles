@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# Quick shortcut to git.
+#
+# USAGE:
+#
+#   $ g
+#   # => calls git status in the current directory
+#
+#   $ g log
+#   # => calls git command
+
+
+function g() {
+  if [ $# -eq 0 ]; then
+    git st;
+  else
+    git $*;
+  fi
+}

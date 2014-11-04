@@ -2,34 +2,34 @@
 #
 
 [user]
-        name = AUTHORNAME
+        name  = AUTHORNAME
         email = AUTHOREMAIL
 [credential]
         helper = GIT_CREDENTIAL_HELPER
 [alias]
-        a = add
-        all = add -A
-        st = status
-        ci = commit
-        ca = commit --amend
-        br = branch
-        co = checkout
-        df = diff
-        dfc = diff --cached
-        lg = log -p
-        pl = pull
-        ps = push
-        undo =  reset --soft HEAD^
-        count   = !git shortlog -sne
-        pr = "!f() { git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1; }; f"
+        a     = add
+        all   = add -A
+        st    = status -sb
+        ci    = commit
+        ca    = commit --amend
+        br    = branch
+        co    = checkout
+        df    = diff
+        dfc   = diff --cached
+        lg    = log --pretty=format:'%C(yellow)%h%Creset %Cgreen(%><(12)%cr%><|(12))%Creset - %s %C(blue)<%an>%Creset'
+        pl    = pull
+        ps    = push
+        undo  =  reset --soft HEAD^
+        count = !git shortlog -sne
+        pr    = "!f() { git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1; }; f"
 [color]
-        diff = auto
+        diff   = auto
         status = auto
         branch = auto
-        ui = true
+        ui     = true
 [core]
         excludesfile = ~/.gitignore
-        editor = vim
+        editor       = vim
 [apply]
         whitespace = nowarn
 [mergetool]
