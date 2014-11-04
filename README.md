@@ -18,18 +18,14 @@ subject](http://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/).
 
 Run this:
 
-<<<<<<< HEAD
-```sh
-=======
 On a clean machine run `apt-get update` and install git and make
 
-```
+```bash
 sudo apt-get update
 sudo apt-get install git make
 ```
 
-```
->>>>>>> a3e50b46525122a4f9b91f91d673ff8397cb184e
+```bash
 git clone https://github.com/rastasheep/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 make linux # or mac

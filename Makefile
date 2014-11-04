@@ -20,6 +20,7 @@ osx_defaults:
 	osx/set-defaults.sh
 
 install_vim_bundle:
+	sudo apt-get install vim
 	vim/install.sh
 
 install_homebrew:

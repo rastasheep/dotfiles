@@ -18,3 +18,5 @@ function g() {
     git $*;
   fi
 }
+
+compdef g=git
