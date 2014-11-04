@@ -1,5 +1,3 @@
-#!/bin/sh
-#
 # Quick shortcut to git.
 #
 # USAGE:
@@ -11,7 +9,7 @@
 #   # => calls git command
 
 
-function g() {
+g () {
   if [ $# -eq 0 ]; then
     git st;
   else
