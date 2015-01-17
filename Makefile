@@ -5,8 +5,10 @@ linux: backup_mac_files setup_zsh bootstrap install_vim_bundle
 mac: osx_defaults bootstrap
 
 setup_zsh:
-	sudo apt-get install zsh
-	wget --no-check-certificate http://install.ohmyz.sh -O - | bash
+	sudo apt-get -y install zsh curl
+	curl -Ls http://install.ohmyz.sh -o install.ohmyz.sh
+	bash install.ohmyz.sh
+	rm install.ohmyz.sh
 	chsh -s `which zsh`
 
 bootstrap:
