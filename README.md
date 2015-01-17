@@ -42,6 +42,21 @@ defaults, and so on. Tweak this script, and occasionally run `dot` from
 time to time to keep your environment fresh and up-to-date. You can find
 this script in `bin/`.
 
+
+*Note*:
+
+If you want to run installation process from automated script without interactive shell you can pass arguments like:
+
+```bash
+git_authorname=rastasheep git_authoremail=rastasheep3@gmail.com existing_files=O make -C ~/.dotfiles linux
+```
+
+Available options are optional:
+
+- `git_authorname` (string) - Your name used for doing git
+- `git_authoremail` (string) - Your email used for doing git
+- `existing_files` (string) - `[s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all` - Policy used for overriding existing files   ``
+
 ## topical
 
 Everything's built around topic areas. If you're adding a new area to your

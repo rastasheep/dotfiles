@@ -1,32 +1,34 @@
-.PHONY: linux mac bootstrap setup_zsh backup_mac_files osx_defaults install_homebrew clean install_vim_bundle
+.PHONY: linux mac bootstrap setup_zsh backup_mac_files osx_defaults install_homebrew clean restore_mac_files set_zsh
 
-linux: backup_mac_files setup_zsh bootstrap install_vim_bundle
+linux: backup_mac_files setup_zsh bootstrap restore_mac_files set_zsh
 
-mac: osx_defaults bootstrap
+mac: osx_defaults bootstrap set_zsh
 
 setup_zsh:
-	sudo apt-get -y install zsh curl
+	sudo apt-get -y install zsh curl vim
 	curl -Ls http://install.ohmyz.sh -o install.ohmyz.sh
 	bash install.ohmyz.sh
 	rm install.ohmyz.sh
-	chsh -s `which zsh`
+	sudo chsh -s `which zsh`
 
 bootstrap:
 	script/bootstrap
-	env zsh && . ~/.zshrc
+	vim/install.sh
 
-backup_mac_files:
-	mv atom.symlink atom.symlink.tmp
+set_zsh:
+	cd && env zsh && . ~/.zshrc
 
 osx_defaults:
 	osx/set-defaults.sh
 
-install_vim_bundle:
-	sudo apt-get install vim
-	vim/install.sh
-
 install_homebrew:
 	homebrew/install.sh
+
+backup_mac_files:
+	mv atom.symlink atom.symlink.tmp
+
+restore_mac_files:
+	mv atom.symlink.tmp atom.symlink
 
 clean:
 	git add . && git reset --hard HEAD

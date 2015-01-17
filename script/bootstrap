@@ -39,9 +39,10 @@ setup_gitconfig () {
     fi
 
     user ' - What is your github author name?'
-    read -e git_authorname
+    [ -z "$git_authorname" ] && read -e git_authorname
+
     user ' - What is your github author email?'
-    read -e git_authoremail
+    [ -z "$git_authoremail" ] && read -e git_authoremail
 
     sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.symlink.example > git/gitconfig.symlink
 
@@ -72,9 +73,10 @@ link_file () {
       else
 
         user "File already exists: $(basename "$src"), what do you want to do? [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
-        read -n 1 action
+        [ -z "$existing_files" ] && read -e existing_files
 
-        case "$action" in
+        echo $existing_files
+        case "$existing_files" in
           o )
             overwrite=true;;
           O )
