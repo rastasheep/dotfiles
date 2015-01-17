@@ -6,17 +6,17 @@ mac: osx_defaults bootstrap set_zsh
 
 setup_zsh:
 	sudo apt-get -y install zsh curl vim
-	curl -Ls http://install.ohmyz.sh -o install.ohmyz.sh
-	bash install.ohmyz.sh
-	rm install.ohmyz.sh
-	sudo chsh -s `which zsh`
+	zsh/install.sh
+	sudo chsh -s `which zsh` $$USER
 
 bootstrap:
 	script/bootstrap
 	vim/install.sh
 
 set_zsh:
-	cd && env zsh && . ~/.zshrc
+	cd
+	env zsh
+	. ~/.zshrc
 
 osx_defaults:
 	osx/set-defaults.sh
