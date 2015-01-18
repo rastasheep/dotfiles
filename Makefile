@@ -1,3 +1,5 @@
+SHELL = /bin/bash
+
 .PHONY: linux mac bootstrap setup_zsh backup_mac_files osx_defaults install_homebrew clean restore_mac_files set_zsh
 
 linux: backup_mac_files setup_zsh bootstrap restore_mac_files set_zsh
@@ -14,9 +16,7 @@ bootstrap:
 	vim/install.sh
 
 set_zsh:
-	cd
-	env zsh
-	. ~/.zshrc
+	[[ -z $$PS1 ]] || (cd && env zsh && . ~/.zshrc)
 
 osx_defaults:
 	osx/set-defaults.sh
