@@ -2,7 +2,7 @@
 export ZSH=$HOME/.oh-my-zsh
 
 # your project folder that we can `c [tab]` to
-export PROJECTS=~/Code
+export PROJECTS=~/code
 
 # use .localrc for SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.
@@ -39,4 +39,5 @@ done
 
 unset config_files
 
+source /etc/profile
 source $ZSH/oh-my-zsh.sh

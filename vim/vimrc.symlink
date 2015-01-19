@@ -16,28 +16,29 @@ Plugin 'tpope/vim-cucumber'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-repeat'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
-" Plugin 'Lokaltog/vim-powerline'
-Plugin 'Lokaltog/vim-easymotion'
+"Plugin 'tpope/vim-repeat'
+"Plugin 'scrooloose/nerdtree'
+"Plugin 'scrooloose/nerdcommenter'
+"Plugin 'Lokaltog/vim-powerline'
+"Plugin 'Lokaltog/vim-easymotion'
 
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
+"Plugin 'MarcWeber/vim-addon-mw-utils'
+"Plugin 'tomtom/tlib_vim'
+"Plugin 'garbas/vim-snipmate'
+"Plugin 'honza/vim-snippets'
 
 Plugin 'thisivan/vim-bufexplorer'
-Plugin 'mattn/gist-vim'
-Plugin 'godlygeek/tabular'
+"Plugin 'mattn/gist-vim'
+"Plugin 'godlygeek/tabular'
 Plugin 'gregsexton/MatchTag'
-" Plugin "chriskempson/tomorrow-theme'
+"Plugin "chriskempson/tomorrow-theme'
 Plugin 'Townk/vim-autoclose'
 Plugin 'wincent/Command-T'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'renderedtext/vim-bdd'
-Plugin 'chriskempson/base16-vim'
+"Plugin 'chriskempson/base16-vim'
+Plugin 'mileszs/ack.vim'
 
 call vundle#end()
 
@@ -88,7 +89,7 @@ augroup fastescape
 augroup END
 
 
-" Define , as map leader"
+" Define <space> as leader
 let mapleader = ' '
 let g:mapleader = ' '
 
@@ -119,7 +120,7 @@ set foldlevel=100
 set foldcolumn=0
 
 " Ack vim
-let g:ackprg="ack --nogroup --nocolor --column --ignore-dir .bundle"
+"let g:ackprg="ack --nogroup --nocolor --column --ignore-dir .bundle"
 
 " Look and Feel settings
 " let base16colorspace=256
@@ -220,25 +221,24 @@ set expandtab
   highlight SignColumn ctermbg=none
   let g:gitgutter_signs = 1         " Activate gutter signs
 
-  " NERD tree"{{{
-    let g:NERDTreeChristmasTree = 1
-    let g:NERDTreeCaseSensitiveSort = 1
-    let g:NERDTreeQuitOnOpen = 1
-    let g:NERDTreeWinPos = 'left'
-    let g:NERDTreeWinSize = 50
-    let g:NERDTreeShowBookmarks = 1
-    map <F2> :NERDTreeToggle<CR>"}}}
+"  NERD tree"{{{
+"    let g:NERDTreeChristmasTree = 1
+"    let g:NERDTreeCaseSensitiveSort = 1
+"    let g:NERDTreeQuitOnOpen = 1
+"    let g:NERDTreeWinPos = 'left'
+"    let g:NERDTreeWinSize = 50
+"    let g:NERDTreeShowBookmarks = 1
+"    map <F2> :NERDTreeToggle<CR>"}}}
 
-
-" Clear vertical split backgrount
+" Clear vertical split background
 hi clear VertSplit
 
 set statusline =%#identifier#
 set statusline+=%f   "tail of the filename
 set statusline+=%M
 
-nnoremap <silent><leader>2 :!sst<CR>
+" nnoremap <silent><leader>2 :!sst<CR>
 
 " SnipMate
-imap <C-J> <esc>a<Plug>snipMateNextOrTrigger
-smap <C-J> <Plug>snipMateNextOrTrigger "
+" imap <C-J> <esc>a<Plug>snipMateNextOrTrigger
+" smap <C-J> <Plug>snipMateNextOrTrigger "
