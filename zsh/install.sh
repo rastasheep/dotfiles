@@ -1,4 +1,8 @@
+#!/usr/bin/env bash
+
 set -e
+
+sudo apt-get -y install zsh curl
 
 if [ ! -n "$ZSH" ]; then
   ZSH=~/.oh-my-zsh
@@ -39,3 +43,5 @@ echo "\033[0;32m"' / __ \/ __ \   / __ `__ \/ / / /  /_  / / ___/ __ \ '"\033[0m
 echo "\033[0;32m"'/ /_/ / / / /  / / / / / / /_/ /    / /_(__  ) / / / '"\033[0m"
 echo "\033[0;32m"'\____/_/ /_/  /_/ /_/ /_/\__, /    /___/____/_/ /_/  '"\033[0m"
 echo "\033[0;32m"'                        /____/                       ....is now installed!'"\033[0m"
+
+sudo chsh -s `which zsh` $USER
