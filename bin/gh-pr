@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+#/
+#/ Usage: gh-pr [<branch>]
+#/
+#/ Open the pull request page for <branch>, or the current branch if not
+#/ specified. Lands on the new pull request page when no PR exists yet.
+#/ The branch must already be pushed.
+set -e
+
+# Usage message
+if [ "$1" == "--help" -o "$1" == '-h' ]; then
+  grep ^#/ "$0" | cut -c4-
+  exit
+fi
+
+# Run through all remotes looking for a github repository. Bail when found.
+remotes="origin $(git remote)"
+for remote in $remotes;
+do
+  git_url=$(git config remote.$remote.url || true)
+  case "$git_url" in
+    https://github.com/*)
+      url="$git_url"
+      break
+      ;;
+    git@github.com:*)
+      url=$(echo "$git_url" | sed 's|git@github.com:|https://github.com/|')
+      break
+      ;;
+    git://github.com/*)
+      url=$(echo "$git_url" | sed 's|git://github.com|https://github.com|')
+      break
+      ;;
+  esac
+done
+
+# No github.com remotes exists. Death.
+if [ -z "$url" ]; then
+  echo "error: no github.com git remotes found" 1>&2
+  exit 1
+fi
+
+# Axe the .git suffix if there is one. Remove trailing slashes.
+url=$(echo "$url" | sed 's|\.git$||')
+url=$(echo "$url" | sed 's|/{1,}$||')
+
+# figure out the branch
+branch=${1:-"$(git symbolic-ref HEAD | sed 's@refs/heads/@@')"}
+
+# check that the branch exists in the origin remote first
+if git rev-parse "refs/remotes/origin/$branch" 1>/dev/null 2>&1; then
+  current_branch=$(git branch | sed -n '/\* /s///p')
+
+  echo "$url/compare/$branch...$current_branch"
+else
+  echo "error: branch '$branch' does not exist on the origin remote." 1>&2
+  echo "       try again after pushing the branch"
+fi
