@@ -1,8 +1,0 @@
-#!/bin/sh
-#
-# Sets OS X defaults by running $ZSH/osx/set-defaults.sh.
-
-if [ "$(uname -s)" == "Darwin" ]
-then
-  exec $ZSH/osx/set-defaults.sh
-fi
