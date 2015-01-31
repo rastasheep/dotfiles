@@ -16,35 +16,19 @@ Plugin 'tpope/vim-cucumber'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-endwise'
-"Plugin 'tpope/vim-repeat'
-"Plugin 'scrooloose/nerdtree'
-"Plugin 'scrooloose/nerdcommenter'
-"Plugin 'Lokaltog/vim-powerline'
-"Plugin 'Lokaltog/vim-easymotion'
-
-"Plugin 'MarcWeber/vim-addon-mw-utils'
-"Plugin 'tomtom/tlib_vim'
-"Plugin 'garbas/vim-snipmate'
-"Plugin 'honza/vim-snippets'
 
 Plugin 'thisivan/vim-bufexplorer'
-"Plugin 'mattn/gist-vim'
-"Plugin 'godlygeek/tabular'
 Plugin 'gregsexton/MatchTag'
-"Plugin "chriskempson/tomorrow-theme'
 Plugin 'Townk/vim-autoclose'
 Plugin 'wincent/Command-T'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'renderedtext/vim-bdd'
-"Plugin 'chriskempson/base16-vim'
 Plugin 'mileszs/ack.vim'
 
 call vundle#end()
 
 filetype plugin indent on
-
-runtime! bundle/snipmate-snippets/support_functions.vim
 
 autocmd BufWritePre * :%s/\s\+$//e
 
@@ -61,10 +45,10 @@ exe "set path=".expand("$PATH")
 syntax enable
 
 set nomodeline
-set backspace=indent,eol,start                          " Backspace will delete EOL chars, as well as indents
-set matchpairs+=<:>                                     " For characters that forms pairs for using % commands, this is for HTML Tags
-set shortmess=atToOI                                    " To avoid the 'Hit Enter' prompts caused by the file messages
-set iskeyword+=_,$,@,%,#                                " Keywords are use to searching and recognized with many commands
+set backspace=indent,eol,start " Backspace will delete EOL chars, as well as indents
+set matchpairs+=<:>            " For characters that forms pairs for using % commands, this is for HTML Tags
+set shortmess=atToOI           " To avoid the 'Hit Enter' prompts caused by the file messages
+set iskeyword+=_,$,@,%,#       " Keywords are use to searching and recognized with many commands
 set history=1000
 set undolevels=1000
 set confirm
@@ -119,16 +103,10 @@ set foldmethod=syntax
 set foldlevel=100
 set foldcolumn=0
 
-" Ack vim
-"let g:ackprg="ack --nogroup --nocolor --column --ignore-dir .bundle"
-
 " Look and Feel settings
 " let base16colorspace=256
 set background=dark
 "colorscheme base16-default
-
-" Display extra whitespace
-" set list listchars=tab:»·,trail:·
 
 " General UI Options"
 set laststatus=2       " Always show the statusline
@@ -205,6 +183,9 @@ set expandtab
 	vmap < <gv
 	vmap = =gv
 
+  " Clear vertical split background
+  hi clear VertSplit
+
 " 3RD-PARTY PLUGINS SETTINGS
 
   " Buffer Explorer
@@ -219,26 +200,13 @@ set expandtab
 
   " Vim Git Gutter
   highlight SignColumn ctermbg=none
-  let g:gitgutter_signs = 1         " Activate gutter signs
+  let g:gitgutter_signs = 1            " Activate gutter signs
 
-"  NERD tree"{{{
-"    let g:NERDTreeChristmasTree = 1
-"    let g:NERDTreeCaseSensitiveSort = 1
-"    let g:NERDTreeQuitOnOpen = 1
-"    let g:NERDTreeWinPos = 'left'
-"    let g:NERDTreeWinSize = 50
-"    let g:NERDTreeShowBookmarks = 1
-"    map <F2> :NERDTreeToggle<CR>"}}}
-
-" Clear vertical split background
-hi clear VertSplit
+  " Ack tricks
+  " Seen at https://github.com/jeremyckahn
+  nmap <leader>a :Ack ""<Left>
+  nmap <leader>A :Ack <C-r><C-w><CR>
 
 set statusline =%#identifier#
 set statusline+=%f   "tail of the filename
 set statusline+=%M
-
-" nnoremap <silent><leader>2 :!sst<CR>
-
-" SnipMate
-" imap <C-J> <esc>a<Plug>snipMateNextOrTrigger
-" smap <C-J> <Plug>snipMateNextOrTrigger "
