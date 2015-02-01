@@ -1,19 +1,15 @@
 export LSCOLORS="exfxcxdxbxegedabagacad"
 export CLICOLOR=true
 
-fpath=($HOME/.dotfiles/functions $fpath)
+fpath=($ZSH/functions $fpath)
 
-autoload -U $HOME/.dotfiles/functions/*(:t)
-
-ZSH_THEME="robbyrussell"
+autoload -U $ZSH//functions/*(:t)
 
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
 DISABLE_AUTO_TITLE="true"
-
-plugins=(zeus)
 
 setopt NO_BG_NICE # don't nice background tasks
 setopt NO_HUP

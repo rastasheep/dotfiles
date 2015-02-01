@@ -1,5 +1,6 @@
+#source /etc/profile
 # shortcut to this dotfiles path is $ZSH
-export ZSH=$HOME/.oh-my-zsh
+export ZSH=$HOME/.dotfiles
 
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/code
@@ -39,5 +40,3 @@ done
 
 unset config_files
 
-source /etc/profile
-source $ZSH/oh-my-zsh.sh
