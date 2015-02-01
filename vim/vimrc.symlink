@@ -20,7 +20,7 @@ Plugin 'tpope/vim-endwise'
 Plugin 'thisivan/vim-bufexplorer'
 Plugin 'gregsexton/MatchTag'
 Plugin 'Townk/vim-autoclose'
-Plugin 'wincent/Command-T'
+Plugin 'kien/ctrlp.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'renderedtext/vim-bdd'
@@ -206,6 +206,19 @@ set expandtab
   " Seen at https://github.com/jeremyckahn
   nmap <leader>a :Ack ""<Left>
   nmap <leader>A :Ack <C-r><C-w><CR>
+
+  " Use ctrlp.vim as Command-T
+  let g:ctrlp_map = '<leader>t'
+  let g:ctrlp_buffer_func = {'enter': 'Ctrlp_enter','exit':  'Ctrlp_exit' }
+
+  func! Ctrlp_enter()
+    set laststatus=0
+  endfunc
+
+  func! Ctrlp_exit()
+    set laststatus=2
+  endfunc
+
 
 set statusline =%#identifier#
 set statusline+=%f   "tail of the filename
