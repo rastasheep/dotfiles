@@ -82,7 +82,7 @@ set noerrorbells visualbell t_vb=
 
 " Wild menu (Autocompletion)"
 set wildmenu
-set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.jpeg,*.png,*.xpm,*.gif
+set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.jpeg,*.png,*.xpm,*.gif,.bundle
 set wildmode=full
 
 " Backup and Swap"
@@ -210,6 +210,7 @@ set expandtab
   " Use ctrlp.vim as Command-T
   let g:ctrlp_map = '<leader>t'
   let g:ctrlp_buffer_func = {'enter': 'Ctrlp_enter','exit':  'Ctrlp_exit' }
+  let g:ctrlp_custom_ignore = 'vendor/bundle$'
 
   func! Ctrlp_enter()
     set laststatus=0
