@@ -1,4 +1,4 @@
-#source /etc/profile
+source /etc/profile
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
 

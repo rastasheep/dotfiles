@@ -224,3 +224,18 @@ set expandtab
 set statusline =%#identifier#
 set statusline+=%f   "tail of the filename
 set statusline+=%M
+
+function! GitHub_open(lines)
+  let executable = "gh-url"
+  let cmd = executable . " ". expand('%:p') "
+
+  if a:lines == "true"
+    let cmd = cmd . ":" . line(".")
+  endif
+
+  echom system(cmd)
+endfunc
+
+command Ghl call GitHub_open("true")
+command Gh call GitHub_open("false")
+
