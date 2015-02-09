@@ -22,6 +22,7 @@
         undo  =  reset --soft HEAD^
         count = !git shortlog -sne
         pr    = "!f() { git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1; }; f"
+        up    = "!f() { git pull --rebase --prune && git log --pretty=format:\"%Cred%ae %Creset- %C(yellow)%s %Creset(%ar)\" HEAD@{1}.. }; f"
 [color]
         diff   = auto
         status = auto
