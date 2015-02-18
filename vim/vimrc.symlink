@@ -239,3 +239,9 @@ endfunc
 command Ghl call GitHub_open("true")
 command Gh call GitHub_open("false")
 
+" Spell stuff
+autocmd Filetype gitcommit setlocal spell textwidth=72
+
+autocmd BufRead,BufNewFile *.md setlocal spell textwidth=80 colorcolumn=+1
+autocmd BufRead,BufNewFile *.md.erb setlocal spell textwidth=80 colorcolumn=+1
+autocmd BufRead,BufNewFile *.feature setlocal spell
