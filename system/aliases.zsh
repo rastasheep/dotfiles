@@ -18,3 +18,5 @@ alias md='mkdir -p'
 alias rd=rmdir
 
 alias history='fc -El 1'
+
+alias spark="python -m SimpleHTTPServer"
