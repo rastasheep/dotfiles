@@ -1,8 +1,12 @@
-export PATH="$HOME/.dotfiles/bin:/usr/local/bin:/usr/local/sbin:$ZSH/bin:$PATH"
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+
+# dotfiles
+export PATH=$PATH:$ZSH/bin
 
 # rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 
 # go
 export GOPATH=$HOME/gocode
-export PATH=$PATH:$GOROOT/bin
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOBIN:$GOROOT/bin
