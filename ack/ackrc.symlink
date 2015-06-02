@@ -1,0 +1,16 @@
+--sort-files
+--color
+--follow
+--group
+--type-add=ruby=.haml,.feature,.ru
+--type-add=css=.sass,.scss
+--type-set=markdown=.markdown,.mdown,.md
+--type-set=ragel=.rl
+--type-set=plist=.plist
+--type-set=javascript=.coffee
+--ignore-dir=log
+--ignore-dir=tmp
+--ignore-dir=vendor/bundle
+--ignore-dir=coverage
+--ignore-dir=_site
+--smart-case
