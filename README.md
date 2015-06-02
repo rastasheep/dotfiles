@@ -11,7 +11,7 @@ up into the main areas I used (Ruby, git, system libraries, and so on), so I
 structured the project accordingly.
 
 If you're interested in the philosophy behind why projects like these are
-awesome, you might want to [read my post on the
+awesome, you might want to [read my (holman's) post on the
 subject](http://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/).
 
 ## install
@@ -32,20 +32,20 @@ make linux # or mac
 ```
 
 This will symlink the appropriate files in `.dotfiles` to your home directory.
-Everything is configured and tweaked within `~/.dotfiles`.
+Everything is configured and tweaked within `~/.dotfiles` directory.
 
 The main file you'll want to change right off the bat is `zsh/zshrc.symlink`,
 which sets up a few paths that'll be different on your particular machine.
 
-`dot` is a simple script that installs some dependencies, sets sane OS X
-defaults, and so on. Tweak this script, and occasionally run `dot` from
+`mac-dot` is a simple script that installs some dependencies, sets sane OS X
+defaults, and so on. Tweak this script, and occasionally run `mac-dot` from
 time to time to keep your environment fresh and up-to-date. You can find
 this script in `bin/`.
 
-
 *Note*:
 
-If you want to run installation process from automated script without interactive shell you can pass arguments like:
+If you want to run installation process from automated script like vagrant shell
+provisioner, without interactive shell you can pass arguments like:
 
 ```bash
 git_authorname=rastasheep git_authoremail=rastasheep3@gmail.com existing_files=O make -C ~/.dotfiles linux
@@ -102,9 +102,12 @@ and I'd love to get it fixed for you!
 
 ## thanks
 
-I forked [Ryan Bates](http://github.com/ryanb)' excellent
+I forked [Ryan Bates](http://github.com/ryanb)'s excellent
 [dotfiles](http://github.com/ryanb/dotfiles) for a couple years before the
 weight of my changes and tweaks inspired me to finally roll my own. But Ryan's
 dotfiles were an easy way to get into bash customization, and then to jump ship
 to zsh a bit later. A decent amount of the code in these dotfiles stem or are
 inspired from Ryan's original project.
+
+All other thanks goes to original autor [Zach Holman
+](https://github.com/holman).
