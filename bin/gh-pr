@@ -17,18 +17,18 @@ fi
 remotes="origin $(git remote)"
 for remote in $remotes;
 do
-  git_url=$(git config remote.$remote.url || true)
+  git_url=$(git config remote."$remote".url || true)
   case "$git_url" in
     https://github.com/*)
       url="$git_url"
       break
       ;;
     git@github.com:*)
-      url=$(echo "$git_url" | sed 's|git@github.com:|https://github.com/|')
+      url=${git_url//git@github.com:/https:\/\/github.com\/}
       break
       ;;
     git://github.com/*)
-      url=$(echo "$git_url" | sed 's|git://github.com|https://github.com|')
+      url=${git_url//git:\/\/github.com\//https:\/\/github.com\/}
       break
       ;;
   esac
@@ -41,8 +41,8 @@ if [ -z "$url" ]; then
 fi
 
 # Axe the .git suffix if there is one. Remove trailing slashes.
-url=$(echo "$url" | sed 's|\.git$||')
-url=$(echo "$url" | sed 's|/{1,}$||')
+url=${url/%.git/}
+url=${url/%\//}
 
 # figure out the branch
 branch=${1:-"master"}

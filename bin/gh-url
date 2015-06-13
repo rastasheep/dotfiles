@@ -17,24 +17,24 @@ if [ "$1" == "--help" -o "$1" == '-h' ]; then usage; fi
 # The http URL to the git repository on github.com.
 url=
 
-params=(`echo "$1" | sed -e 's/:/\n/g'`)
+params=(${1//:/ })
 
 # Run through all remotes looking for a github repository. Bail when found.
 remotes="origin $(git remote)"
 for remote in $remotes;
 do
-  git_url=$(git config remote.$remote.url || true)
+  git_url="$(git config remote."$remote".url || true)"
   case "$git_url" in
     https://github.com/*)
       url="$git_url"
       break
       ;;
     git@github.com:*)
-      url=$(echo "$git_url" | sed 's|git@github.com:|https://github.com/|')
+      url=${git_url//git@github.com:/https:\/\/github.com\/}
       break
       ;;
     git://github.com/*)
-      url=$(echo "$git_url" | sed 's|git://github.com|https://github.com|')
+      url=${git_url//git:\/\/github.com\//https:\/\/github.com\/}
       break
       ;;
   esac
@@ -47,8 +47,8 @@ if [ -z "$url" ]; then
 fi
 
 # Axe the .git suffix if there is one. Remove trailing slashes.
-url=$(echo "$url" | sed 's|\.git$||')
-url=$(echo "$url" | sed 's|/{1,}$||')
+url="${url/%.git/}"
+url="${url/%\//}"
 
 # When given a path, append it to the url. Be smart about it,
 # append the part that is inside the current git repository.
@@ -65,7 +65,7 @@ else
 fi
 
 # Ignore non existing paths
-if [ ! -e $full_path ]; then
+if [ ! -e "$full_path" ]; then
   full_path=""
 fi
 
@@ -74,7 +74,7 @@ branch=$(git branch | sed -n '/\* /s///p')
 if [ -n "$full_path" ]; then
   gitdir=$(git rev-parse --git-dir)
   workdir=$(cd "$gitdir"/.. && pwd -P)
-  path=$(echo "$full_path" | sed "s|^$workdir/||")
+  path=${full_path/#$workdir\//}
 
   if [ -z "$line" ]
   then

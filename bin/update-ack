@@ -15,4 +15,4 @@ dest="$HOME/.dotfiles/bin/ack"
 content="$(curl -L http://beyondgrep.com/ack-2.14-single-file)"
 echo "$content" > "$dest"
 
-chmod +x $dest
+chmod +x "$dest"
