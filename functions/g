@@ -18,3 +18,5 @@ g () {
 }
 
 compdef g=git
+
+g "$@"
