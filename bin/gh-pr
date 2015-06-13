@@ -2,9 +2,9 @@
 #/
 #/ Usage: gh-pr [<branch>]
 #/
-#/ Open the pull request page for <branch>, or the current branch if not
+#/ Open the pull request page from current branch to <branch>, or 'master' if not
 #/ specified. Lands on the new pull request page when no PR exists yet.
-#/ The branch must already be pushed.
+#/ Both branches must already be pushed to GitHub.
 set -e
 
 # Usage message
@@ -45,7 +45,7 @@ url=$(echo "$url" | sed 's|\.git$||')
 url=$(echo "$url" | sed 's|/{1,}$||')
 
 # figure out the branch
-branch=${1:-"$(git symbolic-ref HEAD | sed 's@refs/heads/@@')"}
+branch=${1:-"master"}
 
 # check that the branch exists in the origin remote first
 if git rev-parse "refs/remotes/origin/$branch" 1>/dev/null 2>&1; then
