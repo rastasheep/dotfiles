@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+#/
+#/ Usage: pre-commit [options] | [<script-name>]
+#/
+#/ Link script from <DOTFILES>/git/hooks/pre-commit.<script-name> to
+#/ <PWD>/.git/hooks/pre-commit and set it as pre-commit hook.
+#/
+#/ Options:
+#/    -l, --list  Show list of avaible hooks
+#/    -h, --help  Show this help
+set -e
+
+# Usage message
+if [ "$1" == "--help" -o "$1" == '-h' ]; then
+  grep ^#/ "$0" | cut -c4-
+  exit
+fi
+
+# List avaible scripts
+if [ "$1" == "--list" -o "$1" == '-l' ]; then
+  files=$(ls "$ZSH/git/hooks")
+  printf "Avaible hooks:\n"
+  echo "   ${files//pre-commit./}"
+  exit
+fi
+
+script_name="$1"
+script_dir="$ZSH/git/hooks"
+script="$script_dir/pre-commit.$script_name"
+destination=".git/hooks/pre-commit"
+
+if [ ! -f "$script" ]; then
+  echo "No script with name $script_name found in $script_dir"
+  printf "Avaible hooks:\n"
+  files=$(ls "$ZSH/git/hooks")
+  echo "   ${files//pre-commit./}"
+  exit 1
+fi
+
+if [ -e $destination ]; then
+echo $destination
+  echo "Pre commit script already exists, overriding, check $destination.old"
+  mv $destination $destination.old
+fi
+
+ln -s "$script" "$destination"
+echo "Script $script_name is set in place, happy committing"
