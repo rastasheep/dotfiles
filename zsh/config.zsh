@@ -38,6 +38,17 @@ unsetopt correct_all # Stop correcting me!
 
 zle -N newtab
 
+# load and bind prediction
+autoload predict-on
+predict-toggle() {
+  ((predict_on=1-predict_on)) && predict-on || predict-off
+}
+zle -N predict-toggle
+bindkey '^P'   predict-toggle
+zstyle ':predict' toggle true
+zstyle ':predict' verbose true
+predict-toggle
+
 bindkey '^[^[[D' backward-word
 bindkey '^[^[[C' forward-word
 bindkey '^[[5D' beginning-of-line
