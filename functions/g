@@ -17,6 +17,6 @@ g () {
   fi
 }
 
-compdef g=git
-
 g "$@"
+
+compdef g=git
