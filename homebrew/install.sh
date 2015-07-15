@@ -33,14 +33,16 @@ brew cask install iterm2-nightly
 brew cask install google-chrome
 brew cask install virtualbox
 brew cask install vagrant
-brew cask install twitter
+brew cask install 1password
 brew cask install transmission
 brew cask install spotify
 brew cask install spectacle
 brew cask install dropbox
+brew cask install google-drive
 brew cask install mailbox
 brew cask install xquartz
 brew cask install fliqlo
+brew cask install skype
 
 # Install terminal font
 
