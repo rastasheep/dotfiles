@@ -5,7 +5,7 @@
 # The original idea (and a couple settings) were grabbed from:
 #   https://github.com/mathiasbynens/dotfiles/blob/master/.osx
 #
-# Run ./set-defaults.sh and you'll be good to go.
+# Run ./defaults.sh and you'll be good to go.
 
 # Always open everything in Finder's column view. This is important.
 defaults write com.apple.Finder FXPreferredViewStyle clmv
@@ -13,27 +13,39 @@ defaults write com.apple.Finder FXPreferredViewStyle clmv
 # Set a really fast key repeat.
 defaults write NSGlobalDomain KeyRepeat -int 0
 
-# Set the Finder prefs for showing a few different volumes on the Desktop.
+# Set the Finder prefs for not showing a volumes on the Desktop.
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
+
+# Finder: show all filename extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Disable the warning when changing a file extension
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+# Automatically open a new Finder window when a volume is mounted
+defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
+defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
+defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
+
+# Empty Trash securely by default
+defaults write com.apple.finder EmptyTrashSecurely -bool true
 
 # Set sidebar icon size to small
 defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 1
 
-# Set highlight color to graphite
-defaults write NSGlobalDomain AppleHighlightColor -string "0.847059 0.847059 0.862745"
+# Set highlight color to green
+defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600"
 
 # Expand save panel by default
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
 
 # Menu bar: hide the Time Machine, Volume and User icons
-for domain in ~/Library/Preferences/ByHost/com.apple.systemuiserver.*; do
-      defaults write "${domain}" dontAutoLoad -array \
-                "/System/Library/CoreServices/Menu Extras/TimeMachine.menu" \
-                "/System/Library/CoreServices/Menu Extras/Volume.menu" \
-                "/System/Library/CoreServices/Menu Extras/User.menu"
-done
+defaults write ~/Library/Preferences/ByHost/com.apple.systemuiserver dontAutoLoad -array \
+    "/System/Library/CoreServices/Menu Extras/TimeMachine.menu" \
+    "/System/Library/CoreServices/Menu Extras/Volume.menu" \
+    "/System/Library/CoreServices/Menu Extras/User.menu"
 
 # Menu bar: show VPN, Keychain, Volume, AirPort, Battery, TextInput and Clock icons
 defaults write com.apple.systemuiserver menuExtras -array \
@@ -45,10 +57,16 @@ defaults write com.apple.systemuiserver menuExtras -array \
     "/System/Library/CoreServices/Menu Extras/TextInput.menu" \
     "/System/Library/CoreServices/Menu Extras/Clock.menu"
 
+# Menu bar: set clock format to 24 hour
+defaults write com.apple.menuextra.clock "DateFormat" 'EEE HH:mm'
+
 # Trackpad: enable tap to click for this user and for the login screen
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+# Disable the “Are you sure you want to open this application?” dialog
+defaults write com.apple.LaunchServices LSQuarantine -bool false
 
 # Stop iTunes from responding to the keyboard media keys
 launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
@@ -56,6 +74,9 @@ launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/nul
 # Require password immediately after sleep or screen saver begins
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
+
+# Check for software updates daily, not just once per week
+defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
 # Set the Dock orientation to left
 defaults write com.apple.dock orientation -string "left"
@@ -65,6 +86,17 @@ defaults write com.apple.dock tilesize -int 28
 
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
+
+permament_dock() {
+  defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>$1</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+}
+
+# Empty the dock
+defaults write com.apple.dock persistent-apps -array ''
+
+permament_dock "/opt/homebrew-cask/Caskroom/google-chrome/latest/Google Chrome.app/"
+permament_dock "/opt/homebrew-cask/Caskroom/iterm2-nightly/latest/iTerm.app"
+permament_dock "/opt/homebrew-cask/Caskroom/mailbox/0.4.2_150316/Mailbox (Beta).app/"
 
 # Disable Dashboard
 defaults write com.apple.dashboard mcx-disabled -bool true

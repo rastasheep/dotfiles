@@ -10,7 +10,7 @@ set -e
 echo ''
 
 info () {
-  printf "  [ \033[00;34m..\033[0m ] $1"
+  printf "  [ \033[00;34m..\033[0m ] $1\n"
 }
 
 user () {
@@ -138,20 +138,34 @@ install_dotfiles () {
   done
 }
 
+install_dependencies () {
+  if [ "$(uname -s)" == "Darwin" ]
+  then
+    ./osx/defaults.sh
+    success 'applied mac settings'
+    info 'brewing apps'
+    ./homebrew/install.sh >/dev/null 2>&1
+    success 'all settings and apps are in the place'
+  fi
+}
+
+install_vim () {
+  info 'seting up vim'
+  ./vim/install.sh >/dev/null 2>&1
+}
+
+install_zsh () {
+  info 'seting up zsh'
+  ./zsh/install.sh >/dev/null 2>&1
+}
+
+mkdir -p ~/Code
+
+install_dependencies
 setup_gitconfig
 install_dotfiles
-
-# If we're on a Mac, let's install and setup homebrew.
-if [ "$(uname -s)" == "Darwin" ]
-then
-  info "installing dependencies"
-  if source bin/dot > /tmp/dotfiles-dot 2>&1
-  then
-    success "dependencies installed"
-  else
-    fail "error installing dependencies"
-  fi
-fi
+install_vim
+install_zsh
 
 echo ''
-echo '  All installed!'
+echo '  All installed. Bye!'
