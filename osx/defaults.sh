@@ -13,6 +13,9 @@ defaults write com.apple.Finder FXPreferredViewStyle clmv
 # Set a really fast key repeat.
 defaults write NSGlobalDomain KeyRepeat -int 0
 
+# Set a really short delay until key repeat.
+defaults write -g InitialKeyRepeat -int 15
+
 # Set the Finder prefs for not showing a volumes on the Desktop.
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
