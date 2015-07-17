@@ -31,8 +31,12 @@ brew tap caskroom/versions
 
 brew cask install iterm2-nightly
 brew cask install google-chrome
+
 brew cask install virtualbox
 brew cask install vagrant
+vagrant plugin install vagrant-hostmanager
+vagrant plugin install vagrant-berkshelf
+
 brew cask install 1password
 brew cask install transmission
 brew cask install spotify
@@ -43,6 +47,7 @@ brew cask install mailbox
 brew cask install xquartz
 brew cask install fliqlo
 brew cask install skype
+brew cask install chefdk
 
 # Install terminal font
 
