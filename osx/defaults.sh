@@ -53,7 +53,6 @@ defaults write ~/Library/Preferences/ByHost/com.apple.systemuiserver dontAutoLoa
 # Menu bar: show VPN, Keychain, Volume, AirPort, Battery, TextInput and Clock icons
 defaults write com.apple.systemuiserver menuExtras -array \
     "/System/Library/CoreServices/Menu Extras/VPN.menu" \
-    "/Applications/Utilities/Keychain Access.app/Contents/Resources/Keychain.menu" \
     "/System/Library/CoreServices/Menu Extras/Volume.menu" \
     "/System/Library/CoreServices/Menu Extras/AirPort.menu" \
     "/System/Library/CoreServices/Menu Extras/Battery.menu" \
@@ -90,6 +89,9 @@ defaults write com.apple.dock tilesize -int 28
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
 
+# Minimize windows into their application’s icon
+defaults write com.apple.dock minimize-to-application -bool true
+
 permament_dock() {
   defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>$1</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
 }
@@ -100,6 +102,7 @@ defaults write com.apple.dock persistent-apps -array ''
 permament_dock "/opt/homebrew-cask/Caskroom/google-chrome/latest/Google Chrome.app/"
 permament_dock "/opt/homebrew-cask/Caskroom/iterm2-nightly/latest/iTerm.app"
 permament_dock "/opt/homebrew-cask/Caskroom/mailbox/0.4.2_150316/Mailbox (Beta).app/"
+permament_dock "/opt/homebrew-cask/Caskroom/spotify/latest/Spotify.app/"
 
 # Disable Dashboard
 defaults write com.apple.dashboard mcx-disabled -bool true
