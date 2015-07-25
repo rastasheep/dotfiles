@@ -37,6 +37,8 @@ brew cask install vagrant
 vagrant plugin install vagrant-hostmanager
 vagrant plugin install vagrant-berkshelf
 
+brew cask install safari-tab-switching
+
 brew cask install 1password
 brew cask install transmission
 brew cask install spotify
