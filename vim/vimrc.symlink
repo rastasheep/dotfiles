@@ -158,6 +158,7 @@ set expandtab
   command Q q
   command Wq wq
   command E Explore
+  command Pp %!python -m json.tool
 
   " Paste
   let paste_mode = 0 " 0 = normal, 1 = paste
