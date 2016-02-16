@@ -253,3 +253,28 @@ autocmd BufRead,BufNewFile *.feature setlocal spell
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>c <Plug>(go-coverage)
+
+function! RubocopFormat()
+  " save cursor position, folds and many other things
+  mkview!
+
+  " Write current unsaved buffer to a temp file
+  let l:tmpname = tempname()
+  call writefile(getline(1, '$'), l:tmpname)
+
+  " construct and execute command
+  let cmd = 'bundle exec rubocop --auto-correct -c .rubocop.yml ' .  l:tmpname
+  let out = system(cmd)
+
+  " Replace current file with temp file, then reload buffer
+  let old_fileformat = &fileformat
+  call rename(l:tmpname, expand('%'))
+  silent edit!
+  let &fileformat = old_fileformat
+  let &syntax = &syntax
+
+  " restore our cursor/windows positions, folds, etc..
+  silent! loadview
+endfunction
+
+autocmd BufWritePre *.rb call RubocopFormat()
