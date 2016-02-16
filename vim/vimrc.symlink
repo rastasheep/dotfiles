@@ -26,6 +26,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'renderedtext/vim-bdd'
 Plugin 'mileszs/ack.vim'
 
+Plugin 'fatih/vim-go'
+
 call vundle#end()
 
 filetype plugin indent on
@@ -246,3 +248,8 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd BufRead,BufNewFile *.md setlocal spell textwidth=80 colorcolumn=+1
 autocmd BufRead,BufNewFile *.md.erb setlocal spell textwidth=80 colorcolumn=+1
 autocmd BufRead,BufNewFile *.feature setlocal spell
+
+" Vim-go stuff
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>c <Plug>(go-coverage)
