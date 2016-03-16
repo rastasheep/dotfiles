@@ -40,3 +40,10 @@ done
 
 unset config_files
 
+
+# The next line updates PATH for the Google Cloud SDK.
+#source '/home/vagrant/google-cloud-sdk/path.zsh.inc'
+
+# The next line enables shell command completion for gcloud.
+# source '/home/vagrant/google-cloud-sdk/completion.zsh.inc'
+# source '/home/vagrant/kubernetes/cluster/'
