@@ -6,3 +6,6 @@ atom.symlink/storage
 atom.symlink/themes
 
 git/gitconfig.symlink
+
+vim/nvim.conflink/autoload
+vim/nvim.conflink/plugged
