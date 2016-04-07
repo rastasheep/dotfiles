@@ -2,33 +2,28 @@
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
 """""""""""
 " Plugins "
 """""""""""
-Plugin 'gmarik/Vundle.vim'
+call plug#begin('~/.vim/plugged')
 
 " Plugins
-Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-cucumber'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-endwise'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-cucumber'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-endwise'
 
-Plugin 'thisivan/vim-bufexplorer'
-Plugin 'gregsexton/MatchTag'
-Plugin 'Townk/vim-autoclose'
-Plugin 'kien/ctrlp.vim'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'renderedtext/vim-bdd'
-Plugin 'mileszs/ack.vim'
+Plug 'thisivan/vim-bufexplorer'
+Plug 'gregsexton/MatchTag'
+Plug 'Townk/vim-autoclose'
+Plug 'kien/ctrlp.vim'
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'airblade/vim-gitgutter'
+Plug 'renderedtext/vim-bdd'
+Plug 'mileszs/ack.vim'
 
-Plugin 'fatih/vim-go'
-
-call vundle#end()
+call plug#end()
 
 filetype plugin indent on
 
