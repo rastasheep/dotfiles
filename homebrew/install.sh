@@ -24,6 +24,8 @@ brew install ack
 brew install tree
 brew install zsh
 
+brew install neovim/neovim/neovim
+
 # Install applications
 
 brew install caskroom/cask/brew-cask

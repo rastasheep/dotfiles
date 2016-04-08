@@ -135,9 +135,16 @@ set shiftwidth=2
 set tabstop=2
 set expandtab
 
+set mouse= " Disable the use of the mouse
+
 " MAPPINGS
 
 " General
+  " Neovim termial mode
+  if has('nvim')
+    tnoremap <Esc> <C-\><C-n>
+  endif
+
 	" Clear search highlighting
   nnoremap <silent><leader>c :nohlsearch<CR>
 
