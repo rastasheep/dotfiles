@@ -1,10 +1,8 @@
 " Settings
-set nocompatible
+set nocompatible " not compatible with vi
 filetype off
 
-"""""""""""
-" Plugins "
-"""""""""""
+" Plugins
 call plug#begin('~/.vim/plugged')
 
 " utilities
@@ -13,10 +11,12 @@ Plug 'tpope/vim-fugitive' " amazing git wrapper for vim
 Plug 'tpope/vim-surround' " mappings to manage surroundings in pairs, such as quotes, parens..
 Plug 'tpope/vim-endwise' " automatically add end in ruby
 Plug 'mileszs/ack.vim' " search inside files using ack
+Plug 'benekastah/neomake' " neovim replacement for syntastic using neovim's job control functonality
 
 Plug 'thisivan/vim-bufexplorer'
 Plug 'Townk/vim-autoclose'
 Plug 'airblade/vim-gitgutter'
+
 
 " language-specific plugins
 Plug 'tpope/vim-rails'
@@ -221,8 +221,8 @@ set mouse= " Disable the use of the mouse
   let g:ctrlp_map = '<leader>t'
   let g:ctrlp_buffer_func = {'enter': 'Ctrlp_enter','exit':  'Ctrlp_exit' }
   let g:ctrlp_custom_ignore = {
-\  'dir': '\v[\/](tmp|dist|bower_components|node_modules|vendor)$',
-\ }
+      \  'dir': '\v[\/](tmp|dist|bower_components|node_modules|vendor)$',
+      \ }
 
   func! Ctrlp_enter()
     set laststatus=0
@@ -251,14 +251,10 @@ endfunc
 command Ghl call GitHub_open("true")
 command Gh call GitHub_open("false")
 
-" Section AutoGroups {{{
-" " file type specific settings
+" file type specific settings
 augroup configgroup
   autocmd!
   autocmd Filetype gitcommit setlocal spell textwidth=72
-
-  autocmd BufWritePost .vimrc source %
-  autocmd BufWritePost .vimrc.local source %
 
   autocmd BufNewFile,BufReadPost *.md set filetype=markdown
   autocmd BufRead,BufNewFile *.md setlocal spell textwidth=80 colorcolumn=+1
@@ -268,9 +264,22 @@ augroup configgroup
   autocmd BufNewFile,BufRead .babelrc set filetype=json
   autocmd BufNewFile,BufRead .jshintrc set filetype=json
   autocmd BufNewFile,BufRead .eslintrc set filetype=json
+
+  autocmd! BufWritePost * Neomake
 augroup END
 
-" Vim-go stuff
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>c <Plug>(go-coverage)
+" Neomake stuff
+let g:neomake_javascript_enabled_makers = ['eslint']
+
+" Use local eslint if available
+let local_eslint = finddir('node_modules', '.;') . '/.bin/eslint'
+if matchstr(local_eslint, "^\/\\w") == ''
+    let local_eslint = getcwd() . "/" . local_eslint
+endif
+
+let g:neomake_javascript_eslint_maker = {
+    \ 'exe': executable(local_eslint) ? local_eslint : 'eslint',
+    \ 'args': ['-f', 'compact'],
+    \ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
+    \ '%W%f: line %l\, col %c\, Warning - %m'
+    \ }
