@@ -215,7 +215,9 @@ set mouse= " Disable the use of the mouse
   " Use ctrlp.vim as Command-T
   let g:ctrlp_map = '<leader>t'
   let g:ctrlp_buffer_func = {'enter': 'Ctrlp_enter','exit':  'Ctrlp_exit' }
-  let g:ctrlp_custom_ignore = 'vendor/bundle$'
+  let g:ctrlp_custom_ignore = {
+\  'dir': '\v[\/](tmp|dist|bower_components|node_modules|vendor)$',
+\ }
 
   func! Ctrlp_enter()
     set laststatus=0
