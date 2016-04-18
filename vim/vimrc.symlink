@@ -45,6 +45,7 @@ set ruler
 exe "set path=".expand("$PATH")
 
 syntax enable
+syntax on
 
 set nomodeline
 set backspace=indent,eol,start " Backspace will delete EOL chars, as well as indents
@@ -261,6 +262,7 @@ augroup configgroup
   autocmd BufRead,BufNewFile *.md.erb setlocal spell textwidth=80 colorcolumn=+1
   autocmd BufRead,BufNewFile *.feature setlocal spell
   autocmd BufNewFile,BufRead *.svg set filetype=xml
+  autocmd BufNewFile,BufRead *.es6 set filetype=javascript
   autocmd BufNewFile,BufRead .babelrc set filetype=json
   autocmd BufNewFile,BufRead .jshintrc set filetype=json
   autocmd BufNewFile,BufRead .eslintrc set filetype=json
