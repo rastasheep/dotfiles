@@ -1,27 +1,32 @@
 " Settings
-set nocompatible
+set nocompatible " not compatible with vi
 filetype off
 
-"""""""""""
-" Plugins "
-"""""""""""
+" Plugins
 call plug#begin('~/.vim/plugged')
 
-" Plugins
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-cucumber'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-endwise'
+" utilities
+Plug 'ctrlpvim/ctrlp.vim' " fuzzy file finder, mapped to <leader>t
+Plug 'tpope/vim-fugitive' " amazing git wrapper for vim
+Plug 'tpope/vim-surround' " mappings to manage surroundings in pairs, such as quotes, parens..
+Plug 'tpope/vim-endwise' " automatically add end in ruby
+Plug 'mileszs/ack.vim' " search inside files using ack
+Plug 'benekastah/neomake' " neovim replacement for syntastic using neovim's job control functonality
 
 Plug 'thisivan/vim-bufexplorer'
-Plug 'gregsexton/MatchTag'
 Plug 'Townk/vim-autoclose'
-Plug 'kien/ctrlp.vim'
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'airblade/vim-gitgutter'
+
+
+" language-specific plugins
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-cucumber'
 Plug 'renderedtext/vim-bdd'
-Plug 'mileszs/ack.vim'
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'gregsexton/MatchTag', { 'for': 'html' } " match tags in html, similar to paren support
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' } " JavaScript support
+" Plug 'moll/vim-node', { 'for': 'javascript' } " node support
+Plug 'othree/yajs.vim', { 'for': 'javascript' } " JavaScript syntax plugin
 
 call plug#end()
 
@@ -40,6 +45,7 @@ set ruler
 exe "set path=".expand("$PATH")
 
 syntax enable
+syntax on
 
 set nomodeline
 set backspace=indent,eol,start " Backspace will delete EOL chars, as well as indents
@@ -216,8 +222,8 @@ set mouse= " Disable the use of the mouse
   let g:ctrlp_map = '<leader>t'
   let g:ctrlp_buffer_func = {'enter': 'Ctrlp_enter','exit':  'Ctrlp_exit' }
   let g:ctrlp_custom_ignore = {
-\  'dir': '\v[\/](tmp|dist|bower_components|node_modules|vendor)$',
-\ }
+      \  'dir': '\v[\/](tmp|dist|bower_components|node_modules|vendor)$',
+      \ }
 
   func! Ctrlp_enter()
     set laststatus=0
@@ -246,14 +252,36 @@ endfunc
 command Ghl call GitHub_open("true")
 command Gh call GitHub_open("false")
 
-" Spell stuff
-autocmd Filetype gitcommit setlocal spell textwidth=72
+" file type specific settings
+augroup configgroup
+  autocmd!
+  autocmd Filetype gitcommit setlocal spell textwidth=72
 
-autocmd BufRead,BufNewFile *.md setlocal spell textwidth=80 colorcolumn=+1
-autocmd BufRead,BufNewFile *.md.erb setlocal spell textwidth=80 colorcolumn=+1
-autocmd BufRead,BufNewFile *.feature setlocal spell
+  autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+  autocmd BufRead,BufNewFile *.md setlocal spell textwidth=80 colorcolumn=+1
+  autocmd BufRead,BufNewFile *.md.erb setlocal spell textwidth=80 colorcolumn=+1
+  autocmd BufRead,BufNewFile *.feature setlocal spell
+  autocmd BufNewFile,BufRead *.svg set filetype=xml
+  autocmd BufNewFile,BufRead *.es6 set filetype=javascript
+  autocmd BufNewFile,BufRead .babelrc set filetype=json
+  autocmd BufNewFile,BufRead .jshintrc set filetype=json
+  autocmd BufNewFile,BufRead .eslintrc set filetype=json
 
-" Vim-go stuff
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>c <Plug>(go-coverage)
+  autocmd! BufWritePost * Neomake
+augroup END
+
+" Neomake stuff
+let g:neomake_javascript_enabled_makers = ['eslint']
+
+" Use local eslint if available
+let local_eslint = finddir('node_modules', '.;') . '/.bin/eslint'
+if matchstr(local_eslint, "^\/\\w") == ''
+    let local_eslint = getcwd() . "/" . local_eslint
+endif
+
+let g:neomake_javascript_eslint_maker = {
+    \ 'exe': executable(local_eslint) ? local_eslint : 'eslint',
+    \ 'args': ['-f', 'compact'],
+    \ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
+    \ '%W%f: line %l\, col %c\, Warning - %m'
+    \ }
