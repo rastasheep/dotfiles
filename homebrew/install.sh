@@ -28,7 +28,6 @@ brew install neovim/neovim/neovim
 
 # Install applications
 
-brew install caskroom/cask/brew-cask
 brew tap caskroom/versions
 
 brew cask install iterm2-nightly
