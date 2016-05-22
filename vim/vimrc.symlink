@@ -17,7 +17,6 @@ Plug 'thisivan/vim-bufexplorer'
 Plug 'Townk/vim-autoclose'
 Plug 'airblade/vim-gitgutter'
 
-
 " language-specific plugins
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-cucumber'
