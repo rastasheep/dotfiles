@@ -1,34 +1,33 @@
-'editor':
-  'showIndentGuide': true
-  'fontFamily': 'Menlo'
-  'fontSize': 15
-  'invisibles': {}
-'core':
-  'ignoredNames': [
-    '.bundle'
-    '.git'
-    'log'
-    'repositories'
-    'tmp'
-    'vendor'
-  ]
-  'themes': [
-    'unity-ui'
-    'glacier-syntax'
-  ]
-  'hideGitIgnoredFiles': true
-  'disabledPackages': [
-    'background-tips'
-    'exception-reporting'
-    'metrics'
-  ]
-'spell-check':
-  'grammars': [
-    'text.plain'
-    'source.gfm'
-    'text.git-commit'
-  ]
-'welcome':
-  'showOnStartup': false
-'release-notes':
-  'viewedVersion': '0.89.0'
+"*":
+  core:
+    disabledPackages: [
+      "background-tips"
+      "exception-reporting"
+      "metrics"
+    ]
+    hideGitIgnoredFiles: true
+    ignoredNames: [
+      ".bundle"
+      ".git"
+      "log"
+      "repositories"
+      "tmp"
+      "vendor"
+    ]
+  editor:
+    autoIndentOnPaste: false
+    fontFamily: "Menlo"
+    fontSize: 15
+    invisibles: {}
+    showIndentGuide: true
+    tabType: "soft"
+  "release-notes":
+    viewedVersion: "0.89.0"
+  "spell-check":
+    grammars: [
+      "text.plain"
+      "source.gfm"
+      "text.git-commit"
+    ]
+  welcome:
+    showOnStartup: false
