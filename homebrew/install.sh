@@ -32,6 +32,7 @@ brew tap caskroom/versions
 
 brew cask install iterm2-nightly
 brew cask install google-chrome
+brew cask install hyperterm
 
 brew cask install virtualbox
 brew cask install vagrant
