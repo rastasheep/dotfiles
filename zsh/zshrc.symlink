@@ -2,6 +2,8 @@ source /etc/profile
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
 
+export TERM=screen-256color
+
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/code
 
