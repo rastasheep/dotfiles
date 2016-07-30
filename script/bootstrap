@@ -164,16 +164,9 @@ install_dependencies () {
     ./osx/defaults.sh
     success 'applied mac settings'
   fi
-}
-
-install_vim () {
-  info 'seting up vim'
-  ./vim/install.sh >/dev/null 2>&1
-}
-
-install_zsh () {
-  info 'seting up zsh'
-  ./zsh/install.sh >/dev/null 2>&1
+  info 'installing dependencies'
+  ./script/install
+  success 'installed dependencies'
 }
 
 mkdir -p ~/Code
@@ -182,8 +175,6 @@ install_dependencies
 setup_gitconfig
 install_dotfiles
 install_conflinks
-install_vim
-install_zsh
 
 echo ''
 echo '  All installed. Bye!'

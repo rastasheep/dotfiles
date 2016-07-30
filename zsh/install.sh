@@ -2,7 +2,9 @@
 
 set -e
 
-# If we're not on a Mac, let's install vim first
+echo "› installing zsh"
+
+# If we're not on a Mac, let's install zsh first
 if [ "$(uname -s)" != "Darwin" ]
 then
   sudo apt-get -q -y install zsh curl
