@@ -9,53 +9,16 @@
 if test ! $(which brew)
 then
   echo "  Installing Homebrew for you."
-  ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)" > /tmp/homebrew-install.log
+
+  # Install the correct homebrew for each OS type
+  if test "$(uname)" = "Darwin"
+  then
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
+  then
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/linuxbrew/go/install)"
+  fi
+
 fi
 
-brew update
-
-# Install homebrew packages
-
-brew install grc
-brew install coreutils
-
-brew install wget
-brew install ack
-brew install tree
-brew install zsh
-
-brew install neovim/neovim/neovim
-
-# Install applications
-
-brew tap caskroom/versions
-
-brew cask install iterm2-nightly
-brew cask install google-chrome
-brew cask install hyperterm
-
-brew cask install virtualbox
-brew cask install vagrant
-vagrant plugin install vagrant-hostmanager
-vagrant plugin install vagrant-berkshelf
-
-brew cask install safari-tab-switching
-
-brew cask install 1password
-brew cask install transmission
-brew cask install spotify
-brew cask install spectacle
-brew cask install google-drive
-brew cask install xquartz
-brew cask install fliqlo
-brew cask install skype
-brew cask install chefdk
-
-# Install terminal font
-
-brew tap caskroom/fonts
-brew cask install font-source-code-pro
-
-# Cleanup stuff
-
-brew cleanup && brew cask cleanup
+exit 0

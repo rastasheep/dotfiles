@@ -6,5 +6,11 @@ set -e
 
 cd "$(dirname $0)"/..
 
+if [ "$(uname -s)" == "Darwin" ]
+then
+  echo "› brewing bundled apps"
+  brew bundle
+fi
+
 # find the installers and run them iteratively
 find . -name install.sh | while read installer ; do sh -c "${installer}" ; done

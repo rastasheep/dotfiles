@@ -163,9 +163,6 @@ install_dependencies () {
   then
     ./osx/defaults.sh
     success 'applied mac settings'
-    info 'brewing apps'
-    ./homebrew/install.sh >/dev/null 2>&1
-    success 'all settings and apps are in the place'
   fi
 }
 
