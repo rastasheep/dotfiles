@@ -161,7 +161,7 @@ install_conflinks () {
 install_dependencies () {
   if [ "$(uname -s)" == "Darwin" ]
   then
-    ./osx/defaults.sh
+    ./macos/defaults.sh
     success 'applied mac settings'
   fi
   info 'installing dependencies'
