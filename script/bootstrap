@@ -161,22 +161,12 @@ install_conflinks () {
 install_dependencies () {
   if [ "$(uname -s)" == "Darwin" ]
   then
-    ./osx/defaults.sh
+    ./macos/defaults.sh
     success 'applied mac settings'
-    info 'brewing apps'
-    ./homebrew/install.sh >/dev/null 2>&1
-    success 'all settings and apps are in the place'
   fi
-}
-
-install_vim () {
-  info 'seting up vim'
-  ./vim/install.sh >/dev/null 2>&1
-}
-
-install_zsh () {
-  info 'seting up zsh'
-  ./zsh/install.sh >/dev/null 2>&1
+  info 'installing dependencies'
+  ./script/install
+  success 'installed dependencies'
 }
 
 mkdir -p ~/Code
@@ -185,8 +175,6 @@ install_dependencies
 setup_gitconfig
 install_dotfiles
 install_conflinks
-install_vim
-install_zsh
 
 echo ''
 echo '  All installed. Bye!'

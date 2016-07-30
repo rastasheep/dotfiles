@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+set -e
+
+echo "› installing vim"
+
 # If we're not on a Mac, let's install vim first
 if [ "$(uname -s)" != "Darwin" ]
 then
