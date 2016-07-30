@@ -7,6 +7,9 @@
 #
 # Run ./defaults.sh and you'll be good to go.
 
+# Enable transparency in the menu bar and elsewhere
+defaults write com.apple.universalaccess reduceTransparency -bool false
+
 # Always open everything in Finder's column view. This is important.
 defaults write com.apple.Finder FXPreferredViewStyle clmv
 
@@ -48,11 +51,11 @@ defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
 defaults write ~/Library/Preferences/ByHost/com.apple.systemuiserver dontAutoLoad -array \
     "/System/Library/CoreServices/Menu Extras/TimeMachine.menu" \
     "/System/Library/CoreServices/Menu Extras/Volume.menu" \
+    "/System/Library/CoreServices/Menu Extras/VPN.menu" \
     "/System/Library/CoreServices/Menu Extras/User.menu"
 
 # Menu bar: show VPN, Keychain, Volume, AirPort, Battery, TextInput and Clock icons
 defaults write com.apple.systemuiserver menuExtras -array \
-    "/System/Library/CoreServices/Menu Extras/VPN.menu" \
     "/System/Library/CoreServices/Menu Extras/Volume.menu" \
     "/System/Library/CoreServices/Menu Extras/AirPort.menu" \
     "/System/Library/CoreServices/Menu Extras/Battery.menu" \
@@ -99,10 +102,10 @@ permament_dock() {
 # Empty the dock
 defaults write com.apple.dock persistent-apps -array ''
 
-permament_dock "/opt/homebrew-cask/Caskroom/google-chrome/latest/Google Chrome.app/"
-permament_dock "/opt/homebrew-cask/Caskroom/iterm2-nightly/latest/iTerm.app"
-permament_dock "/opt/homebrew-cask/Caskroom/mailbox/0.4.2_150316/Mailbox (Beta).app/"
-permament_dock "/opt/homebrew-cask/Caskroom/spotify/latest/Spotify.app/"
+permament_dock "/Applications/Google Chrome.app/"
+permament_dock "/Applications/Google Chrome Canary.app/"
+permament_dock "/Applications/HyperTerm.app/"
+permament_dock "/Applications/Spotify.app/"
 
 # Disable Dashboard
 defaults write com.apple.dashboard mcx-disabled -bool true
@@ -119,3 +122,36 @@ defaults write com.apple.Safari IncludeDevelopMenu -bool true
 defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
 defaults write com.apple.Safari "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" -bool true
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+
+# Apps
+
+## Transmission.app
+
+# Don’t prompt for confirmation before downloading
+defaults write org.m0k.transmission DownloadAsk -bool false
+defaults write org.m0k.transmission MagnetOpenAsk -bool false
+
+# Trash original torrent files
+defaults write org.m0k.transmission DeleteOriginalTorrent -bool true
+
+# Hide the donate message
+defaults write org.m0k.transmission WarningDonate -bool false
+
+# Hide the legal disclaimer
+defaults write org.m0k.transmission WarningLegal -bool false
+
+# IP block list.
+# Source: https://giuliomac.wordpress.com/2014/02/19/best-blocklist-for-transmission/
+defaults write org.m0k.transmission BlocklistNew -bool true
+defaults write org.m0k.transmission BlocklistURL -string "http://john.bitsurge.net/public/biglist.p2p.gz"
+defaults write org.m0k.transmission BlocklistAutoUpdate -bool true
+
+## Atom
+
+# Mac OS X Lion introduced a new, iOS-like context menu when you press and hold a key
+# that enables you to choose a character from a menu of options.
+# It's a nightmare to deal with in Atom if you're running vim mode, disable it only for Atom.
+defaults write com.github.atom ApplePressAndHoldEnabled -bool false
+
+# Uncomment if you want this feature disabled globally
+# defaults write -g ApplePressAndHoldEnabled -bool false
