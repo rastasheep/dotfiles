@@ -196,6 +196,11 @@ set mouse= " Disable the use of the mouse
   " Clear vertical split background
   hi clear VertSplit
 
+  " Netrw settings
+  let g:netrw_liststyle=3 " thin (change to 3 for tree)
+  let g:netrw_preview=1   " open previews vertically
+  let g:netrw_banner=0    " no banner
+
 " 3RD-PARTY PLUGINS SETTINGS
 
   " Buffer Explorer
