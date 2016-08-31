@@ -59,6 +59,7 @@ module.exports = {
     hyperclean: {
       hideTabs: true
     },
+    summonShortcut: "Super+Esc",
 
     // for advanced config flags please refer to https://hyperterm.org/#cfg
   },
@@ -69,7 +70,7 @@ module.exports = {
   //   `hypersolar`
   //   `@company/project`
   //   `project#1.0.1`
-  plugins:['hyperclean'],
+  plugins:['hyperclean', 'hyperterm-summon'],
 
   // in development, you can create a directory under
   // `~/.hyperterm_plugins/local/` and include it here
