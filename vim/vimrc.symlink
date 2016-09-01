@@ -27,6 +27,10 @@ Plug 'pangloss/vim-javascript', { 'for': 'javascript' } " JavaScript support
 " Plug 'moll/vim-node', { 'for': 'javascript' } " node support
 Plug 'othree/yajs.vim', { 'for': 'javascript' } " JavaScript syntax plugin
 
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
+
 call plug#end()
 
 filetype plugin indent on
