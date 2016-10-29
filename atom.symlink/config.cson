@@ -14,10 +14,11 @@
       "tmp"
       "vendor"
     ]
+    telemetryConsent: "limited"
   editor:
     autoIndentOnPaste: false
     fontFamily: "Menlo"
-    fontSize: 15
+    fontSize: 17
     invisibles: {}
     showIndentGuide: true
     tabType: "soft"
