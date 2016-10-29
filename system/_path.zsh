@@ -10,3 +10,9 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 export GOPATH=$HOME/gocode
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOBIN:$GOROOT/bin
+
+# awsebcli
+export PATH="$HOME/.local/bin:$PATH"
+
+# nvm
+export PATH="$HOME/.npm-packages/bin:$PATH"
