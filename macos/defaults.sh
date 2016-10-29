@@ -14,10 +14,10 @@ defaults write com.apple.universalaccess reduceTransparency -bool false
 defaults write com.apple.Finder FXPreferredViewStyle clmv
 
 # Set a really fast key repeat.
-defaults write NSGlobalDomain KeyRepeat -int 0
+defaults write NSGlobalDomain KeyRepeat -int 1
 
 # Set a really short delay until key repeat.
-defaults write -g InitialKeyRepeat -int 15
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
 # Set the Finder prefs for not showing a volumes on the Desktop.
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
@@ -95,6 +95,12 @@ defaults write com.apple.dock autohide -bool true
 # Minimize windows into their application’s icon
 defaults write com.apple.dock minimize-to-application -bool true
 
+# Enable time announcement
+defaults write com.apple.speech.synthesis.general.prefs TimeAnnouncementPrefs -dict-add "TimeAnnouncementsEnabled" -bool true
+
+## Announce the time => On the hour
+defaults write com.apple.speech.synthesis.general.prefs TimeAnnouncementPrefs -dict-add "TimeAnnouncementsIntervalIdentifier" -string "EveryHourInterval"
+
 permament_dock() {
   defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>$1</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
 }
@@ -104,8 +110,8 @@ defaults write com.apple.dock persistent-apps -array ''
 
 permament_dock "/Applications/Google Chrome.app/"
 permament_dock "/Applications/Google Chrome Canary.app/"
-permament_dock "/Applications/HyperTerm.app/"
 permament_dock "/Applications/Spotify.app/"
+permament_dock "/Applications/Hyper.app/"
 
 # Disable Dashboard
 defaults write com.apple.dashboard mcx-disabled -bool true
