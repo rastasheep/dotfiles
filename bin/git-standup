@@ -1,0 +1,234 @@
+#!/usr/bin/env bash
+
+# Stolen from Kamran Ahmed
+# https://github.com/kamranahmedse/git-standup
+
+# Shows the usage
+function usage() {
+  cat <<EOS
+Usage:
+  git standup [-a <author name>] [-w <weekstart-weekend>] [-d <days-ago>] [-m <max-dir-depth>] [-g] [-h] [-f]
+
+  -a      - Specify author to restrict search to
+  -w      - Specify weekday range to limit search to
+  -m      - Specify the depth of recursive directory search
+  -L      - Toggle inclusion of symbolic links in recursive directory search
+  -d      - Specify the number of days back to include
+  -D      - Specify the date format for "git log" (default: relative)
+  -h      - Display this help screen
+  -g      - Show if commit is GPG signed (G) or not (N)
+  -f      - Fetch the latest commits beforehand
+
+Examples:
+  git standup -a "John Doe" -w "MON-FRI" -m 3
+EOS
+}
+
+# Sets up the colored output
+function colored() {
+  RED=$(tput setaf 1)
+  GREEN=$(tput setaf 2)
+  YELLOW=$(tput setaf 3)
+  BLUE=$(tput setaf 4)
+  BOLD=$(tput bold)
+  UNDERLINE=$(tput smul)
+  NORMAL=$(tput sgr0)
+  GIT_PRETTY_FORMAT='%Cred%h%Creset - %s %Cgreen(%cd) %C(bold blue)<%an>%Creset'
+
+  if [[ $option_g ]] ; then
+    GIT_PRETTY_FORMAT="$GIT_PRETTY_FORMAT %C(yellow)gpg: %G?%Creset"
+  fi
+}
+
+# Sets up the uncolored output
+function uncolored() {
+  RED=""
+  GREEN=""
+  YELLOW=""
+  BLUE=""
+  BOLD=""
+  UNDERLINE=""
+  NORMAL=""
+  GIT_PRETTY_FORMAT='%h - %s (%cd) <%an>'
+
+  if [[ $option_g ]] ; then
+    GIT_PRETTY_FORMAT="$GIT_PRETTY_FORMAT gpg: %G?"
+  fi
+}
+
+while getopts "hgfd:a:w:m:D:L" opt; do
+  case $opt in
+    h|d|a|w|m|g|D|f|L)
+      declare "option_$opt=${OPTARG:-0}"
+      ;;
+    \?)
+      echo >&2 "Use 'git standup -h' to see usage info"
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND-1))
+
+if [[ $# -gt 0 ]]; then
+  echo >&2 "Invalid arguments: $@"
+  echo >&2 "Use 'git standup -h' to see usage info"
+  exit 1
+fi
+
+
+# Main script
+
+if [[ $option_h ]]; then
+  usage
+  exit 0
+fi
+
+# Use colors, but only if connected to a terminal, and that terminal
+# supports them.
+if [[ -t 1 ]] && [[ -n "$TERM" ]] && which tput &>/dev/null && tput colors &>/dev/null; then
+  ncolors=$(tput colors)
+  if [[ -n "$ncolors" ]] && [[ "$ncolors" -ge 8 ]] ; then
+    colored
+  else
+    uncolored
+  fi
+else
+  uncolored
+fi
+
+## Set the necessary variables for standup
+AUTHOR=`git config user.name`
+SINCE="yesterday"
+MAXDEPTH=2
+INCLUDE_LINKS=
+
+if [[ $option_a ]] ; then
+  # In case the parameter
+  if [[ $option_a = 'all' ]] ; then
+    AUTHOR=".*"
+  else
+    AUTHOR="$option_a"
+  fi
+fi
+
+if [[ $option_m ]] ; then
+  MAXDEPTH="$(($option_m + 1))"
+fi
+
+if [[ $option_L ]] ; then
+  INCLUDE_LINKS="-L"
+fi
+
+## If -d flag is there, use its value for the since
+if [[ $option_d ]] && [[ $option_d -ne 0 ]] ; then
+  SINCE="$option_d days ago"
+else
+  ## -d flag is not there, go on with the normal processing
+  WEEKSTART="$( cut -d '-' -f 1 <<< "$option_w" )";
+  WEEKSTART=${WEEKSTART:="Mon"}
+
+  WEEKEND="$( cut -d '-' -f 2 <<< "$option_w" )";
+  WEEKEND=${WEEKEND:="Fri"}
+
+  ## In case it is the start of week, we need to
+  ## show the commits since the last weekend
+  shopt -s nocasematch
+  if [[ $WEEKSTART == "$(date +%a)" ]] ; then
+    SINCE="last $WEEKEND";
+  fi
+fi
+
+GIT_DATE_FORMAT=${option_D:-relative}
+
+GIT_LOG_COMMAND="git --no-pager log \
+    --all
+    --no-merges
+    --since=\"$SINCE\"
+    --author=\"$AUTHOR\"
+    --abbrev-commit
+    --oneline
+    --pretty=format:'$GIT_PRETTY_FORMAT'
+    --date='$GIT_DATE_FORMAT'"
+
+
+## For when the command has been run in a non-repo directory
+if [[ ! -d ".git" || -f ".git" ]]; then
+  BASE_DIR=`pwd`
+
+  ## Set delimiter to newline for the loop
+  IFS=$'\n'
+
+  ## Recursively search for git repositories
+  PROJECT_DIRS=`find $INCLUDE_LINKS . -maxdepth $MAXDEPTH -mindepth 0 -name .git`
+
+  # Fetch the latest commits, if required
+  if [[ $option_f ]]; then
+
+    echo "${BOLD}${GREEN}Fetching commits ..${NORMAL}"
+
+    # Foreach of the project directories, fetch the commits
+    for DIR in $PROJECT_DIRS; do
+
+      cd "`dirname $DIR`"
+      CUR_DIR=`pwd`
+      BASENAME=`basename "$CUR_DIR"`
+
+      if [[ -d ".git" ]] ; then
+        echo "   ${YELLOW}$BASENAME${NORMAL}"
+        git fetch --all > /dev/null 2>&1
+      fi
+
+      cd $BASE_DIR
+    done
+  fi
+
+  # Get the standup details for each of the projects
+  for DIR in $PROJECT_DIRS; do
+
+    cd "`dirname $DIR`"
+    CUR_DIR=`pwd`
+
+    ## Show the detail only if it is a git repository
+    if [[ -d ".git" || -f ".git" ]] ; then
+      {
+        GITOUT=$(eval ${GIT_LOG_COMMAND} 2>/dev/null )
+      } || {
+        GITOUT=""
+      }
+
+      ## Only output if there is some activity
+      if [[ ! -z "$GITOUT" ]] ;  then
+        # Directory heading
+        echo "${BOLD}${UNDERLINE}${YELLOW}$CUR_DIR${NORMAL}"
+        echo "$GITOUT"
+      fi
+    fi
+
+    cd $BASE_DIR
+  done
+
+else
+
+  if [[ $option_f ]]; then
+    echo "${GREEN}Fetching commits ..${NORMAL}"
+    git fetch --all > /dev/null 2>&1
+  fi
+
+  {
+    GITOUT=$(eval ${GIT_LOG_COMMAND} 2>/dev/null )
+  } || {
+    GITOUT=""
+  }
+
+  if [[ ! -z "$GITOUT" ]] ;  then
+    echo "$GITOUT"
+  else
+
+    if [[ $AUTHOR = '.*' ]] ; then
+      AUTHOR="all the contributors"
+    fi
+
+    echo "${YELLOW}Seems like $AUTHOR did nothing!${NORMAL}"
+  fi
+fi
