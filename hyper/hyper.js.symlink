@@ -1,3 +1,26 @@
+// Colors
+const cursorColor = 'rgba(255,255,255,.4)';
+
+//base16-ocean
+const base16 = {
+  '00': '#2b303b',
+  '01': '#343d46',
+  '02': '#4f5b66',
+  '03': '#65737e',
+  '04': '#a7adba',
+  '05': '#c0c5ce',
+  '06': '#dfe1e8',
+  '07': '#eff1f5',
+  '08': '#bf616a',
+  '09': '#d08770',
+  '0A': '#ebcb8b',
+  '0B': '#a3be8c',
+  '0C': '#96b5b4',
+  '0D': '#8fa1b3',
+  '0E': '#b48ead',
+  '0F': '#ab7967',
+};
+
 module.exports = {
   config: {
     // default font size in pixels for all tabs
@@ -7,59 +30,69 @@ module.exports = {
     fontFamily: '"Source Code Pro", Menlo, "DejaVu Sans Mono", "Lucida Console", monospace',
 
     // terminal cursor background color (hex)
-    cursorColor: 'rgba(255,255,255,.4)',
+    cursorColor: cursorColor,
 
     // `BEAM` for |, `UNDERLINE` for _, `BLOCK` for █
     cursorShape: 'BLOCK',
 
     // color of the text
-    foregroundColor: 'rgb(131,148,150)',
+    foregroundColor: base16['05'],
 
     // terminal background color
-    //backgroundColor: '#DD0a1a1f',//'rgba(2, 40, 50, 1)',
-    backgroundColor: 'rgba(2, 40, 50, 0.75)',
+    // backgroundColor: base16['00'],
+    backgroundColor: 'rgba(43, 48, 59, 0.7)',
 
     // border color (window, tabs)
-    borderColor: 'rgba(255,255,255,.1)',
+    borderColor: 'transparent',
 
     // custom css to embed in the main window
-    css: 'header {background: transparent!important;}',
+    css: '',
 
     // custom css to embed in the terminal window
-    termCSS: 'x-screen a { color: #93a1a1; }',
+    termCSS: '',
 
     // custom padding
-    padding: '0px 0px',
+    padding: '0',
 
-    // some color overrides. see http://bit.ly/29k1iU2 for
-    // the full list
+    // some color overrides. see http://bit.ly/29k1iU2 for the full list
     colors: {
-      black: '#002834',
-      red: '#dc322f',
-      green: '#859901',
-      yellow: '#b58901',
-      blue: '#268bd2',
-      magenta: '#d33682',
-      cyan: '#2aa198',
-      white: '#eee8d5',
-      lightBlack: '#839496',
-      lightRed: '#cb4b16',
-      lightGreen: '#3d713a',
-      lightYellow: '#83773b',
-      lightBlue: '#839496',
-      lightMagenta: '#839496',
-      lightCyan: '#93a1a1',
-      lightWhite: '#93a1a1',
+      black : base16['00'],
+      red : base16['08'],
+      green : base16['0B'],
+      yellow : base16['0A'],
+      blue : base16['0D'],
+      magenta : base16['0E'],
+      cyan : base16['0C'],
+      white : base16['07'],
+      lightBlack : base16['03'],
+      lightRed : base16['08'],
+      lightGreen : base16['0B'],
+      lightYellow : base16['0A'],
+      lightBlue : base16['0D'],
+      lightMagenta: base16['0E'],
+      lightCyan : base16['0C'],
+      lightWhite : base16['05'],
+      colorCubes : base16['05'],
+      grayscale : base16['05'],
     },
+
+    // copy on select
+    copyOnSelect: true,
 
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
     // if left empty, your system's login shell will be used by default
     shell: '',
 
+    // hyperclean config
     hyperclean: {
       hideTabs: true
     },
-    summonShortcut: "Super+Esc",
+
+    // hyperterm-summon config
+    summonShortcut: 'Super+Esc',
+
+    // hyper-startup config
+    commands: ['tmux attach-session -t mac-session || tmux new-session -s mac-session'],
 
     // for advanced config flags please refer to https://hyperterm.org/#cfg
   },
@@ -67,10 +100,11 @@ module.exports = {
   // a list of plugins to fetch and install from npm
   // format: [@org/]project[#version]
   // examples:
-  //   `hypersolar`
-  //   `@company/project`
-  //   `project#1.0.1`
-  plugins:['hyperclean', 'hyperterm-summon'],
+  // `hypersolar`
+  // `@company/project`
+  // `project#1.0.1`
+  plugins: ['hyperterm-summon', 'hyperclean', 'hyper-startup'],
+
 
   // in development, you can create a directory under
   // `~/.hyperterm_plugins/local/` and include it here
