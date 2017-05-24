@@ -26,8 +26,8 @@ set-window-option -g mode-keys vi
 #set-window-option -g mode-mouse on
 
 # v and y like vi in copy-mode
-bind-key -t vi-copy 'v' begin-selection
-bind-key -t vi-copy 'y' copy-selection
+bind-key -T copy-mode-vi 'v' send -X begin-selection
+bind-key -T copy-mode-vi 'y' send -X copy-selection
 
 # p for paste
 unbind p
@@ -41,9 +41,9 @@ setw -g pane-base-index 1
 bind C-y choose-buffer "run \"tmux save-buffer -b %% - | xclip -i -sel clipboard\" \; run \" tmux display \\\"Clipboard \(+\) filled with: $(tmux save-buffer -b %1 - | dd ibs=1 obs=1 status=noxfer count=80 2> /dev/null)... \\\" \" "
 
 # Shift+PageUp/PageDown start scroll mode
-bind-key -n C-PPage copy-mode -u
-bind-key -t vi-copy -n C-PPage page-up
-bind-key -t vi-copy -n C-NPage page-down
+# bind-key -n C-PPage copy-mode -u
+# bind-key -t vi-copy -n C-PPage page-up
+# bind-key -t vi-copy -n C-NPage page-down
 
 # # scrollback buffer n lines
 set -g history-limit 10000
