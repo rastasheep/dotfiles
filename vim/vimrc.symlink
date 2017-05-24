@@ -164,6 +164,7 @@ set mouse= " Disable the use of the mouse
   nnoremap <silent><leader>\ :vs<CR>
   nnoremap <silent><leader>- :split<CR>
   nnoremap <silent><leader>1 :e ~/.vimrc<CR>
+  nnoremap <silent><leader>2 :e ~/Google\ Drive/notes.md<CR>
 
   nnoremap <silent><leader>r :!rspec %<CR>
   nnoremap <silent><leader>w :wa<CR>
