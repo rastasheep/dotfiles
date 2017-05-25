@@ -4,6 +4,13 @@
       "background-tips"
       "exception-reporting"
       "metrics"
+      "atom-typescript"
+      "busy-signal"
+      "intentions"
+      "linter"
+      "linter-ui-default"
+      "github"
+      "vim-mode"
     ]
     hideGitIgnoredFiles: true
     ignoredNames: [
@@ -15,6 +22,10 @@
       "vendor"
     ]
     telemetryConsent: "limited"
+    themes: [
+      "one-dark-ui"
+      "electron-syntax"
+    ]
   editor:
     autoIndentOnPaste: false
     fontFamily: "Menlo"
@@ -22,6 +33,10 @@
     invisibles: {}
     showIndentGuide: true
     tabType: "soft"
+  linter: {}
+  "linter-ui-default":
+    showPanel: true
+  "one-dark-ui": {}
   "release-notes":
     viewedVersion: "0.89.0"
   "spell-check":
@@ -30,5 +45,8 @@
       "source.gfm"
       "text.git-commit"
     ]
+  tabs:
+    alwaysShowTabBar: false
+  "vim-mode-plus": {}
   welcome:
     showOnStartup: false
