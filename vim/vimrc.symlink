@@ -11,7 +11,7 @@ Plug 'tpope/vim-fugitive' " amazing git wrapper for vim
 Plug 'tpope/vim-surround' " mappings to manage surroundings in pairs, such as quotes, parens..
 Plug 'tpope/vim-endwise' " automatically add end in ruby
 Plug 'mileszs/ack.vim' " search inside files using ack
-Plug 'benekastah/neomake' " neovim replacement for syntastic using neovim's job control functonality
+Plug 'w0rp/ale' " asynchronous lint engine
 
 Plug 'thisivan/vim-bufexplorer'
 Plug 'Townk/vim-autoclose'
@@ -238,6 +238,13 @@ set mouse= " Disable the use of the mouse
     set laststatus=2
   endfunc
 
+  " ALE
+  let g:ale_sign_error = 'x'
+  let g:ale_sign_warning = '!'
+  highlight ALEError ctermbg=darkred
+  highlight ALEErrorSign ctermfg=darkred
+  highlight ALEWarning ctermbg=darkyellow
+  highlight ALEWarningSign ctermfg=darkyellow
 
 set statusline =%#identifier#
 set statusline+=%f   "tail of the filename
@@ -271,22 +278,4 @@ augroup configgroup
   autocmd BufNewFile,BufRead .babelrc set filetype=json
   autocmd BufNewFile,BufRead .jshintrc set filetype=json
   autocmd BufNewFile,BufRead .eslintrc set filetype=json
-
-  autocmd! BufWritePost * Neomake
 augroup END
-
-" Neomake stuff
-let g:neomake_javascript_enabled_makers = ['eslint']
-
-" Use local eslint if available
-let local_eslint = finddir('node_modules', '.;') . '/.bin/eslint'
-if matchstr(local_eslint, "^\/\\w") == ''
-    let local_eslint = getcwd() . "/" . local_eslint
-endif
-
-let g:neomake_javascript_eslint_maker = {
-    \ 'exe': executable(local_eslint) ? local_eslint : 'eslint',
-    \ 'args': ['-f', 'compact'],
-    \ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
-    \ '%W%f: line %l\, col %c\, Warning - %m'
-    \ }
