@@ -18,14 +18,10 @@ Plug 'Townk/vim-autoclose'
 Plug 'airblade/vim-gitgutter'
 
 " language-specific plugins
+Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-rails'
-Plug 'tpope/vim-cucumber'
 Plug 'renderedtext/vim-bdd'
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'gregsexton/MatchTag', { 'for': 'html' } " match tags in html, similar to paren support
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' } " JavaScript support
-" Plug 'moll/vim-node', { 'for': 'javascript' } " node support
-Plug 'othree/yajs.vim', { 'for': 'javascript' } " JavaScript syntax plugin
 
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
