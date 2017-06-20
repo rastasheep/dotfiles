@@ -241,6 +241,10 @@ set mouse= " Disable the use of the mouse
   " ALE
   let g:ale_sign_error = 'x'
   let g:ale_sign_warning = '!'
+  let g:ale_linters = {
+  \  'html': [],
+  \}
+
   highlight ALEError ctermbg=darkred
   highlight ALEErrorSign ctermfg=darkred
   highlight ALEWarning ctermbg=darkyellow
