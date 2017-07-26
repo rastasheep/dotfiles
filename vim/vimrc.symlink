@@ -22,6 +22,8 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-rails'
 Plug 'renderedtext/vim-bdd'
 Plug 'gregsexton/MatchTag', { 'for': 'html' } " match tags in html, similar to paren support
+Plug 'Quramy/tsuquyomi'
+  Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
@@ -86,6 +88,8 @@ set noerrorbells visualbell t_vb=
 set wildmenu
 set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.jpeg,*.png,*.xpm,*.gif,.bundle
 set wildmode=full
+set completeopt+=longest,menuone
+set omnifunc=syntaxcomplete#Complete
 
 " Backup and Swap"
 set nobackup
@@ -224,6 +228,7 @@ set mouse= " Disable the use of the mouse
   nmap <leader>A :Ack <C-r><C-w><CR>
 
   " Use ctrlp.vim as Command-T
+  let g:ctrlp_working_path_mode = 0
   let g:ctrlp_map = '<leader>t'
   let g:ctrlp_buffer_func = {'enter': 'Ctrlp_enter','exit':  'Ctrlp_exit' }
   let g:ctrlp_custom_ignore = {
@@ -282,4 +287,14 @@ augroup configgroup
   autocmd BufNewFile,BufRead .babelrc set filetype=json
   autocmd BufNewFile,BufRead .jshintrc set filetype=json
   autocmd BufNewFile,BufRead .eslintrc set filetype=json
+
+  autocmd FileType typescript setlocal completeopt+=menu,preview
+  autocmd FileType typescript nmap <buffer> <Leader>E <Plug>(TsuquyomiRenameSymbolC)
+  autocmd FileType typescript imap <C-n> <C-x><C-o>
 augroup END
+
+" tsuquyomi (typescript) settings
+let g:tsuquyomi_use_dev_node_module = 2
+let g:tsuquyomi_tsserver_path = 'node_modules/typescript/bin/tsserver'
+let g:tsuquyomi_completion_detail = 1
+
