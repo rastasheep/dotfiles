@@ -248,6 +248,7 @@ set mouse= " Disable the use of the mouse
   let g:ale_sign_warning = '!'
   let g:ale_linters = {
   \  'html': [],
+  \  'javascript': ['eslint'],
   \}
 
   highlight ALEError ctermbg=darkred
