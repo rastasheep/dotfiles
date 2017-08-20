@@ -94,6 +94,9 @@ module.exports = {
     // hyper-startup config
     commands: ['tmux attach-session -t mac-session || tmux new-session -s mac-session'],
 
+    // hyper-confirm config
+    confirmQuit: true,
+
     // for advanced config flags please refer to https://hyperterm.org/#cfg
   },
 
@@ -103,7 +106,7 @@ module.exports = {
   // `hypersolar`
   // `@company/project`
   // `project#1.0.1`
-  plugins: ['hyperterm-summon', 'hyperclean', 'hyper-startup'],
+  plugins: ['hyperterm-summon', 'hyperclean', 'hyper-startup', 'hyper-confirm'],
 
 
   // in development, you can create a directory under
