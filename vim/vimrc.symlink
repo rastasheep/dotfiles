@@ -31,6 +31,8 @@ Plug 'garbas/vim-snipmate'
 
 Plug 'galooshi/vim-import-js'
 
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
 call plug#end()
 
 filetype plugin indent on
@@ -257,6 +259,9 @@ set mouse= " Disable the use of the mouse
   highlight ALEErrorSign ctermfg=darkred
   highlight ALEWarning ctermbg=darkyellow
   highlight ALEWarningSign ctermfg=darkyellow
+
+  " Use deoplete.
+  let g:deoplete#enable_at_startup = 1
 
 set statusline =%#identifier#
 set statusline+=%f   "tail of the filename
