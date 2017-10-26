@@ -36,18 +36,13 @@ setopt complete_aliases
 
 unsetopt correct_all # Stop correcting me!
 
-zle -N newtab
+# zsh-autosuggestions
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20 # Disabling suggestion for large buffers
+ZSH_AUTOSUGGEST_USE_ASYNC="true" # Enable Asynchronous Mode
 
-# load and bind prediction
-autoload predict-on
-predict-toggle() {
-  ((predict_on=1-predict_on)) && predict-on || predict-off
-}
-zle -N predict-toggle
-bindkey '^P'   predict-toggle
-zstyle ':predict' toggle true
-zstyle ':predict' verbose true
-predict-toggle
+bindkey '^ ' autosuggest-accept # ctrl + space to accept the current suggestion.
+
+zle -N newtab
 
 bindkey '^[^[[D' backward-word
 bindkey '^[^[[C' forward-word
