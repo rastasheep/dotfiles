@@ -52,6 +52,9 @@ defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.5
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
 
+# Menu bar: use dark menu bar and Dock
+defaults write .GlobalPreferences AppleInterfaceStyle -string "Dark"
+
 # Menu bar: hide the Time Machine, Volume and User icons
 defaults write ~/Library/Preferences/ByHost/com.apple.systemuiserver dontAutoLoad -array \
     "/System/Library/CoreServices/Menu Extras/TimeMachine.menu" \
