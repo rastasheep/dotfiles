@@ -21,6 +21,8 @@
 --ignore-dir=bower_components
 --ignore-dir=node_modules
 --ignore-dir=client/dist
+--ignore-dir=build
+--ignore-dir=report
 
 --ignore-dir=vendor/bundle
 --ignore-dir=.bundle

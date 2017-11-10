@@ -37,6 +37,11 @@ defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
 # Empty Trash securely by default
 defaults write com.apple.finder EmptyTrashSecurely -bool true
 
+# Set $HOME as the default location for new Finder windows
+# For other paths, use `PfLo` and `file:///full/path/here/`
+defaults write com.apple.finder NewWindowTarget -string "PfDe"
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}"
+
 # Set sidebar icon size to small
 defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 1
 
@@ -46,6 +51,9 @@ defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.5
 # Expand save panel by default
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+
+# Menu bar: use dark menu bar and Dock
+defaults write .GlobalPreferences AppleInterfaceStyle -string "Dark"
 
 # Menu bar: hide the Time Machine, Volume and User icons
 defaults write ~/Library/Preferences/ByHost/com.apple.systemuiserver dontAutoLoad -array \
