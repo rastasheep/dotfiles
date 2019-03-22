@@ -23,6 +23,7 @@
 --ignore-dir=client/dist
 --ignore-dir=build
 --ignore-dir=report
+--ignore-dir=dist
 
 --ignore-dir=vendor/bundle
 --ignore-dir=.bundle

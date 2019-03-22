@@ -16,6 +16,7 @@ Plug 'w0rp/ale' " asynchronous lint engine
 Plug 'thisivan/vim-bufexplorer'
 Plug 'Townk/vim-autoclose'
 Plug 'airblade/vim-gitgutter'
+Plug 'editorconfig/editorconfig-vim'
 
 " language-specific plugins
 Plug 'sheerun/vim-polyglot'
@@ -275,7 +276,7 @@ function! GitHub_open(lines)
     let cmd = cmd . ":" . line(".")
   endif
 
-  echom system(cmd)
+  echom systemlist(cmd)[0]
 endfunc
 
 command Ghl call GitHub_open("true")
