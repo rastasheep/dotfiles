@@ -61,7 +61,6 @@ link_file () {
   local src=$1 dst=$2
 
   local overwrite= backup= skip=
-  local action=
 
   if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]
   then
@@ -163,9 +162,13 @@ install_dependencies () {
   then
     ./macos/defaults.sh
     success 'applied mac settings'
+
+    info 'brewing bundled apps'
+    brew bundle
   fi
   info 'installing dependencies'
-  ./script/install
+  # find the installers and run them iteratively
+  find . -name install.sh | while read installer ; do sh -c "${installer}" ; done
   success 'installed dependencies'
 }
 
