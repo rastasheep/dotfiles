@@ -26,7 +26,7 @@ brew 'zsh'
 
 brew 'neovim'
 
-cask '1password-beta'
+cask '1password'
 cask 'fliqlo'
 cask 'google-featured-photos'
 
@@ -42,7 +42,7 @@ cask 'google-chrome-canary'
 cask 'google-backup-and-sync'
 cask 'robo-3t'
 cask 'skype'
-cask 'zoom'
+cask 'zoomus'
 cask 'slack-beta'
 cask 'spectacle'
 cask 'spotify'
