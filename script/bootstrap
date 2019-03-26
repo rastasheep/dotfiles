@@ -163,6 +163,7 @@ install_dependencies () {
     ./macos/defaults.sh
     success 'applied mac settings'
 
+    ./homebrew/install.sh
     info 'brewing bundled apps'
     brew bundle
   fi
