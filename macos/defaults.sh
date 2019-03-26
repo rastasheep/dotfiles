@@ -103,6 +103,9 @@ defaults write com.apple.dock autohide -bool true
 # Minimize windows into their application’s icon
 defaults write com.apple.dock minimize-to-application -bool true
 
+# Don’t show recent applications in Dock
+defaults write com.apple.dock show-recents -bool false
+
 # Enable time announcement
 defaults write com.apple.speech.synthesis.general.prefs TimeAnnouncementPrefs -dict-add "TimeAnnouncementsEnabled" -bool true
 
@@ -119,7 +122,8 @@ defaults write com.apple.dock persistent-apps -array ''
 permament_dock "/Applications/Google Chrome.app/"
 permament_dock "/Applications/Google Chrome Canary.app/"
 permament_dock "/Applications/Spotify.app/"
-permament_dock "/Applications/Hyper.app/"
+permament_dock "/Applications/Alacritty.app/"
+permament_dock "/Applications/Slack.app/"
 
 # Disable Dashboard
 defaults write com.apple.dashboard mcx-disabled -bool true
@@ -136,36 +140,3 @@ defaults write com.apple.Safari IncludeDevelopMenu -bool true
 defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
 defaults write com.apple.Safari "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" -bool true
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
-
-# Apps
-
-## Transmission.app
-
-# Don’t prompt for confirmation before downloading
-defaults write org.m0k.transmission DownloadAsk -bool false
-defaults write org.m0k.transmission MagnetOpenAsk -bool false
-
-# Trash original torrent files
-defaults write org.m0k.transmission DeleteOriginalTorrent -bool true
-
-# Hide the donate message
-defaults write org.m0k.transmission WarningDonate -bool false
-
-# Hide the legal disclaimer
-defaults write org.m0k.transmission WarningLegal -bool false
-
-# IP block list.
-# Source: https://giuliomac.wordpress.com/2014/02/19/best-blocklist-for-transmission/
-defaults write org.m0k.transmission BlocklistNew -bool true
-defaults write org.m0k.transmission BlocklistURL -string "http://john.bitsurge.net/public/biglist.p2p.gz"
-defaults write org.m0k.transmission BlocklistAutoUpdate -bool true
-
-## Atom
-
-# Mac OS X Lion introduced a new, iOS-like context menu when you press and hold a key
-# that enables you to choose a character from a menu of options.
-# It's a nightmare to deal with in Atom if you're running vim mode, disable it only for Atom.
-defaults write com.github.atom ApplePressAndHoldEnabled -bool false
-
-# Uncomment if you want this feature disabled globally
-# defaults write -g ApplePressAndHoldEnabled -bool false

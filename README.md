@@ -28,7 +28,7 @@ sudo apt-get install git make
 ```bash
 git clone https://github.com/rastasheep/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-make linux # or mac
+make install
 ```
 
 This will symlink the appropriate files in `.dotfiles` to your home directory.
@@ -48,7 +48,7 @@ If you want to run installation process from automated script like vagrant shell
 provisioner, without interactive shell you can pass arguments like:
 
 ```bash
-git_authorname=rastasheep git_authoremail=rastasheep3@gmail.com existing_files=O make -C ~/.dotfiles linux
+git_authorname=rastasheep git_authoremail=rastasheep3@gmail.com existing_files=O make -C ~/.dotfiles install
 ```
 
 Available options are optional:
