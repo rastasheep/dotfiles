@@ -6,33 +6,18 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 " utilities
-Plug 'ctrlpvim/ctrlp.vim' " fuzzy file finder, mapped to <leader>t
 Plug 'tpope/vim-fugitive' " amazing git wrapper for vim
 Plug 'tpope/vim-surround' " mappings to manage surroundings in pairs, such as quotes, parens..
-Plug 'tpope/vim-endwise' " automatically add end in ruby
-Plug 'mileszs/ack.vim' " search inside files using ack
 Plug 'w0rp/ale' " asynchronous lint engine
-
-Plug 'thisivan/vim-bufexplorer'
+Plug '/usr/local/opt/fzf' " fzf base plugin, installed by homebrew
+Plug 'junegunn/fzf.vim' " fuzzy completion tool, used for searcing files, inside files, buffers, commits
 Plug 'Townk/vim-autoclose'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
 
 " language-specific plugins
 Plug 'sheerun/vim-polyglot'
-Plug 'tpope/vim-rails'
-Plug 'renderedtext/vim-bdd'
 Plug 'gregsexton/MatchTag', { 'for': 'html' } " match tags in html, similar to paren support
-Plug 'Quramy/tsuquyomi'
-  Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
-Plug 'garbas/vim-snipmate'
-
-Plug 'galooshi/vim-import-js'
-
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 call plug#end()
 
@@ -96,12 +81,12 @@ set wildmode=full
 set completeopt+=longest,menuone
 set omnifunc=syntaxcomplete#Complete
 
-" Backup and Swap"
+" Backup and Swap
 set nobackup
 set nowritebackup
 set noswapfile
 
-" Search Options"
+" Search Options
 set hlsearch   " Highlight search
 set incsearch  " Incremental search
 set magic      " Set magic on, for regular expressions
@@ -163,15 +148,11 @@ set mouse= " Disable the use of the mouse
   nnoremap <silent><leader>c :nohlsearch<CR>
 
   " Start BufExplorer
-  nnoremap <silent><leader>l :BufExplorer<CR>
-  nnoremap <silent><leader>s :A<CR>
-  nnoremap <silent><leader>v :AV<CR>
   nnoremap <silent><leader>\ :vs<CR>
   nnoremap <silent><leader>- :split<CR>
   nnoremap <silent><leader>1 :e ~/.vimrc<CR>
   nnoremap <silent><leader>2 :e ~/Google\ Drive/notes.md<CR>
 
-  nnoremap <silent><leader>r :!rspec %<CR>
   nnoremap <silent><leader>w :wa<CR>
   command W w
   command Q q
@@ -213,40 +194,9 @@ set mouse= " Disable the use of the mouse
 
 " 3RD-PARTY PLUGINS SETTINGS
 
-  " Buffer Explorer
-  let g:bufExplorerDefaultHelp=0       " Do not show default help.
-  let g:bufExplorerShowRelativePath=1  " Show relative paths.
-
-  " Command-T
-  let g:CommandTMaxHeight=5
-  let g:bufExplorerShowRelativePath=1
-
-  set wildignore+=vendor/**
-
   " Vim Git Gutter
   highlight SignColumn ctermbg=none
-  let g:gitgutter_signs = 1            " Activate gutter signs
-
-  " Ack tricks
-  " Seen at https://github.com/jeremyckahn
-  nmap <leader>a :Ack ""<Left>
-  nmap <leader>A :Ack <C-r><C-w><CR>
-
-  " Use ctrlp.vim as Command-T
-  let g:ctrlp_working_path_mode = 0
-  let g:ctrlp_map = '<leader>t'
-  let g:ctrlp_buffer_func = {'enter': 'Ctrlp_enter','exit':  'Ctrlp_exit' }
-  let g:ctrlp_custom_ignore = {
-      \  'dir': '\v[\/](tmp|dist|bower_components|node_modules|vendor)$',
-      \ }
-
-  func! Ctrlp_enter()
-    set laststatus=0
-  endfunc
-
-  func! Ctrlp_exit()
-    set laststatus=2
-  endfunc
+  let g:gitgutter_signs = 1 " Activate gutter signs
 
   " ALE
   let g:ale_sign_error = 'x'
@@ -261,8 +211,32 @@ set mouse= " Disable the use of the mouse
   highlight ALEWarning ctermbg=darkyellow
   highlight ALEWarningSign ctermfg=darkyellow
 
-  " Use deoplete.
-  let g:deoplete#enable_at_startup = 1
+  " FZF
+  let g:fzf_layout = { 'down': '~10%' }
+
+  nmap <leader>t :FZF<CR>
+  nmap <leader>l :Buffers<CR>
+  nnoremap <silent><leader>q :bp\|bd #<CR>
+
+  " Ack tricks
+  " Seen at https://github.com/jeremyckahn
+  nmap <leader>a :Ack<Space>
+  nmap <leader>A :Ack <C-r><C-w><CR>
+
+  command! -bang -nargs=* Ack
+    \ call fzf#vim#grep(
+    \   'ack -s -H --nopager --nocolor --nogroup --column --color '.shellescape(<q-args>),
+    \   1,
+    \   <bang>0 ? fzf#vim#with_preview({'options': '--bind ctrl-space:select-all'}, 'up:60%') : fzf#vim#with_preview({'options': '--bind ctrl-space:select-all'}, 'right:50%:hidden', '?'),
+    \   <bang>0)
+
+  autocmd! FileType fzf
+  autocmd  FileType fzf set laststatus=0 noshowmode noruler
+    \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
+  command! -bang Buffers
+    \ call fzf#vim#buffers({'window': 'enew'}, <bang>0)
+
 
 set statusline =%#identifier#
 set statusline+=%f   "tail of the filename
@@ -301,9 +275,4 @@ augroup configgroup
   autocmd FileType typescript nmap <buffer> <Leader>E <Plug>(TsuquyomiRenameSymbolC)
   autocmd FileType typescript imap <C-n> <C-x><C-o>
 augroup END
-
-" tsuquyomi (typescript) settings
-let g:tsuquyomi_use_dev_node_module = 2
-let g:tsuquyomi_tsserver_path = 'node_modules/typescript/bin/tsserver'
-let g:tsuquyomi_completion_detail = 1
 
