@@ -4,7 +4,9 @@ bind-key C-a last-window
 
 set -g base-index 1
 
-set -g default-terminal "screen-256color"
+# set -g default-terminal "screen-256color"
+set -g default-terminal "tmux-256color"
+
 #
 # scroll stuff
 set -g terminal-overrides 'xterm*:smcup@:rmcup@'
