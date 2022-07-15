@@ -45,3 +45,5 @@ done
 unset config_files
 
 bindkey -e
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

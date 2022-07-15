@@ -2,6 +2,10 @@
 set nocompatible " not compatible with vi
 filetype off
 
+  " polyglot
+  " use custom syntax for TS
+  let g:polyglot_disabled = ['typescript']
+
 " Plugins
 call plug#begin('~/.vim/plugged')
 
@@ -95,6 +99,9 @@ set incsearch  " Incremental search
 set magic      " Set magic on, for regular expressions
 set ignorecase " Searches are Non Case-sensitive
 set smartcase
+
+" Live Substitution
+set inccommand=split
 
 " FOLDING
 set foldenable
@@ -212,6 +219,10 @@ set mouse= " Disable the use of the mouse
   let g:netrw_preview=1   " open previews vertically
   let g:netrw_banner=0    " no banner
 
+  " Move visual selection
+  vnoremap J :m '>+1<cr>gv=gv
+  vnoremap K :m '<-2<cr>gv=gv
+
 " 3RD-PARTY PLUGINS SETTINGS
 
   " Vim Git Gutter
@@ -242,16 +253,22 @@ set mouse= " Disable the use of the mouse
   vnoremap <leader>64e c<c-r>=system('base64', @")<cr><esc>
   vnoremap <leader>64d c<c-r>=system('base64 --decode', @")<cr><esc>
 
+  " copy / paste
+  nnoremap <leader>p "+p
+  nnoremap <leader>y "+y
+
   " Ack tricks
   " Seen at https://github.com/jeremyckahn
   nmap <leader>a :Ack<Space>
   nmap <leader>A :Ack <C-r><C-w><CR>
+  nmap <leader>s :Ack!<Space>
+  nmap <leader>S :Ack! <C-r><C-w><CR>
 
   command! -bang -nargs=* Ack
     \ call fzf#vim#grep(
     \   'ag -S --noheading --column --color --nobreak --hidden '.shellescape(<q-args>),
     \   1,
-    \   <bang>0 ? fzf#vim#with_preview({'options': '--bind ctrl-space:select-all'}, 'up:60%') : fzf#vim#with_preview({'options': '--bind ctrl-space:select-all'}, 'right:50%:hidden', '?'),
+    \   <bang>0 ? fzf#vim#with_preview({'options': '--bind ctrl-space:select-all --preview-window noborder'}, 'up:60%') : fzf#vim#with_preview({'options': '--bind ctrl-space:select-all'}, 'right:50%:hidden', '?'),
     \   <bang>0)
 
   autocmd! FileType fzf
@@ -262,10 +279,6 @@ set mouse= " Disable the use of the mouse
     \ call fzf#vim#buffers({'window': 'enew'}, <bang>0)
 
   autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
-
-  " polyglot
-  " use custom syntax for TS
-  let g:polyglot_disabled = ['typescript']
 
   " Tsuquyomi
   let g:tsuquyomi_disable_default_mappings = 1
@@ -317,5 +330,28 @@ augroup configgroup
   " autocmd FileType typescript autocmd CursorHold <buffer>
   autocmd FileType typescript nmap <buffer> <leader>i :echom tsuquyomi#hint()<cr>
   autocmd FileType typescript nmap <buffer> <leader>I :TsuImport<cr>
+  autocmd FileType typescript nmap <buffer> <leader>D :TsuDefinition<cr>
 augroup END
+
+
+function! s:list_buffers()
+  redir => list
+  silent ls
+  redir END
+  return split(list, "\n")
+endfunction
+
+function! s:delete_buffers(lines)
+  execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
+endfunction
+
+command! BD call fzf#run(fzf#wrap({
+  \ 'source': s:list_buffers(),
+  \ 'sink*': { lines -> s:delete_buffers(lines) },
+  \ 'options': '--multi --bind ctrl-space:select-all --preview-window noborder'
+\ }))
+
+let @q = "
+			\GkO\<Esc>i  - name: NEWRELIC_ENABLED\<cr>"
+
 
