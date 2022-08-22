@@ -1,3 +1,4 @@
+alias vim="nvim"
 alias e="vim"
 
 alias ..='cd ..'
