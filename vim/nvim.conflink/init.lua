@@ -148,7 +148,7 @@ vim.api.nvim_set_keymap('n', '<leader>A', ':FzfLua grep_cword<cr>', { silent = t
 -- treesitter
 
 require('nvim-treesitter.configs').setup({
-  ensure_installed = { 'lua', 'javascript', 'typescript', 'html' },
+  ensure_installed = { 'lua', 'javascript', 'typescript', 'html', 'graphql'},
   highlight = {
     enable = true
   },
