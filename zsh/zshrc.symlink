@@ -1,11 +1,8 @@
 source /etc/profile
 # shortcut to this dotfiles path is $ZSH
-export ZSH=$HOME/.dotfiles
+export ZSH=$HOME/src/github.com/rastasheep/dotfiles
 
 export TERM=screen-256color
-
-# your project folder that we can `c [tab]` to
-export PROJECTS=~/code
 
 # use .localrc for SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.
@@ -16,7 +13,7 @@ fi
 
 # all of our zsh files
 typeset -U config_files
-config_files=($HOME/.dotfiles/**/*.zsh)
+config_files=($ZSH/**/*.zsh)
 
 # load the path files
 for file in ${(M)config_files:#*/path.zsh}

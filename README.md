@@ -26,13 +26,13 @@ sudo apt-get install git make
 ```
 
 ```bash
-git clone https://github.com/rastasheep/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
+git clone https://github.com/rastasheep/dotfiles.git ~/src/github.com/rastasheep/dotfiles
+cd ~/src/github.com/rastasheep/dotfiles
 make install
 ```
 
-This will symlink the appropriate files in `.dotfiles` to your home directory.
-Everything is configured and tweaked within `~/.dotfiles` directory.
+This will symlink the appropriate files in `dotfiles` to your home directory.
+Everything is configured and tweaked within `dotfiles` directory.
 
 The main file you'll want to change right off the bat is `zsh/zshrc.symlink`,
 which sets up a few paths that'll be different on your particular machine.
@@ -48,7 +48,7 @@ If you want to run installation process from automated script like vagrant shell
 provisioner, without interactive shell you can pass arguments like:
 
 ```bash
-git_authorname=rastasheep git_authoremail=rastasheep3@gmail.com existing_files=O make -C ~/.dotfiles install
+git_authorname=rastasheep git_authoremail=rastasheep3@gmail.com existing_files=O make -C ~/src/github.com/rastasheep/dotfiles install
 ```
 
 Available options are optional:
