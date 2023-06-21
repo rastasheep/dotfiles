@@ -1,14 +1,1 @@
-atom.symlink/.apm
-atom.symlink/.node-gyp
-atom.symlink/.storage
-atom.symlink/blob-store
-atom.symlink/compile-cache/
-atom.symlink/packages
-atom.symlink/storage
-atom.symlink/themes
-
-git/gitconfig.symlink
-
-vim/nvim.conflink/autoload
-vim/nvim.conflink/plugged
-vim/nvim.conflink/.netrwhist
+result
