@@ -21,4 +21,6 @@ $ apply-$(hostname)
 Your actual aliases are listed below:
     apply-mbp = "nix run github:ublue-os/fleek -- apply -l src/github.com/rastasheep/dotfiles";
 
+    dc = "docker compose";
+
     fleeks = "cd ~/src/github.com/rastasheep/dotfiles";

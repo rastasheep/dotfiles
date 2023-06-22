@@ -3,6 +3,8 @@
    home.shellAliases = {
     "apply-mbp" = "nix run github:ublue-os/fleek -- apply -l src/github.com/rastasheep/dotfiles";
     
+    "dc" = "docker compose";
+    
     "fleeks" = "cd ~/src/github.com/rastasheep/dotfiles";
     };
 }
