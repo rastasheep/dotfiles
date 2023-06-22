@@ -3,6 +3,14 @@ aliases:
     apply-mbp: nix run github:ublue-os/fleek -- apply -l src/github.com/rastasheep/dotfiles
     dc: docker compose
     ack: ag
+    vim: nvim
+    e: vim
+    ..: cd ..
+    ll: ls -lah
+    f: fg
+    j: jobs
+    df: df -hT
+    history: fc -El 1
 bling: none
 blocklist: []
 byo_git: false
@@ -18,6 +26,7 @@ name: Fleek Configuration
 overlays: {}
 packages:
     - tmux
+    - zsh
     - silver-searcher
     - fzf
 paths:

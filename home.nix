@@ -20,6 +20,7 @@
   home.packages = [
     # user selected packages
     pkgs.tmux
+    pkgs.zsh
     pkgs.silver-searcher
     pkgs.fzf
     # Fleek Bling

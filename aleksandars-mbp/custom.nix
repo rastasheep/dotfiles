@@ -109,4 +109,118 @@
 
          '';
     };
+    programs.zsh = {
+	defaultKeymap = "emacs";
+        enableAutosuggestions = true;
+        history = {
+            share = true;
+            extended = true;
+        };
+	sessionVariables = {
+            EDITOR = "nvim";
+            LANG = "en_US.UTF-8";
+        };
+        initExtra = ''
+            # matches case insensitive for lowercase
+            zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+            
+            # pasting with tabs doesn't perform completion
+            zstyle ':completion:*' insert-tab pending
+
+            setopt NO_BG_NICE # don't nice background tasks
+            setopt NO_HUP
+            setopt NO_LIST_BEEP
+            setopt LOCAL_OPTIONS # allow functions to have local options
+            setopt LOCAL_TRAPS # allow functions to have local traps
+            setopt HIST_VERIFY
+            setopt PROMPT_SUBST
+            setopt CORRECT
+            setopt COMPLETE_IN_WORD
+            setopt IGNORE_EOF
+            setopt AUTO_CD
+            
+            setopt APPEND_HISTORY # adds history
+            setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
+            setopt HIST_IGNORE_ALL_DUPS  # don't record dupes in history
+            setopt HIST_REDUCE_BLANKS
+            
+            # don't expand aliases _before_ completion has finished
+            #   like: git comm-[tab]
+            setopt complete_aliases
+            
+            unsetopt correct_all # Stop correcting me!
+
+            # foreground the last backgrounded job using ctrl+z
+            # http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/.
+            #
+            
+            fancy-ctrl-z () {
+              if [[ $#BUFFER -eq 0 ]]; then
+                BUFFER="fg"
+                zle accept-line
+              else
+                zle push-input
+                zle clear-screen
+              fi
+            }
+            
+            zle -N fancy-ctrl-z
+            bindkey '^Z' fancy-ctrl-z
+
+            # Prompt
+            autoload colors && colors
+            
+            # get the name of the branch we are on
+            function git_prompt_info() {
+              local ZSH_THEME_GIT_PROMPT_PREFIX="git:(%{$fg[red]%}"
+              local ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
+
+              if [[ "$(command git config --get oh-my-zsh.hide-status 2>/dev/null)" != "1" ]]; then
+                ref=$(command git symbolic-ref HEAD 2> /dev/null) || \
+                ref=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
+                echo "$ZSH_THEME_GIT_PROMPT_PREFIX''${ref#refs/heads/}$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_SUFFIX"
+              fi
+            }
+            
+            
+            # Checks if working tree is dirty
+            parse_git_dirty() {
+              local STATUS
+              local FLAGS
+              FLAGS=('--porcelain')
+              if [[ "$(command git config --get oh-my-zsh.hide-dirty)" != "1" ]]; then
+                if [[ $POST_1_7_2_GIT -gt 0 ]]; then
+                  FLAGS+='--ignore-submodules=dirty'
+                fi
+                if [[ "$DISABLE_UNTRACKED_FILES_DIRTY" == "true" ]]; then
+                  FLAGS+='--untracked-files=no'
+                fi
+                STATUS=$(command git status ''${FLAGS} 2> /dev/null | tail -n1)
+              fi
+              if [[ -n $STATUS ]]; then
+	        echo "%{$fg[blue]%}) %{$fg[yellow]%}✗%{$reset_color%}"
+              else
+                echo "%{$fg[blue]%})"
+              fi
+            }
+            
+            suspended_jobs() {
+              local sj
+              sj=$(jobs 2>/dev/null | tail -n 1)
+              if [[ $sj == "" ]]; then
+                echo ""
+              else
+                echo "%{$fg[red]%}✱%{$reset_color%}"
+              fi
+            }
+            
+            local ret_status="%(?:%{$fg[green]%}➜:%{$fg[red]%}➜%s)"
+            PROMPT='`suspended_jobs` ''${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
+            
+         '';
+    };
+    programs.fzf = {
+        enable = true;
+        enableZshIntegration = true;
+    };
 }
