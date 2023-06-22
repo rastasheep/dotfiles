@@ -15,6 +15,7 @@ min_version: 0.8.4
 name: Fleek Configuration
 overlays: {}
 packages:
+    - tmux
     - fzf
 paths:
     - $HOME/bin

@@ -19,6 +19,7 @@
   # programs are installed and configuration applied to dotfiles
   home.packages = [
     # user selected packages
+    pkgs.tmux
     pkgs.fzf
     # Fleek Bling
     pkgs.git
