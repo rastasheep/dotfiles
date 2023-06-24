@@ -1,5 +1,3 @@
--- deps: git fzf ag tar curl npm (typescript typescript-language-server)
-
 -- leader
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -102,35 +100,6 @@ vim.api.nvim_set_keymap('v', '<leader>de', [[c<c-r>=system('base64 --decode', @"
 -- plugins
 --
 
-local packerPath = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
-
-if vim.fn.empty(vim.fn.glob(packerPath)) > 0 then
-  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. packerPath)
-end
-
-local packerGroup = vim.api.nvim_create_augroup('Packer', { clear = true })
-vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | PackerCompile', group = packerGroup, pattern = 'init.lua' })
-
-require('packer').startup(function(use)
-  use('wbthomason/packer.nvim')
-
-  use('gpanders/editorconfig.nvim')
-  use('ibhagwan/fzf-lua')
-  use({
-    'nvim-treesitter/nvim-treesitter',
-    run = function() require('nvim-treesitter.install').update({ with_sync = true }) end
-  })
-  use('lewis6991/gitsigns.nvim') -- git gutter signs
-  use('neovim/nvim-lspconfig') -- enable LSP
-
-  -- cmp plugins
-  use('hrsh7th/nvim-cmp') -- The completion plugin
-  use('hrsh7th/vim-vsnip') -- snippets, used by cmp to expand lsp results
-  use('hrsh7th/cmp-buffer') -- buffer completions
-  use('hrsh7th/cmp-path') -- path completions
-  use('hrsh7th/cmp-nvim-lsp') -- lsp completions
-end)
-
 -- fzf
 -- fzf tip: shift+tab selects multiple items
 
@@ -148,7 +117,6 @@ vim.api.nvim_set_keymap('n', '<leader>A', ':FzfLua grep_cword<cr>', { silent = t
 -- treesitter
 
 require('nvim-treesitter.configs').setup({
-  ensure_installed = { 'lua', 'javascript', 'typescript', 'html', 'graphql'},
   highlight = {
     enable = true
   },
@@ -192,7 +160,7 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { silent = true, nor
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { silent = true, noremap = true })
 
 require('lspconfig')['tsserver'].setup({
-  capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
   on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
      vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')

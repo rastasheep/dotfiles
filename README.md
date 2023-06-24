@@ -40,5 +40,3 @@ Your actual aliases are listed below:
     j = "jobs";
 
     ll = "ls -lah";
-
-    vim = "nvim";

@@ -22,7 +22,5 @@
     "j" = "jobs";
     
     "ll" = "ls -lah";
-    
-    "vim" = "nvim";
     };
 }
