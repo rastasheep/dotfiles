@@ -19,10 +19,15 @@
   # programs are installed and configuration applied to dotfiles
   home.packages = [
     # user selected packages
-    pkgs.tmux
-    pkgs.zsh
     pkgs.silver-searcher
-    pkgs.fzf
+    pkgs.coreutils
+    pkgs.openssl
+    pkgs.tree
+    pkgs.docker
+    pkgs.slack
+    pkgs.wget
+    pkgs.zoom-us
+    pkgs.spotify
     # Fleek Bling
     pkgs.git
     (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })

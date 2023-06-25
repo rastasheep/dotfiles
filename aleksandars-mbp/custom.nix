@@ -191,6 +191,7 @@
          '';
     };
     programs.zsh = {
+        enable = true;
         defaultKeymap = "emacs";
         enableAutosuggestions = true;
         history = {
@@ -328,5 +329,8 @@
             cmp-path
             cmp-nvim-lsp
         ];
+    };
+    programs.vscode = {
+      enable = true;
     };
 }

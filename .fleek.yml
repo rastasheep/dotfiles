@@ -25,10 +25,23 @@ min_version: 0.8.4
 name: Fleek Configuration
 overlays: {}
 packages:
-    - tmux
-    - zsh
     - silver-searcher
-    - fzf
+    - coreutils
+    - openssl
+    - tree
+    - docker
+    - slack
+    - wget
+    - zoom-us
+    - spotify
+    # unsupported apps
+    # - _1password-gui-beta
+    # - blender
+    # - google-backup-and-sync
+    # - hammerspoon
+    # - krita
+    # - prusa-slicer
+    # - robo3t
 paths:
     - $HOME/bin
     - $HOME/.local/bin
