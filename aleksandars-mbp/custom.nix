@@ -28,6 +28,10 @@
             count = "!git shortlog -sne";
             pr = "!f() { git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1; }; f";
             up = "!f() { git pull --rebase --prune && git log --pretty=format:\"%Cred%ae %Creset- %C(yellow)%s %Creset(%ar)\" HEAD@{1}.. }; f";
+            credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f";
+            unpushed = "!f() { git diff origin/\"$(git rev-parse --abbrev-ref HEAD)\"..HEAD; }; f";
+            delete-local-merged = "!f() { git branch -d $(git branch --merged | grep -v '^*' | grep -v 'master' | tr -d '\n'); }; f";
+            nuke = "!f() { git branch -D $1 && git push origin :$1; }; f";
         };
     };
 
