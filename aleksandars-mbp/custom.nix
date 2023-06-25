@@ -8,6 +8,81 @@
         })
     ];
 
+    targets.darwin.defaults = {
+        NSGlobalDomain = {
+            # Set highlight color to green
+            AppleAccentColor = 3;
+            AppleHighlightColor = "0.752941 0.964706 0.678431 Green";
+            # Finder: show all filename extensions
+            AppleShowAllExtensions = true;
+            # Set a really short delay until key repeat.
+            InitialKeyRepeat = 25;
+            # Set a really fast key repeat.
+            KeyRepeat = 2;
+            KeyRepeatDelay = "0.5";
+            KeyRepeatEnabled = 1;
+            KeyRepeatInterval = "0.083333333";
+            # Expand save panel by default
+            NSNavPanelExpandedStateForSaveMode = true;
+            NSNavPanelExpandedStateForSaveMode2 = true;
+            # Menu bar: use dark menu bar and Dock
+            AppleAquaColorVariant = 1;
+            AppleInterfaceStyle = "Dark";
+        };
+        "com.apple.desktopservices" = {
+            # Don't write .DS_Store files outside macOS
+            DSDontWriteNetworkStores = true;
+            DSDontWriteUSBStores = true;
+        };
+        "com.apple.menuextra.clock" = {
+            # Set clock format to 24 hour
+            Show24Hour = true;
+        };
+        "com.apple.dock" = {
+            # Don't show recent applications in Dock
+            show-recents = false;
+            # Set the Dock orientation to left
+            orientation = "left";
+            # Set the icon size of Dock items to 28 pixels
+            tilesize = 28;
+            # Automatically hide and show the Dock
+            autohide = true;
+            # Minimize windows into their application’s icon
+            minimize-to-application = true;
+            # Show Dock instantly on hover
+            autohide-delay = 0;
+            # Empty the dock
+            persistent-apps = [];
+        };
+        "com.apple.finder" = {
+            # Always open everything in Finder's column view. This is important.
+            FXPreferredViewStyle = "clmv";
+            # Disable the warning when changing a file extension
+            FXEnableExtensionChangeWarning = false;
+            # Set the Finder prefs for not showing a volumes on the Desktop.
+            ShowExternalHardDrivesOnDesktop = false;
+            ShowRemovableMediaOnDesktop = false;
+            # Automatically open a new Finder window when a volume is mounted
+            OpenWindowForNewRemovableDisk = true;
+            # Empty Trash securely by default
+            EmptyTrashSecurely = true;
+            # Set $HOME as the default location for new Finder windows
+            # For other paths, use `PfLo` and `file:///full/path/here/`
+            NewWindowTarget = "PfDe";
+            NewWindowTargetPath = ''file://''${HOME}'';
+        };
+        "com.apple.TimeMachine" = {
+            DoNotOfferNewDisksForBackup = true;
+        };
+        "com.apple.mouse" = {
+            # Trackpad: enable tap to click
+            tapBehavior = true;
+        };
+        "com.apple.driver.AppleBluetoothMultitouch.trackpad" = {
+            Clicking = true;
+        };
+    };
+
     programs.git = {
         enable = true;
         ignores = ["*~" "*.swp" ".DS_Store"];
