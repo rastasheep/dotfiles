@@ -35,6 +35,8 @@ Your actual aliases are listed below:
 
     fleeks = "cd ~/src/github.com/rastasheep/dotfiles";
 
+    g = "git";
+
     history = "fc -El 1";
 
     j = "jobs";

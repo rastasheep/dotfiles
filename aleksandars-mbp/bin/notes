@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+#
 # Simple note taking from the command line
 #
 # credit: https://dev.to/ricardomol/note-taking-from-the-command-line-156
@@ -9,10 +11,8 @@
 #  $ notes
 #  # my_command -which -I -want -to remember
 
-notes() {
-  if [ ! -z "$1" ]; then
-    echo "$(date +"%Y-%m-%d %H:%M") $@" >> "$HOME/notes.md"
-  else
-    cat "$HOME/notes.md"
-  fi
-}
+if [ ! -z "$1" ]; then
+  echo "$(date +"%Y-%m-%d %H:%M") $@" >> "$HOME/notes.md"
+else
+  cat "$HOME/notes.md"
+fi

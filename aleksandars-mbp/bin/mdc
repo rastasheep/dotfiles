@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+#
 # Create and cd into the dir
 #
 # credit: http://dotfiles.org/~_why/.zshrc
@@ -9,6 +11,4 @@
 #   $ pwd
 #   # ~/my_awesome_dir
 
-mdc() {
-  mkdir -p "$1" && cd "$1"
-}
+mkdir -p "$1" && cd "$1"

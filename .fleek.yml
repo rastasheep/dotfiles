@@ -4,6 +4,7 @@ aliases:
     dc: docker compose
     ack: ag
     e: vim
+    g: git
     ..: cd ..
     ll: ls -lah
     f: fg
