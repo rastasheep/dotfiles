@@ -1,6 +1,4 @@
 aliases:
-    fleeks: cd ~/src/github.com/rastasheep/dotfiles
-    apply-mbp: nix run github:ublue-os/fleek -- apply -l src/github.com/rastasheep/dotfiles
     dc: docker compose
     ack: ag
     e: vim
@@ -35,6 +33,7 @@ packages:
     - zoom-us
     - spotify
     - raycast
+    - openvpn
     # unsupported apps
     # - arc
     # - _1password-gui-beta

@@ -8,6 +8,11 @@
         })
     ];
 
+    home.shellAliases = {
+        "apply-dot" = "nix run github:ublue-os/fleek -- apply -l src/github.com/rastasheep/dotfiles";
+        "dev-vpn" = "sudo openvpn --config ~/Google\\ Drive/My\\ Drive/fhc-dev-vpn.ovpn";
+    };
+
     targets.darwin.defaults = {
         NSGlobalDomain = {
             # Set highlight color to green
