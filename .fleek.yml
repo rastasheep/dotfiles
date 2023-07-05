@@ -34,11 +34,13 @@ packages:
     - wget
     - zoom-us
     - spotify
+    - raycast
     # unsupported apps
+    # - arc
     # - _1password-gui-beta
+    # - backblaze
     # - blender
-    # - google-backup-and-sync
-    # - hammerspoon
+    # - google-drive
     # - krita
     # - prusa-slicer
     # - robo3t

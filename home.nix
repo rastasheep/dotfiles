@@ -28,6 +28,7 @@
     pkgs.wget
     pkgs.zoom-us
     pkgs.spotify
+    pkgs.raycast
     # Fleek Bling
     pkgs.git
     (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
