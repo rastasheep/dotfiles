@@ -1,18 +1,18 @@
 aliases:
-    dc: docker compose
-    ack: ag
-    e: vim
-    g: git
     ..: cd ..
-    ll: ls -lah
-    f: fg
-    j: jobs
+    ack: ag
+    dc: docker compose
     df: df -hT
+    e: vim
+    f: fg
+    g: git
     history: fc -El 1
+    j: jobs
+    ll: ls -lah
 bling: none
 blocklist: []
 byo_git: false
-ejected: false
+ejected: true
 flakedir: src/github.com/rastasheep/dotfiles
 git:
     autocommit: false

@@ -6,10 +6,11 @@
             paths = [ ./bin ];
             extraPrefix = "/bin";
         })
+        pkgs.blender
     ];
 
     home.shellAliases = {
-        "apply-dot" = "nix run github:ublue-os/fleek -- apply -l src/github.com/rastasheep/dotfiles";
+        "apply-dot" = "cd ~/src/github.com/rastasheep/dotfiles && nix run --impure home-manager/master -- -b bak switch --flake .#rastasheep@aleksandars-mbp";
         "dev-vpn" = "sudo openvpn --config ~/Google\\ Drive/My\\ Drive/fhc-dev-vpn.ovpn";
     };
 

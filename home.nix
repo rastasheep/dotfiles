@@ -13,8 +13,6 @@
   };
 
   
-  # managed by fleek, modify ~/.fleek.yml to change installed packages
-  
   # packages are just installed (no configuration applied)
   # programs are installed and configuration applied to dotfiles
   home.packages = [

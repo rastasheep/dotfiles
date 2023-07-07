@@ -14,21 +14,19 @@
     fleek.url = "github:ublue-os/fleek";
 
     # Overlays
-    
-
   };
 
   outputs = { self, nixpkgs, home-manager, fleek, ... }@inputs: {
 
     # Available through 'home-manager --flake .#your-username@your-hostname'
-    
+
     homeConfigurations = {
-    
+
       "rastasheep@aleksandars-mbp" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.aarch64-darwin; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = { inherit inputs; }; # Pass flake inputs to our config
         modules = [
-          ./home.nix 
+          ./home.nix
           ./path.nix
           ./shell.nix
           ./user.nix
@@ -39,12 +37,16 @@
           ./aleksandars-mbp/custom.nix
           # self-manage fleek
           ({
-           nixpkgs.overlays = [];
+           nixpkgs.overlays = [
+               (final: prev: {
+                   blender = final.callPackage ./pkgs/blender.nix {};
+               })
+           ];
           })
 
         ];
       };
-      
+
     };
   };
 }
