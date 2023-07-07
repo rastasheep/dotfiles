@@ -1,22 +1,13 @@
 { config, pkgs, misc, ... }: {
-  # DO NOT EDIT: This file is managed by fleek. Manual changes will be overwritten.
   nixpkgs = {
-    # Configure your nixpkgs instance
     config = {
-      # Disable if you don't want unfree packages
-      
       allowUnfree = true;
       # Workaround for https://github.com/nix-community/home-manager/issues/2942
       allowUnfreePredicate = (_: true);
-      
     };
   };
 
-  
-  # packages are just installed (no configuration applied)
-  # programs are installed and configuration applied to dotfiles
   home.packages = [
-    # user selected packages
     pkgs.silver-searcher
     pkgs.coreutils
     pkgs.openssl
@@ -28,12 +19,32 @@
     pkgs.spotify
     pkgs.raycast
     pkgs.openvpn
-    # Fleek Bling
     pkgs.git
-    (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
-  fonts.fontconfig.enable = true; 
-  home.stateVersion =
-    "22.11"; # To figure this out (in-case it changes) you can comment out the line and see what version it expected.
+  home.shellAliases = {
+    ".." = "cd ..";
+    "ack" = "ag";
+    "dc" = "docker compose";
+    "df" = "df -hT";
+    "e" = "vim";
+    "f" = "fg";
+    "g" = "git";
+    "history" = "fc -El 1";
+    "j" = "jobs";
+    "ll" = "ls -lah";
+  };
+  home.sessionPath = [
+    "$HOME/bin"
+    "$HOME/.local/bin"
+  ];
+  fonts.fontconfig.enable = true;
+  home.stateVersion = "22.11"; # To figure this out (in-case it changes) you can comment out the line and see what version it expected.
+
   programs.home-manager.enable = true;
+
+  programs.dircolors.enable = true;
+
+  programs.zsh.profileExtra = "[ -r ~/.nix-profile/etc/profile.d/nix.sh ] && source  ~/.nix-profile/etc/profile.d/nix.sh";
+  programs.zsh.enableCompletion = true;
+  programs.zsh.enable = true;
 }
