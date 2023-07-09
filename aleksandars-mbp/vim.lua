@@ -6,6 +6,7 @@ vim.g.maplocalleader = ' '
 -- settings
 --
 
+vim.o.mouse = false
 vim.o.undofile = false
 vim.o.undolevels = 1000
 vim.o.history = 1000

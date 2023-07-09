@@ -9,6 +9,7 @@
       extraPrefix = "/bin";
     })
     pkgs.blender
+    pkgs.arc
   ];
 
   home.shellAliases = {

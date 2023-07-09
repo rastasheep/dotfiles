@@ -21,6 +21,7 @@
           ({
            nixpkgs.overlays = [
                (final: prev: {
+                   arc = final.callPackage ./pkgs/arc.nix {};
                    blender = final.callPackage ./pkgs/blender.nix {};
                })
            ];
