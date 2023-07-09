@@ -23,6 +23,7 @@
                (final: prev: {
                    arc = final.callPackage ./pkgs/arc.nix {};
                    blender = final.callPackage ./pkgs/blender.nix {};
+                   kicad = final.callPackage ./pkgs/kicad.nix {};
                })
            ];
           })

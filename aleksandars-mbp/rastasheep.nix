@@ -10,6 +10,7 @@
     })
     pkgs.blender
     pkgs.arc
+    pkgs.kicad
   ];
 
   home.shellAliases = {
