@@ -17,3 +17,12 @@ $ dev dotfiles
 # To apply the configuration
 $ apply-dot
 ```
+
+## TODO
+
+Missing apps:
+- 1password
+- backblaze
+- google-drive
+- prusa-slicer
+- robo3t
