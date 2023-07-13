@@ -34,6 +34,8 @@
       KeyRepeatDelay = "0.5";
       KeyRepeatEnabled = 1;
       KeyRepeatInterval = "0.083333333";
+      AppleEnableMouseSwipeNavigateWithScrolls = 1;
+      com.apple.mouse.scaling = 2;
       # Expand save panel by default
       NSNavPanelExpandedStateForSaveMode = true;
       NSNavPanelExpandedStateForSaveMode2 = true;
@@ -89,6 +91,11 @@
     "com.apple.mouse" = {
       # Trackpad: enable tap to click
       tapBehavior = true;
+    };
+    "com.apple.AppleMultitouchMouse" = {
+      MouseButtonMode = "TwoButton";
+      MouseOneFingerDoubleTapGesture = 1;
+      MouseTwoFingerHorizSwipeGesture = 1;
     };
     "com.apple.driver.AppleBluetoothMultitouch.trackpad" = {
       Clicking = true;
