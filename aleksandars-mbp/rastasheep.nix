@@ -21,6 +21,7 @@
 
   targets.darwin.defaults = {
     NSGlobalDomain = {
+      _HIHideMenuBar = 1;
       # Set highlight color to green
       AppleAccentColor = 3;
       AppleHighlightColor = "0.752941 0.964706 0.678431 Green";
@@ -321,6 +322,11 @@
 
       local ret_status="%(?:%{$fg[green]%}➜:%{$fg[red]%}➜%s)"
       PROMPT='`suspended_jobs` ''${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
+
+      # Nix
+      if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+        source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+      fi
     '';
   };
 
