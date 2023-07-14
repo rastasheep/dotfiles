@@ -233,6 +233,11 @@
     sessionVariables = {
       LANG = "en_US.UTF-8";
     };
+    initExtraFirst = ''
+      if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+        . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+      fi
+    '';
     initExtra = ''
       # matches case insensitive for lowercase
       zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
@@ -329,11 +334,6 @@
 
       local ret_status="%(?:%{$fg[green]%}➜:%{$fg[red]%}➜%s)"
       PROMPT='`suspended_jobs` ''${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
-
-      # Nix
-      if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-        source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-      fi
     '';
   };
 
