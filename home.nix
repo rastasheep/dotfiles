@@ -20,6 +20,7 @@
     pkgs.raycast
     pkgs.openvpn
     pkgs.git
+    pkgs.direnv
   ];
   home.shellAliases = {
     ".." = "cd ..";
