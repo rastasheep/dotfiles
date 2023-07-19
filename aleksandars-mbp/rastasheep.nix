@@ -17,6 +17,7 @@
     "apply-dot" = "cd ~/src/github.com/rastasheep/dotfiles && nix run --impure home-manager/master -- -b bak switch --flake .#rastasheep@aleksandars-mbp";
     "dev-vpn" = "sudo openvpn --config ~/Google\\ Drive/My\\ Drive/fhc-dev-vpn.ovpn";
     "dev" = "source dev";
+    "git" = "function _git { [ $# -eq 0 ] && git st || git $* }; compdef _git=git; _git";
   };
 
   targets.darwin.defaults = {
