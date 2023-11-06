@@ -160,6 +160,11 @@ vim.cmd('highlight clear SignColumn') -- remove sign background
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { silent = true, noremap = true })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { silent = true, noremap = true })
 
+require('lspconfig')['elixirls'].setup({
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+  cmd = { "elixir-ls" }
+})
+
 require('lspconfig')['tsserver'].setup({
   capabilities = require('cmp_nvim_lsp').default_capabilities(),
   on_attach = function(client, bufnr)

@@ -363,6 +363,8 @@
         tree-sitter-typescript
         tree-sitter-html
         tree-sitter-nix
+        tree-sitter-elixir
+        tree-sitter-heex
       ]))
       nvim-lspconfig
       nvim-cmp
