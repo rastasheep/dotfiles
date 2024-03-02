@@ -6,12 +6,12 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "blender";
-  version = "3.6.0";
+  version = "4.0.2";
   platform = "macos-arm64";
 
   src = fetchurl {
-    url = "https://mirrors.ocf.berkeley.edu/blender/release/Blender3.6/blender-${version}-${platform}.dmg";
-    sha256 = "ab4e1793343b3d22d7481d30d7f2817b7eb19c9dbdc505db3765336545746e63";
+    url = "https://mirrors.ocf.berkeley.edu/blender/release/Blender4.0/blender-${version}-${platform}.dmg";
+    sha256 = "3debdaeb04fbaa13480c66889bef0c009aa563bb5fca42cdf4484f91195671d2";
   };
 
   dontPatch = true;
