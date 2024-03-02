@@ -11,6 +11,7 @@
     pkgs.blender
     pkgs.arc
     pkgs.kicad
+    pkgs.logseq
   ];
 
   home.shellAliases = {
