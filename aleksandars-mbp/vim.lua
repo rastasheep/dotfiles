@@ -6,7 +6,7 @@ vim.g.maplocalleader = ' '
 -- settings
 --
 
-vim.o.mouse = false
+vim.o.mouse = ''
 vim.o.undofile = false
 vim.o.undolevels = 1000
 vim.o.history = 1000
@@ -36,6 +36,7 @@ vim.o.errorbells = false --  No sound
 vim.o.timeoutlen = 500 --  Wait less time for mapped sequences
 
 vim.g.background = 'dark'
+vim.cmd('colorscheme flexoki-dark') -- set colorscheme
 vim.cmd('highlight clear VertSplit') -- remove vsplit divider background
 
 vim.o.list = true

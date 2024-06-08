@@ -112,6 +112,7 @@
           feature.manyFiles = true;
           init.defaultBranch = "main";
           gpg.format = "ssh";
+          push.autoSetupRemote = true;
       };
 
       signing = {
@@ -205,11 +206,11 @@
       #### Colours
 
       # default statusbar colors
-      set -g status-bg black
+      set -g status-bg default
       set -g status-fg yellow
 
       # active window title colors
-      setw -g window-status-current-style bg=black,fg=brightred
+      setw -g window-status-current-style bg=default,fg=brightred
 
       # pane border
       setw -g pane-border-style bg=black
@@ -224,10 +225,13 @@
       set-option default-terminal "screen-256color"
     '';
   };
+
   programs.zsh = {
     enable = true;
     defaultKeymap = "emacs";
-    enableAutosuggestions = true;
+    autosuggestion = {
+      enable = true;
+    };
     history = {
       share = true;
       extended = true;
@@ -374,6 +378,14 @@
       cmp-buffer
       cmp-path
       cmp-nvim-lsp
+      (pkgs.vimUtils.buildVimPlugin {
+        pname = "flexoki-neovim";
+        version = "2024-02-07";
+        src = pkgs.fetchurl {
+          url = "https://github.com/kepano/flexoki-neovim/archive/975654bce67514114db89373539621cff42befb5.tar.gz";
+          sha256 = "1y52g0jhp4d1iilb96xm93yq13a7iyr631cxz695jxp9y84j2m9w";
+        };
+      })
     ];
   };
 
