@@ -169,10 +169,6 @@
       # scroll stuff
       set -g terminal-overrides 'xterm*:smcup@:rmcup@'
 
-
-      # Highlight active window
-      set -g window-status-current-style bg=green
-
       # open new window in same dir
       bind c new-window -c "#{pane_current_path}"
 
@@ -183,7 +179,6 @@
       # p for paste
       unbind p
       bind p paste-buffer
-
 
       # enable wm window titles
       set -g set-titles on
@@ -206,23 +201,22 @@
       #### Colours
 
       # default statusbar colors
-      set -g status-bg default
-      set -g status-fg yellow
+      set -g status-style bg=default,fg=white
 
-      # active window title colors
-      setw -g window-status-current-style bg=default,fg=brightred
+      # highlight active window
+      set -g window-status-current-style fg=red,bg=default
 
       # pane border
-      setw -g pane-border-style bg=black
-      setw -g pane-active-border-style fg=yellow
+      set -g pane-border-style fg=terminal,bg=default
+      set -g pane-active-border-style fg=yellow,bg=default
 
       # message text
-      setw -g message-style fg=brightred,bg=black
+      set -g message-style fg=brightred,bg=black
 
       # pane number display
-      set-option -g display-panes-active-colour blue #blue
-      set-option -g display-panes-colour brightred #orange
-      set-option default-terminal "screen-256color"
+      set -g display-panes-active-colour blue #blue
+      set -g display-panes-colour brightred #orange
+      set default-terminal "screen-256color"
     '';
   };
 
