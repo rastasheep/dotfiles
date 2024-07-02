@@ -21,6 +21,7 @@
     pkgs.openvpn
     pkgs.git
     pkgs.direnv
+    pkgs.ollama
   ];
   home.shellAliases = {
     ".." = "cd ..";
