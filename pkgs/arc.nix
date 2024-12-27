@@ -6,11 +6,11 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "arc";
-  version = "1.32.0-46908";
+  version = "1.70.0-56062";
 
   src = fetchurl {
     url = "https://releases.arc.net/release/Arc-${version}.dmg";
-    sha256 = "sha256-ox8saokFsmzYrM5UcVRaOF1MJGv/J0HUE/svUpAJ18I=";
+    sha256 = "sha256-x+QHlBsZGkmJm05VeZx43XFxpRJR1crLjEqNIQJwitQ=";
   };
 
   dontPatch = true;

@@ -2,6 +2,7 @@
   nixpkgs = {
     config = {
       allowUnfree = true;
+      allowBroken = true;
       # Workaround for https://github.com/nix-community/home-manager/issues/2942
       allowUnfreePredicate = (_: true);
     };
@@ -22,7 +23,7 @@
     pkgs.git
     pkgs.direnv
     pkgs.ollama
-  ];
+    ];
   home.shellAliases = {
     ".." = "cd ..";
     "ack" = "ag";
