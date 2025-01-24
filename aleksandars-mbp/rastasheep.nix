@@ -160,10 +160,12 @@
     historyLimit = 10000;
     newSession = true;
     shortcut = "a";
-    terminal = "screen-256color";
+    terminal = "xterm-256color";
+    mouse = true;
     sensibleOnTop = false;
 
     extraConfig = ''
+      set -ga terminal-overrides ",*256col*:Tc"
       bind-key C-a last-window
 
       # scroll stuff
@@ -216,7 +218,6 @@
       # pane number display
       set -g display-panes-active-colour blue #blue
       set -g display-panes-colour brightred #orange
-      set default-terminal "screen-256color"
     '';
   };
 
