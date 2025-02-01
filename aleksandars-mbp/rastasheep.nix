@@ -369,7 +369,6 @@
       nvim-lspconfig
       nvim-cmp
       vim-vsnip
-      vim-vsnip
       cmp-buffer
       cmp-path
       cmp-nvim-lsp

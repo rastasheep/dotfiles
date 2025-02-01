@@ -113,7 +113,7 @@ require'fzf-lua'.setup({
 })
 vim.api.nvim_set_keymap('n', '<leader>t', ':FzfLua git_files<cr>', { silent = true, noremap = true }) -- find files via fzf
 vim.api.nvim_set_keymap('n', '<leader>l', ':FzfLua buffers<cr>', { silent = true, noremap = true }) -- list buffers via fzf
-vim.api.nvim_set_keymap('n', '<leader>a', ':FzfLua live_grep continue_last_search=true<cr>', { silent = true, noremap = true }) -- search for a pattern
+vim.api.nvim_set_keymap('n', '<leader>a', ':FzfLua live_grep resume=true<cr>', { silent = true, noremap = true }) -- search for a pattern
 vim.api.nvim_set_keymap('v', '<leader>a', '<cmd>FzfLua grep_visual<cr>', { silent = true, noremap = true }) -- search for a visual selection
 vim.api.nvim_set_keymap('n', '<leader>A', ':FzfLua grep_cword<cr>', { silent = true, noremap = true }) -- search word under cursor
 
@@ -129,13 +129,8 @@ require('nvim-treesitter.configs').setup({
 })
 
 vim.opt.foldlevel = 20 -- do not fold on file open
-vim.api.nvim_create_autocmd({ 'BufEnter','BufAdd','BufNew','BufNewFile','BufWinEnter' }, {
-  group = vim.api.nvim_create_augroup('TS_FOLD_WORKAROUND', {}),
-  callback = function()
-    vim.opt.foldmethod = 'expr'
-    vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-  end
-})
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
 -- gitsigns
 
@@ -167,7 +162,7 @@ require('lspconfig')['elixirls'].setup({
   cmd = { "elixir-ls" }
 })
 
-require('lspconfig')['tsserver'].setup({
+require('lspconfig')['ts_ls'].setup({
   capabilities = require('cmp_nvim_lsp').default_capabilities(),
   on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
