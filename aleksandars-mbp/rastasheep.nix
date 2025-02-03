@@ -354,9 +354,9 @@
     vimAlias = true;
     extraLuaConfig = builtins.readFile (./vim.lua);
     plugins = with pkgs.vimPlugins; [
-      editorconfig-nvim
-      fzf-lua
-      gitsigns-nvim
+      fzf-lua # fuzzy find everything
+      gitsigns-nvim # git signs
+      # syntax
       (nvim-treesitter.withPlugins (p: with p; [
         tree-sitter-lua
         tree-sitter-javascript
@@ -366,12 +366,13 @@
         tree-sitter-elixir
         tree-sitter-heex
       ]))
-      nvim-lspconfig
+      nvim-lspconfig # lsp
+      # completion
       nvim-cmp
-      vim-vsnip
       cmp-buffer
       cmp-path
       cmp-nvim-lsp
+      # color scheme
       (pkgs.vimUtils.buildVimPlugin {
         pname = "flexoki-neovim";
         version = "2024-02-07";
