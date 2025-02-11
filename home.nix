@@ -16,13 +16,12 @@
     pkgs.docker
     pkgs.slack
     pkgs.wget
-    pkgs.zoom-us
-    pkgs.spotify
     pkgs.raycast
     pkgs.openvpn
     pkgs.git
     pkgs.direnv
-    pkgs.ollama
+    # pkgs.zoom-us
+    # pkgs.ollama
     ];
   home.shellAliases = {
     ".." = "cd ..";
