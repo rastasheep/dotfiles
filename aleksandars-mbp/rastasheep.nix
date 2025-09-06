@@ -8,10 +8,10 @@
       paths = [ ./bin ];
       extraPrefix = "/bin";
     })
-    pkgs.blender
-    pkgs.arc
-    pkgs.kicad
-    # pkgs.logseq
+    # pkgs.blender
+    # pkgs.kicad
+    pkgs.llama-cpp
+    pkgs.claude-code
   ];
 
   home.shellAliases = {
@@ -372,6 +372,8 @@
       cmp-buffer
       cmp-path
       cmp-nvim-lsp
+      # ai with llama
+      llama-vim
       # color scheme
       (pkgs.vimUtils.buildVimPlugin {
         pname = "flexoki-neovim";
