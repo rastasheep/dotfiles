@@ -389,4 +389,9 @@
   programs.vscode = {
     enable = true;
   };
+
+  home.file = {
+    ".claude/commands".source = ./claude/commands;
+    ".claude/settings.json".source = ./claude/settings.json;
+  };
 }
