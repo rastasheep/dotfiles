@@ -10,7 +10,7 @@
     })
     # pkgs.blender
     # pkgs.kicad
-    pkgs.llama-cpp
+    pkgs.hammerspoon
     pkgs.claude-code
   ];
 
@@ -53,6 +53,18 @@
     "com.apple.menuextra.clock" = {
       # Set clock format to 24 hour
       Show24Hour = true;
+      # Show day of week in menu bar
+      ShowDayOfWeek = true;
+      # Show AM/PM indicator
+      ShowAMPM = true;
+      # Don't show seconds
+      ShowSeconds = false;
+      # Don't show date
+      ShowDate = 0;
+      # Don't flash date separators
+      FlashDateSeparators = false;
+      # Use digital clock (not analog)
+      IsAnalog = false;
     };
     "com.apple.dock" = {
       # Don't show recent applications in Dock
@@ -86,6 +98,22 @@
       # For other paths, use `PfLo` and `file:///full/path/here/`
       NewWindowTarget = "PfDe";
       NewWindowTargetPath = ''file://''${HOME}'';
+      # Show sidebar
+      ShowSidebar = true;
+      # Set sidebar width
+      SidebarWidth = 176;
+      # Show status bar
+      ShowStatusBar = false;
+      # Show path bar
+      ShowPathbar = false;
+      # Show tab view
+      ShowTabView = false;
+      # Show toolbar
+      ShowToolbar = true;
+      # Disable warning before removing from iCloud Drive
+      FXICloudDriveRemovalWarning = false;
+      # Keep folders on top when sorting by name
+      _FXSortFoldersFirst = true;
     };
     "com.apple.TimeMachine" = {
       DoNotOfferNewDisksForBackup = true;
@@ -95,12 +123,76 @@
       tapBehavior = true;
     };
     "com.apple.AppleMultitouchMouse" = {
+      # Set mouse to two-button mode
       MouseButtonMode = "TwoButton";
+      # Enable one finger double tap gesture
       MouseOneFingerDoubleTapGesture = 1;
+      # Enable two finger horizontal swipe gesture
       MouseTwoFingerHorizSwipeGesture = 1;
+      # Enable two finger double tap gesture (smart zoom)
+      MouseTwoFingerDoubleTapGesture = 3;
+      # Enable horizontal scroll
+      MouseHorizontalScroll = 1;
+      # Enable momentum scroll
+      MouseMomentumScroll = 1;
+      # Enable vertical scroll
+      MouseVerticalScroll = 1;
+      # Set mouse button division
+      MouseButtonDivision = 55;
+      # Enable user preferences
+      UserPreferences = 1;
+      # Set version
+      version = 1;
     };
     "com.apple.driver.AppleBluetoothMultitouch.trackpad" = {
+      # Enable tap to click
       Clicking = true;
+      # Disable drag lock
+      DragLock = false;
+      # Disable dragging
+      Dragging = false;
+      # Disable corner secondary click
+      TrackpadCornerSecondaryClick = false;
+      # Enable five finger pinch gesture
+      TrackpadFiveFingerPinchGesture = 2;
+      # Enable four finger horizontal swipe gesture
+      TrackpadFourFingerHorizSwipeGesture = 2;
+      # Enable four finger pinch gesture
+      TrackpadFourFingerPinchGesture = 2;
+      # Enable four finger vertical swipe gesture
+      TrackpadFourFingerVertSwipeGesture = 2;
+      # Enable hand resting
+      TrackpadHandResting = true;
+      # Enable horizontal scroll
+      TrackpadHorizScroll = true;
+      # Enable momentum scroll
+      TrackpadMomentumScroll = true;
+      # Enable pinch gesture
+      TrackpadPinch = true;
+      # Enable right click
+      TrackpadRightClick = true;
+      # Enable rotate gesture
+      TrackpadRotate = true;
+      # Enable scroll
+      TrackpadScroll = true;
+      # Disable three finger drag
+      TrackpadThreeFingerDrag = false;
+      # Enable three finger horizontal swipe gesture
+      TrackpadThreeFingerHorizSwipeGesture = 2;
+      # Disable three finger tap gesture
+      TrackpadThreeFingerTapGesture = false;
+      # Enable three finger vertical swipe gesture
+      TrackpadThreeFingerVertSwipeGesture = 2;
+      # Enable two finger double tap gesture
+      TrackpadTwoFingerDoubleTapGesture = 1;
+      # Enable two finger swipe from right edge
+      TrackpadTwoFingerFromRightEdgeSwipeGesture = 3;
+      # Don't stop trackpad when USB mouse is connected
+      USBMouseStopsTrackpad = false;
+      # Enable user preferences
+      UserPreferences = true;
+      # Set version
+      version = 5;
     };
   };
 
@@ -393,5 +485,6 @@
   home.file = {
     ".claude/commands".source = ./claude/commands;
     ".claude/settings.json".source = ./claude/settings.json;
+    ".hammerspoon/init.lua".source = ./hammerspoon/init.lua;
   };
 }

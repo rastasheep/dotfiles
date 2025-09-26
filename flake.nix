@@ -23,6 +23,7 @@
                (final: prev: {
                    blender = final.callPackage ./pkgs/blender.nix {};
                    kicad = final.callPackage ./pkgs/kicad.nix {};
+                   hammerspoon = final.callPackage ./pkgs/hammerspoon.nix {};
                })
            ];
           })
