@@ -486,5 +486,6 @@
     ".claude/commands".source = ./claude/commands;
     ".claude/settings.json".source = ./claude/settings.json;
     ".hammerspoon/init.lua".source = ./hammerspoon/init.lua;
+    ".hammerspoon/leaderflow.lua".source = ./hammerspoon/leaderflow.lua;
   };
 }
