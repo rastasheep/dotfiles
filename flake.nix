@@ -40,7 +40,7 @@
                      postBuild = ''
                        for bin in $out/bin/*; do
                          wrapProgram "$bin" \
-                           --prefix PATH : ${final.lib.makeBinPath [ final._1password ]} \
+                           --prefix PATH : ${final.lib.makeBinPath [ final._1password-cli ]} \
                            --run 'export AWS_BEARER_TOKEN_BEDROCK=$(op read "op://Private/claude-code/AWS_BEARER_TOKEN_BEDROCK")' \
                            --run 'export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT=$(op read "op://Private/claude-code/OTEL_EXPORTER_OTLP_METRICS_ENDPOINT")' \
                            --run 'export OTEL_EXPORTER_OTLP_HEADERS=$(op read "op://Private/claude-code/OTEL_EXPORTER_OTLP_HEADERS")' \
