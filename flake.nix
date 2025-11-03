@@ -33,7 +33,21 @@
                    blender = final.callPackage ./pkgs/blender.nix {};
                    kicad = final.callPackage ./pkgs/kicad.nix {};
                    hammerspoon = final.callPackage ./pkgs/hammerspoon.nix {};
-                   claude-code = claudePkgs.claude-code;
+                   claude-code = final.symlinkJoin {
+                     name = "claude-code-wrapped";
+                     paths = [ claudePkgs.claude-code ];
+                     buildInputs = [ final.makeWrapper ];
+                     postBuild = ''
+                       for bin in $out/bin/*; do
+                         wrapProgram "$bin" \
+                           --prefix PATH : ${final.lib.makeBinPath [ final._1password ]} \
+                           --run 'export AWS_BEARER_TOKEN_BEDROCK=$(op read "op://Private/claude-code/AWS_BEARER_TOKEN_BEDROCK")' \
+                           --run 'export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT=$(op read "op://Private/claude-code/OTEL_EXPORTER_OTLP_METRICS_ENDPOINT")' \
+                           --run 'export OTEL_EXPORTER_OTLP_HEADERS=$(op read "op://Private/claude-code/OTEL_EXPORTER_OTLP_HEADERS")' \
+                           --run 'export OTEL_RESOURCE_ATTRIBUTES=$(op read "op://Private/claude-code/OTEL_RESOURCE_ATTRIBUTES")'
+                       done
+                     '';
+                   };
                })
            ];
           })
