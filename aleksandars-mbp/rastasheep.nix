@@ -12,6 +12,7 @@
     # pkgs.kicad
     pkgs.hammerspoon
     pkgs.claude-code
+    pkgs._1password-cli
   ];
 
   home.shellAliases = {
@@ -326,12 +327,13 @@
     sessionVariables = {
       LANG = "en_US.UTF-8";
     };
-    initExtraFirst = ''
-      if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-        . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-      fi
-    '';
-    initExtra = ''
+    initContent = pkgs.lib.mkMerge [
+      (pkgs.lib.mkBefore ''
+        if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+          . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+        fi
+      '')
+      ''
       # matches case insensitive for lowercase
       zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
@@ -429,7 +431,8 @@
       PROMPT='`suspended_jobs` ''${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
 
       eval "$(direnv hook zsh)"
-    '';
+      ''
+    ];
   };
 
   programs.fzf = {
