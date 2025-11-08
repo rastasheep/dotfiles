@@ -9,7 +9,7 @@
   };
 
   home.packages = [
-    pkgs.silver-searcher
+    pkgs.ripgrep
     pkgs.coreutils
     pkgs.openssl
     pkgs.tree
@@ -21,11 +21,10 @@
     pkgs.git
     pkgs.direnv
     # pkgs.zoom-us
-    # pkgs.ollama
     ];
   home.shellAliases = {
     ".." = "cd ..";
-    "ack" = "ag";
+    "ack" = "rg";
     "dc" = "docker compose";
     "df" = "df -hT";
     "e" = "vim";

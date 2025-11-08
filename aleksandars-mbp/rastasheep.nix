@@ -200,11 +200,6 @@
   programs.git = {
       enable = true;
 
-      signing = {
-          key = "";
-          signByDefault = builtins.stringLength "" > 0;
-      };
-
       lfs.enable = true;
       ignores = ["*~" "*.swp" ".DS_Store"];
 
@@ -216,8 +211,12 @@
 
           feature.manyFiles = true;
           init.defaultBranch = "main";
-          gpg.format = "ssh";
           push.autoSetupRemote = true;
+          pull.rebase = true;
+          fetch.prune = true;
+          diff.algorithm = "histogram";
+          merge.conflictstyle = "zdiff3";
+          rerere.enabled = true;
 
           alias = {
               a = "add";
@@ -238,7 +237,7 @@
               up = "!f() { git pull --rebase --prune && git log --pretty=format:\"%Cred%ae %Creset- %C(yellow)%s %Creset(%ar)\" HEAD@{1}.. }; f";
               credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f";
               unpushed = "!f() { git diff origin/\"$(git rev-parse --abbrev-ref HEAD)\"..HEAD; }; f";
-              delete-local-merged = "!f() { git branch -d $(git branch --merged | grep -v '^*' | grep -v 'master' | tr -d '\n'); }; f";
+              delete-local-merged = "!git branch --merged | grep -v '^*' | grep -v 'master' | grep -v 'main' | xargs -r git branch -d";
               nuke = "!f() { git branch -D $1 && git push origin :$1; }; f";
           };
       };
@@ -369,9 +368,6 @@
       unsetopt correct_all # Stop correcting me!
 
       # foreground the last backgrounded job using ctrl+z
-      # http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/.
-      #
-
       fancy-ctrl-z () {
         if [[ $#BUFFER -eq 0 ]]; then
           BUFFER="fg"
@@ -385,56 +381,6 @@
       zle -N fancy-ctrl-z
       bindkey '^Z' fancy-ctrl-z
 
-      # Prompt
-      autoload colors && colors
-
-      # get the name of the branch we are on
-      function git_prompt_info() {
-        local ZSH_THEME_GIT_PROMPT_PREFIX="git:(%{$fg[red]%}"
-        local ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-
-        if [[ "$(command git config --get oh-my-zsh.hide-status 2>/dev/null)" != "1" ]]; then
-          ref=$(command git symbolic-ref HEAD 2> /dev/null) || \
-          ref=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
-          echo "$ZSH_THEME_GIT_PROMPT_PREFIX''${ref#refs/heads/}$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_SUFFIX"
-        fi
-      }
-
-
-      # Checks if working tree is dirty
-      parse_git_dirty() {
-        local STATUS
-        local FLAGS
-        FLAGS=('--porcelain')
-        if [[ "$(command git config --get oh-my-zsh.hide-dirty)" != "1" ]]; then
-          if [[ $POST_1_7_2_GIT -gt 0 ]]; then
-            FLAGS+='--ignore-submodules=dirty'
-          fi
-          if [[ "$DISABLE_UNTRACKED_FILES_DIRTY" == "true" ]]; then
-            FLAGS+='--untracked-files=no'
-          fi
-          STATUS=$(command git status ''${FLAGS} 2> /dev/null | tail -n1)
-        fi
-        if [[ -n $STATUS ]]; then
-          echo "%{$fg[blue]%}) %{$fg[yellow]%}✗%{$reset_color%}"
-        else
-          echo "%{$fg[blue]%})"
-        fi
-      }
-
-      suspended_jobs() {
-        local sj
-        sj=$(jobs 2>/dev/null | tail -n 1)
-        if [[ $sj == "" ]]; then
-          echo ""
-        else
-          echo "%{$fg[red]%}✱%{$reset_color%}"
-        fi
-      }
-
-      local ret_status="%(?:%{$fg[green]%}➜:%{$fg[red]%}➜%s)"
-      PROMPT='`suspended_jobs` ''${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
-
       eval "$(direnv hook zsh)"
       ''
     ];
@@ -443,6 +389,20 @@
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      add_newline = false;
+      format = "$directory$git_branch$git_status$character";
+
+      git_branch = {
+        format = " [$branch]($style)";
+        symbol = "";
+      };
+    };
   };
 
   programs.neovim = {
@@ -466,28 +426,16 @@
         tree-sitter-elixir
         tree-sitter-heex
       ]))
-      nvim-lspconfig # lsp
-      # completion
-      nvim-cmp
-      cmp-buffer
-      cmp-path
-      cmp-nvim-lsp
-      # ai with llama
-      llama-vim
       # color scheme
       (pkgs.vimUtils.buildVimPlugin {
         pname = "flexoki-neovim";
-        version = "2024-02-07";
+        version = "2025-08-26";
         src = pkgs.fetchurl {
-          url = "https://github.com/kepano/flexoki-neovim/archive/975654bce67514114db89373539621cff42befb5.tar.gz";
-          sha256 = "1y52g0jhp4d1iilb96xm93yq13a7iyr631cxz695jxp9y84j2m9w";
+          url = "https://github.com/kepano/flexoki-neovim/archive/c3e2251e813d29d885a7cbbe9808a7af234d845d.tar.gz";
+          sha256 = "sha256-ere25TqoPfyc2/6yQKZgAQhJXz1wxtI/VZj/0LGMwNw=";
         };
       })
     ];
-  };
-
-  programs.vscode = {
-    enable = true;
   };
 
   home.file = {
