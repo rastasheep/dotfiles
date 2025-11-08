@@ -13,6 +13,7 @@
     pkgs.hammerspoon
     pkgs.claude-code
     pkgs._1password-cli
+    pkgs.ghostty-bin
   ];
 
   home.shellAliases = {
@@ -443,5 +444,6 @@
     ".claude/settings.json".source = ./claude/settings.json;
     ".hammerspoon/init.lua".source = ./hammerspoon/init.lua;
     ".hammerspoon/leaderflow.lua".source = ./hammerspoon/leaderflow.lua;
+    ".config/ghostty/config".source = ./ghostty/config;
   };
 }
