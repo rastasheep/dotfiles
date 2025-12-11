@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+#
+# Upgrade Nix installation itself
+#
+
+set -e
+
+echo "→ Current Nix version:"
+nix --version
+
+echo ""
+echo "→ Upgrading Nix installation..."
+
+# Use channel method only for non-flakes setups with configured channels
+if ! nix show-config 2>/dev/null | grep -q "experimental-features.*flakes" && \
+   command -v nix-channel >/dev/null 2>&1 && \
+   nix-channel --list 2>/dev/null | grep -q .; then
+    echo "Using nix-channel method..."
+    sudo nix-channel --update
+    sudo nix-env --install --attr nixpkgs.nix
+else
+    echo "Using direct upgrade method..."
+    sudo nix upgrade-nix
+fi
+
+echo ""
+echo "→ Restarting Nix daemon..."
+sudo launchctl stop org.nixos.nix-daemon
+sudo launchctl start org.nixos.nix-daemon
+
+# Wait a moment for daemon to start
+sleep 2
+
+echo ""
+echo "✓ Nix upgraded successfully!"
+echo ""
+echo "New Nix version:"
+nix --version
+
+echo ""
+echo "You may need to restart your shell or source your profile."
