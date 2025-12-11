@@ -1,6 +1,6 @@
 # Dotfiles
 
-Nix-based dotfiles for macOS using home-manager and flakes.
+Portable Nix-based dotfiles for macOS with individual tool wrappers.
 
 ## Features
 
@@ -10,67 +10,110 @@ Nix-based dotfiles for macOS using home-manager and flakes.
 - **Window Management**: [Hammerspoon](https://www.hammerspoon.org) with Leaderflow modal keybindings
 - **Development**: Claude Code, direnv, fzf, ripgrep
 - **Git**: Modern config with rebasing, pruning, and helpful aliases
+- **Portable**: Run tools on any Nix-enabled machine without installation
 
 ## Quick Start
 
+### Option 1: Run Individual Tools (No Installation)
 ```bash
-# Apply configuration
+# Run neovim with your config
+nix run github:rastasheep/dotfiles#nvim
+
+# Run tmux, git, or any other tool
+nix run github:rastasheep/dotfiles#tmux
+nix run github:rastasheep/dotfiles#git status
+
+# Run from local checkout
+cd ~/src/github.com/rastasheep/dotfiles
+nix run .#nvim
+```
+
+### Option 2: Install Everything
+```bash
+# Install all tools to your profile
+nix profile install github:rastasheep/dotfiles
+
+# Or from local checkout
+cd ~/src/github.com/rastasheep/dotfiles
+nix profile install .#default
+
+# Update later
+nix profile upgrade '.*dotfiles.*'
+```
+
+### Option 3: Install Individual Tools
+```bash
+# Cherry-pick the tools you want
+nix profile install github:rastasheep/dotfiles#{nvim,git,tmux}
+```
+
+### Legacy: Home-Manager (Still Available)
+```bash
+# Apply home-manager configuration (traditional approach)
 apply-dot
 
 # Update and apply
 update-dot
-
-# Navigate to dotfiles
-dev dotfiles
 ```
 
 ## Structure
 
 ```
 .
-├── flake.nix                    # Flake definition with inputs
-├── home.nix                     # Global packages and settings
+├── flake.nix                    # Flake definition with all packages
+├── packages/                    # All tool and app packages (CLI + GUI)
+│   ├── nvim/                   # Neovim with plugins and config
+│   ├── git/                    # Git with custom config
+│   ├── tmux/                   # Tmux with custom config
+│   ├── zsh/                    # Zsh with plugins and config
+│   ├── starship/               # Starship prompt config
+│   ├── scripts/                # Custom scripts (dev, git-*, etc.)
+│   ├── fzf/                    # FZF fuzzy finder
+│   ├── direnv/                 # Direnv integration
+│   ├── hammerspoon/            # Hammerspoon app with config
+│   ├── ghostty/                # Ghostty terminal with config
+│   ├── claude-code/            # Claude with 1Password + config
+│   ├── 1password-cli/          # 1Password CLI
+│   ├── blender/                # Custom Blender build (optional)
+│   └── kicad/                  # Custom KiCad build (optional)
+├── machines/                    # Machine-specific bundles
+│   └── aleksandars-mbp/        # Composes tools + apps for this machine
+├── home.nix                     # Global packages (home-manager legacy)
 └── aleksandars-mbp/
-    ├── rastasheep.nix          # Host-specific config (main file)
-    ├── vim.lua                 # Neovim configuration
-    ├── bin/                    # Custom scripts (dev, git-*, etc.)
-    ├── claude/                 # Claude Code settings and commands
-    ├── ghostty/                # Ghostty terminal config
-    └── hammerspoon/            # Hammerspoon window management
+    ├── rastasheep.nix          # Host-specific config (home-manager legacy)
+    └── vim.lua                 # Vim config (legacy, now in packages/nvim/)
 ```
 
-## Key Configurations
+## Available Packages
 
-### Neovim
-- Leader: `Space`
-- LSP servers configured per-project via direnv
-- Built-in completion (Neovim 0.11+)
-- Treesitter for syntax highlighting
-- fzf-lua for fuzzy finding
+All packages are exposed individually and can be run or installed standalone.
 
-### Git Aliases
-- `g st` - Status
-- `g ci` - Commit
-- `g co` - Checkout
-- `g lg` - Pretty log
-- `g up` - Pull with rebase
-- See more in `aleksandars-mbp/rastasheep.nix`
+### CLI Tools
+- `nvim` - Neovim with plugins (treesitter, gitsigns, fzf-lua) and custom config
+- `git` - Git with custom config and aliases
+- `tmux` - Tmux with vi-mode and custom keybindings
+- `zsh` - Zsh with plugins (autosuggestions, completions) and config
+- `starship` - Starship prompt with minimal config
+- `fzf` - FZF fuzzy finder
+- `direnv` - Direnv for per-project environments
+- `scripts` - Custom shell scripts (dev, git-*, gh-*, etc.)
 
-### Shell Aliases
-- `e` - vim
-- `g` - git
-- `ll` - ls -lah
-- `..` - cd ..
-- `dev <project>` - Navigate to project or clone it
+### GUI Apps
+- `hammerspoon` - Hammerspoon with bundled Leaderflow config
+- `ghostty` - Ghostty terminal with custom config
+- `claude-code` - Claude Code with 1Password integration and custom settings
+- `1password-cli` - 1Password CLI
+- `blender` - Custom Blender build (optional, commented out)
+- `kicad` - Custom KiCad build (optional, commented out)
 
-## Requirements
+### Machine Bundles
+Pre-configured bundles for specific machines:
 
-- Nix with flakes enabled
-- macOS (Darwin)
-- 1Password CLI (for Claude Code integration)
+- `aleksandars-mbp` - Complete setup with all CLI tools + GUI apps
+- `default` - Core CLI tools only (no GUI apps)
 
 ## References
 
-- [home-manager](https://nix-community.github.io/home-manager/)
-- [home-manager options](https://nix-community.github.io/home-manager/options.html)
 - [Nix flakes](https://nixos.wiki/wiki/Flakes)
+- [Nix packages manual](https://nixos.org/manual/nixpkgs/stable/)
+- [home-manager](https://nix-community.github.io/home-manager/) (for legacy config)
