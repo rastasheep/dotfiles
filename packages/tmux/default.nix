@@ -1,5 +1,6 @@
 { pkgs }:
 
+# Note: tmux uses --add-flags pattern, not env var, so we keep custom implementation
 let
   inherit (pkgs) lib;
 in

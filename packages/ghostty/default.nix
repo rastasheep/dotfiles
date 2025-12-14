@@ -2,17 +2,11 @@
 
 let
   inherit (pkgs) lib;
+  dotfilesLib = import ../../lib { inherit pkgs; };
 
-  ghosttyConfig = pkgs.stdenvNoCC.mkDerivation {
-    name = "ghostty-config";
+  ghosttyConfig = dotfilesLib.buildConfig {
+    name = "ghostty";
     src = ./config;
-
-    dontBuild = true;
-
-    installPhase = ''
-      mkdir -p $out/share/ghostty
-      cp -r $src/* $out/share/ghostty/
-    '';
   };
 
   # Wrapper to setup config

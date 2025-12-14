@@ -2,17 +2,11 @@
 
 let
   inherit (pkgs) lib;
+  dotfilesLib = import ../../lib { inherit pkgs; };
 
-  claudeConfig = pkgs.stdenvNoCC.mkDerivation {
-    name = "claude-config";
+  claudeConfig = dotfilesLib.buildConfig {
+    name = "claude";
     src = ./config;
-
-    dontBuild = true;
-
-    installPhase = ''
-      mkdir -p $out/share/claude
-      cp -r $src/* $out/share/claude/
-    '';
   };
 
   claudeWrapped = pkgs.symlinkJoin {
@@ -24,15 +18,10 @@ let
       for bin in $out/bin/*; do
         wrapProgram "$bin" \
           --prefix PATH : ${lib.makeBinPath [ pkgs._1password-cli ]} \
-          --run '
-            # Smart config linking: backup real files, replace symlinks
-            if [ -e "$HOME/.claude" ] && [ ! -L "$HOME/.claude" ]; then
-              backup="$HOME/.claude.backup.$(date +%Y%m%d-%H%M%S)"
-              echo "Backing up existing Claude config to $backup" >&2
-              mv "$HOME/.claude" "$backup"
-            fi
-            ln -sf ${claudeConfig}/share/claude "$HOME/.claude"
-          ' \
+          --run '${dotfilesLib.smartConfigLink {
+            from = "${claudeConfig}/share/claude";
+            to = "$HOME/.claude";
+          }}' \
           --run 'export AWS_BEARER_TOKEN_BEDROCK=$(op read "op://Private/claude-code/AWS_BEARER_TOKEN_BEDROCK" 2>/dev/null || true)' \
           --run 'export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT=$(op read "op://Private/claude-code/OTEL_EXPORTER_OTLP_METRICS_ENDPOINT" 2>/dev/null || true)' \
           --run 'export OTEL_EXPORTER_OTLP_HEADERS=$(op read "op://Private/claude-code/OTEL_EXPORTER_OTLP_HEADERS" 2>/dev/null || true)' \

@@ -1,5 +1,6 @@
 { pkgs }:
 
+# Note: zsh requires custom installPhase to generate zshenv, can't use lib.buildConfig directly
 let
   inherit (pkgs) lib;
 

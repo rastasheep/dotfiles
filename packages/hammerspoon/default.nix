@@ -2,6 +2,7 @@
 
 let
   inherit (pkgs) lib;
+  dotfilesLib = import ../../lib { inherit pkgs; };
 
   hammerspoonApp = pkgs.stdenvNoCC.mkDerivation rec {
     pname = "hammerspoon";
@@ -37,30 +38,17 @@ let
     };
   };
 
-  hammerspoonConfig = pkgs.stdenvNoCC.mkDerivation {
-    name = "hammerspoon-config";
+  hammerspoonConfig = dotfilesLib.buildConfig {
+    name = "hammerspoon";
     src = ./config;
-
-    dontBuild = true;
-
-    installPhase = ''
-      mkdir -p $out/share/hammerspoon
-      cp -r $src/* $out/share/hammerspoon/
-    '';
   };
 
   # Wrapper script to launch the app and setup config
   hammerspoonWrapper = pkgs.writeShellScriptBin "hammerspoon" ''
-    # Smart config linking: backup real files, replace symlinks
-    if [ -e "$HOME/.hammerspoon" ] && [ ! -L "$HOME/.hammerspoon" ]; then
-      # It's a real file/directory, not a symlink - back it up
-      backup="$HOME/.hammerspoon.backup.$(date +%Y%m%d-%H%M%S)"
-      echo "Backing up existing Hammerspoon config to $backup"
-      mv "$HOME/.hammerspoon" "$backup"
-    fi
-
-    # Create/update symlink (replaces old symlinks, creates new ones)
-    ln -sf ${hammerspoonConfig}/share/hammerspoon "$HOME/.hammerspoon"
+    ${dotfilesLib.smartConfigLink {
+      from = "${hammerspoonConfig}/share/hammerspoon";
+      to = "$HOME/.hammerspoon";
+    }}
 
     # Open the app
     open ${hammerspoonApp}/Applications/Hammerspoon.app
