@@ -2,7 +2,7 @@ name: Nix Flake Checks
 
 on:
   push:
-    branches: [ master, flakes ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
   workflow_dispatch:
