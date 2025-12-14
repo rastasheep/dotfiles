@@ -1,66 +1,65 @@
 {
-  description = "Fleek Configuration";
+  description = "Modular Nix dotfiles for macOS";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    claude-nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, claude-nixpkgs, ... }@inputs:
-    let
-      system = "aarch64-darwin";
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-      claudePkgs = import claude-nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-    in {
-    # Individual tool packages - can be run with 'nix run .#<tool>'
-    packages.${system} = {
-      # Core CLI tools
-      scripts = import ./packages/scripts { inherit pkgs; };
-      git = import ./packages/git { inherit pkgs; };
-      tmux = import ./packages/tmux { inherit pkgs; };
-      starship = import ./packages/starship { inherit pkgs; };
-      fzf = import ./packages/fzf { inherit pkgs; };
-      direnv = import ./packages/direnv { inherit pkgs; };
-      zsh = import ./packages/zsh { inherit pkgs; };
-      nvim = import ./packages/nvim { inherit pkgs; };
+  outputs = { self, nixpkgs, flake-utils, ... }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
 
-      # GUI apps and utilities
-      hammerspoon = import ./packages/hammerspoon { inherit pkgs; };
-      ghostty = import ./packages/ghostty { inherit pkgs; };
-      claude-code = import ./packages/claude-code { inherit pkgs claudePkgs; };
-      "1password-cli" = import ./packages/1password-cli { inherit pkgs; };
-      dircolors = import ./packages/dircolors { inherit pkgs; };
-      macos-defaults = import ./packages/macos-defaults { inherit pkgs; };
+        # Separate pkgs instance for Claude Code - allows pinning different version if needed
+        claudePkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
 
-      # Custom builds (optional - commented out by default)
-      # blender = import ./packages/blender { inherit pkgs; };
-      # kicad = import ./packages/kicad { inherit pkgs; };
+        # Import custom packages once, reuse everywhere
+        git = import ./packages/git { inherit pkgs; };
+        scripts = import ./packages/scripts { inherit pkgs; configuredGit = git; };
+        tmux = import ./packages/tmux { inherit pkgs; };
+        starship = import ./packages/starship { inherit pkgs; };
+        zsh = import ./packages/zsh { inherit pkgs; };
+        nvim = import ./packages/nvim { inherit pkgs; };
+        dircolors = import ./packages/dircolors { inherit pkgs; };
 
-      # Machine-specific bundles
-      aleksandars-mbp = import ./machines/aleksandars-mbp { inherit pkgs claudePkgs; };
+        hammerspoon = import ./packages/hammerspoon { inherit pkgs; };
+        ghostty = import ./packages/ghostty { inherit pkgs; };
+        claude-code = import ./packages/claude-code { inherit pkgs claudePkgs; };
+        macos-defaults = import ./packages/macos-defaults { inherit pkgs; };
 
-      # Convenience: all core tools bundle (no machine-specific apps)
-      default = pkgs.buildEnv {
-        name = "dotfiles-all";
-        paths = [
-          (import ./packages/scripts { inherit pkgs; })
-          (import ./packages/git { inherit pkgs; })
-          (import ./packages/tmux { inherit pkgs; })
-          (import ./packages/starship { inherit pkgs; })
-          (import ./packages/fzf { inherit pkgs; })
-          (import ./packages/direnv { inherit pkgs; })
-          (import ./packages/zsh { inherit pkgs; })
-          (import ./packages/nvim { inherit pkgs; })
-        ];
-        pathsToLink = [ "/bin" "/share" "/etc" ];
-      };
-    };
-  };
+        # Custom builds (optional - commented out by default)
+        # blender = import ./packages/blender { inherit pkgs; };
+        # kicad = import ./packages/kicad { inherit pkgs; };
+      in
+      {
+        # Individual tool packages - can be run with 'nix run .#<tool>'
+        packages = {
+          # Core CLI tools with custom config
+          inherit scripts git tmux starship zsh nvim dircolors;
+
+          # GUI apps and utilities
+          inherit hammerspoon ghostty claude-code macos-defaults;
+
+          # Custom builds (uncomment in let block above to enable)
+          # inherit blender kicad;
+
+          # Machine-specific bundles
+          aleksandars-mbp = import ./machines/aleksandars-mbp { inherit pkgs claudePkgs; };
+
+          # Convenience: all core CLI tools bundle (no machine-specific apps)
+          default = pkgs.buildEnv {
+            name = "dotfiles-core";
+            paths = [ scripts git tmux starship zsh nvim dircolors ];
+            pathsToLink = [ "/bin" "/share" "/etc" ];
+          };
+        };
+      }
+    );
 }
