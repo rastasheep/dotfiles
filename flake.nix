@@ -7,20 +7,25 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, ... }:
+    # Support multiple systems (aarch64-darwin, x86_64-darwin, aarch64-linux, x86_64-linux)
     flake-utils.lib.eachDefaultSystem (system:
       let
+        # Main package set with unfree packages enabled
         pkgs = import nixpkgs {
           inherit system;
           config.allowUnfree = true;
         };
 
-        # Separate pkgs instance for Claude Code - allows pinning different version if needed
+        # Separate pkgs instance for Claude Code
+        # Allows pinning different nixpkgs version for Claude Code if needed in future
+        # Currently uses same nixpkgs but kept separate for flexibility
         claudePkgs = import nixpkgs {
           inherit system;
           config.allowUnfree = true;
         };
 
-        # Import custom packages once, reuse everywhere
+        # Import custom packages once, reuse everywhere (DRY principle)
+        # This eliminates duplication and ensures packages are evaluated only once
         git = import ./packages/git { inherit pkgs; };
         scripts = import ./packages/scripts { inherit pkgs; configuredGit = git; };
         tmux = import ./packages/tmux { inherit pkgs; };

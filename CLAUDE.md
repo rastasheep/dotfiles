@@ -4,91 +4,164 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a Nix dotfiles repository that configures a macOS development environment for user `rastasheep` on the `aleksandars-mbp` host. Uses a modular flake-based architecture with per-tool packages.
+This is a modular Nix flake-based dotfiles repository for macOS. It provides portable, reproducible configurations for development tools and applications. The repository uses Nix flakes with multi-system support and follows modern Nix best practices.
 
 ## Core Commands
 
 ### Apply Configuration Changes
 ```bash
-# Apply dotfiles configuration (defined as alias)
-apply-dot
+# Update dotfiles installation
+nix profile upgrade ".*aleksandars-mbp.*"
 
-# Manual application (what the alias runs)
-cd ~/src/github.com/rastasheep/dotfiles && nix profile upgrade --impure ".*aleksandars-mbp.*"
+# Or rebuild from source
+cd ~/src/github.com/rastasheep/dotfiles
+nix profile install .#aleksandars-mbp --priority 5
 ```
 
 ### Update and Upgrade
 ```bash
-# Update flake inputs (nixpkgs) and apply configuration
-update-dot
+# Update flake inputs (nixpkgs, flake-utils)
+nix flake update
 
-# Upgrade Nix installation itself (less frequent)
-upgrade-nix
+# Upgrade specific input
+nix flake lock --update-input nixpkgs
 ```
 
-### Development Navigation
+### Validation and Testing
 ```bash
-# Navigate to dotfiles directory (uses the 'dev' script)
-dev dotfiles
+# Run all checks
+nix flake check
+
+# Show flake structure
+nix flake show
+
+# Build specific package
+nix build .#git
+
+# Test package without installing
+nix run .#nvim
+
+# Access unwrapped package
+nix run .#git.unwrapped status
+
+# Check version
+nix eval .#git.version
 ```
 
 ## Architecture
 
-### Configuration Structure
-- `flake.nix` - Main flake definition with individual tool packages and machine bundles
-- `packages/` - Individual tool packages (git, zsh, tmux, nvim, etc.)
-  - Each tool is self-contained with its own configuration
-  - Can be used independently or as part of a machine bundle
-- `machines/aleksandars-mbp/` - Machine-specific configuration bundle
-  - Composes individual tool packages
-  - Adds machine-specific utilities and apps
-  - Includes custom scripts in `bin/` directory
-- `packages/macos-defaults/` - Declarative macOS system preferences
-  - Type-safe configuration in `defaults.nix`
-  - Drift detection and validation
-  - Management CLI for checking and exporting settings
+### Repository Structure
+```
+.
+├── flake.nix              # Main flake with multi-system support
+├── flake.lock             # Locked dependency versions
+├── lib/                   # Shared utilities
+│   └── default.nix       # Reusable functions (wrapWithConfig, buildConfig, etc.)
+├── packages/              # Individual tool packages
+│   ├── git/              # Git with custom config
+│   ├── tmux/             # Tmux with custom config
+│   ├── nvim/             # Neovim with plugins
+│   ├── zsh/              # Zsh with plugins
+│   ├── starship/         # Starship prompt
+│   ├── scripts/          # Custom shell scripts
+│   ├── hammerspoon/      # Window management
+│   ├── ghostty/          # Terminal emulator
+│   ├── claude-code/      # Claude Code with 1Password integration
+│   ├── macos-defaults/   # Declarative macOS system defaults
+│   ├── dircolors/        # GNU dircolors configuration
+│   └── ...
+└── machines/              # Machine-specific bundles
+    └── aleksandars-mbp/  # Composes all packages for this machine
+```
 
-### Custom Packages
-- `packages/blender/` - Custom Blender package for macOS ARM64
-- `packages/kicad/` - Custom KiCad package
-- `packages/ghostty/` - Ghostty terminal with configuration
-- `packages/hammerspoon/` - Hammerspoon with Leaderflow modal keybindings
-- `packages/claude-code/` - Claude Code CLI with 1Password integration
+### Shared Library (lib/default.nix)
+All packages use shared utilities to ensure consistency:
+- `wrapWithConfig`: Standard CLI wrapper with env var config
+- `buildConfig`: Config directory builder (installs to /share/{name})
+- `smartConfigLink`: Backup and symlink logic for existing configs
+- `mkMeta`: Standardized meta attributes template
 
-### Scripts and Utilities
-Custom shell scripts are available in `packages/scripts/bin/`:
-- Git utilities (git-rank-contributors, git-recent, git-wtf)
-- Development tools (dev, gh-pr, gh-url, mdc, notes)
-- System utilities (extract, headers, update-dot)
+### Package Patterns
+All packages follow consistent patterns:
+- Use `inherit (pkgs) lib;` instead of `with pkgs.lib;`
+- Include complete meta attributes (description, homepage, license, platforms)
+- Expose unwrapped package via `passthru.unwrapped`
+- Use `stdenvNoCC` for pure config packages (no compilation)
+- Use shared library utilities where applicable
+
+### Multi-System Support
+The flake supports multiple systems via flake-utils:
+- `aarch64-darwin` (Apple Silicon Macs)
+- `x86_64-darwin` (Intel Macs)
+- `aarch64-linux` (ARM Linux)
+- `x86_64-linux` (x86 Linux)
 
 ## Configuration Management
 
-### Making Changes
-1. Edit configuration files in relevant `packages/` directory
-2. Run `apply-dot` to apply changes
-3. Changes are applied via `nix profile upgrade`
+### Adding a New Package
+1. Create package directory in `packages/`
+2. Use shared library utilities from `lib/default.nix`
+3. Follow package patterns (inherit lib, complete meta, passthru)
+4. Add package import to `flake.nix` let block
+5. Export in `packages` output
+6. Add to machine bundle in `machines/aleksandars-mbp/default.nix`
+7. Run `nix flake check` to verify
 
-### Host Configuration
-The configuration is specific to `aleksandars-mbp`. To adapt for different hosts:
-- Create new directory under `machines/` (e.g., `machines/new-hostname/`)
-- Create a `default.nix` that composes desired packages
-- Install with `nix profile install .#new-hostname`
+### Creating a New Machine Bundle
+1. Create directory in `machines/` (e.g., `machines/new-machine/`)
+2. Create `default.nix` that imports and composes packages
+3. Add to `flake.nix` packages output:
+   ```nix
+   new-machine = import ./machines/new-machine { inherit pkgs claudePkgs; };
+   ```
+4. Install with: `nix profile install .#new-machine`
 
-### Package Management
-- Individual tools in `packages/` directories
-- Machine-specific bundles in `machines/` directories
-- All packages exposed through flake outputs
+### Modifying Existing Packages
+1. Edit package in `packages/{name}/default.nix`
+2. Run `nix build .#{name} --dry-run` to verify
+3. Test with `nix run .#{name}`
+4. Run `nix flake check` before committing
 
-## Key Programs Configured
-- **Shell**: Zsh with custom prompt, autosuggestions, and extensive aliases
-- **Editor**: Neovim with treesitter, LSP, completion, and custom plugins
-- **Terminal Multiplexer**: tmux with vi key bindings and custom configuration
-- **Version Control**: Git with extensive aliases and LFS support
-- **macOS Defaults**: Comprehensive system preferences including Dock, Finder, and keyboard settings
+## Key Packages Configured
 
-## Development Environment Features
-- Direnv integration for per-project environments
-- FZF for fuzzy finding
-- Custom git prompt with status indicators
-- Development-focused shell aliases and functions
-- Claude Code integration (available as package)
+### CLI Tools
+- **git**: Custom config with rebasing, pruning, helpful aliases, LFS support
+- **tmux**: Vi key bindings, custom prefix, status bar configuration
+- **zsh**: Autosuggestions, completions, custom sourcing
+- **starship**: Minimal prompt configuration
+- **nvim**: Treesitter, LSP, completion, fzf-lua, gitsigns, Flexoki theme
+- **scripts**: Custom shell scripts (dev, git-*, gh-*, etc.)
+- **dircolors**: GNU dircolors configuration for colorized ls output
+
+### GUI Applications
+- **hammerspoon**: Window management with Leaderflow modal keybindings
+- **ghostty**: Terminal emulator with Flexoki theme
+- **claude-code**: Claude Code with 1Password integration for secrets
+- **macos-defaults**: Declarative macOS system defaults management
+
+### Machine Bundle Includes
+The aleksandars-mbp bundle also includes upstream packages:
+- Core utilities: coreutils, ripgrep, openssl, tree, wget
+- Development: direnv, fzf, docker, openvpn, 1password-cli
+- GUI apps: slack, raycast
+
+## Best Practices
+
+### Nix Code Style
+- Use `inherit (pkgs) lib;` instead of `with pkgs.lib;`
+- Add complete meta attributes to all packages
+- Use `stdenvNoCC` for pure config packages
+- Add `passthru.unwrapped` to wrapped packages
+- Use shared library utilities where applicable
+
+### Package Development
+- Test with `nix build .#{name} --dry-run` before committing
+- Run `nix flake check` to validate all packages build
+- Use `nix run .#{name}` to test package functionality
+- Check `nix flake show` to verify package exports
+
+### Commit Messages
+- Use conventional commit format (feat:, fix:, refactor:, docs:)
+- Include what changed and why
+- Reference specific files when relevant
+- Add co-author attribution for Claude Code contributions

@@ -61,7 +61,10 @@ apply-dot  # or: nix profile upgrade ".*aleksandars-mbp.*"
 
 ```
 .
-├── flake.nix                    # Flake definition with all packages
+├── flake.nix                    # Flake definition with multi-system support
+├── flake.lock                   # Locked dependency versions
+├── lib/                         # Shared utilities and helpers
+│   └── default.nix             # Reusable functions (wrapWithConfig, buildConfig, etc.)
 ├── packages/                    # All tool and app packages (CLI + GUI)
 │   ├── nvim/                   # Neovim with plugins and config
 │   ├── git/                    # Git with custom config
@@ -69,14 +72,13 @@ apply-dot  # or: nix profile upgrade ".*aleksandars-mbp.*"
 │   ├── zsh/                    # Zsh with plugins and config
 │   ├── starship/               # Starship prompt config
 │   ├── scripts/                # Custom scripts (dev, git-*, etc.)
-│   ├── fzf/                    # FZF fuzzy finder
-│   ├── direnv/                 # Direnv integration
+│   ├── dircolors/              # GNU dircolors configuration
 │   ├── hammerspoon/            # Hammerspoon app with config
 │   ├── ghostty/                # Ghostty terminal with config
 │   ├── claude-code/            # Claude with 1Password + config
-│   ├── 1password-cli/          # 1Password CLI
-│   ├── blender/                # Custom Blender build (optional)
-│   └── kicad/                  # Custom KiCad build (optional)
+│   ├── macos-defaults/         # macOS system defaults management
+│   ├── blender/                # Custom Blender build (optional, commented out)
+│   └── kicad/                  # Custom KiCad build (optional, commented out)
 └── machines/                    # Machine-specific bundles
     └── aleksandars-mbp/        # Composes tools + apps for this machine
 ```
@@ -91,17 +93,18 @@ All packages are exposed individually and can be run or installed standalone.
 - `tmux` - Tmux with vi-mode and custom keybindings
 - `zsh` - Zsh with plugins (autosuggestions, completions) and config
 - `starship` - Starship prompt with minimal config
-- `fzf` - FZF fuzzy finder
-- `direnv` - Direnv for per-project environments
 - `scripts` - Custom shell scripts (dev, git-*, gh-*, etc.)
+- `dircolors` - GNU dircolors configuration
 
-### GUI Apps
+### GUI Apps & Utilities
 - `hammerspoon` - Hammerspoon with bundled Leaderflow config
 - `ghostty` - Ghostty terminal with custom config
 - `claude-code` - Claude Code with 1Password integration and custom settings
-- `1password-cli` - 1Password CLI
+- `macos-defaults` - Declarative macOS system defaults management
 - `blender` - Custom Blender build (optional, commented out)
 - `kicad` - Custom KiCad build (optional, commented out)
+
+**Note:** Common tools like `fzf`, `direnv`, and `1password-cli` are included directly in the machine bundle without custom wrappers.
 
 ### Machine Bundles
 Pre-configured bundles for specific machines:
@@ -109,7 +112,68 @@ Pre-configured bundles for specific machines:
 - `aleksandars-mbp` - Complete setup with all CLI tools + GUI apps
 - `default` - Core CLI tools only (no GUI apps)
 
+## Architecture & Features
+
+### Multi-System Support
+The flake supports multiple systems out of the box:
+- `aarch64-darwin` (Apple Silicon Macs)
+- `x86_64-darwin` (Intel Macs)
+- `aarch64-linux` (ARM Linux)
+- `x86_64-linux` (x86 Linux)
+
+### Shared Library
+All packages use shared utilities from `lib/default.nix`:
+- `wrapWithConfig`: Standard CLI wrapper pattern
+- `buildConfig`: Config directory builder
+- `smartConfigLink`: Backup and symlink logic
+- `mkMeta`: Standardized meta attributes
+
+This ensures consistency and reduces code duplication across all packages.
+
+### Package Passthru
+All wrapped packages expose the underlying package via `passthru.unwrapped`:
+```bash
+# Run with your config
+nix run .#git status
+
+# Run without your config (unwrapped)
+nix run .#git.unwrapped status
+
+# Check version
+nix eval .#git.version
+```
+
+### Flake Checks
+Validate packages build correctly:
+```bash
+# Run all checks
+nix flake check
+
+# View available checks
+nix flake show | grep checks
+
+# Run specific check
+nix build .#checks.aarch64-darwin.all-packages
+```
+
+## Development
+
+### Adding a New Package
+1. Create package directory in `packages/`
+2. Use shared library utilities from `lib/default.nix`
+3. Add package to `flake.nix` imports
+4. Add to machine bundle in `machines/aleksandars-mbp/default.nix`
+5. Run `nix flake check` to verify
+
+### Best Practices
+- Use `inherit (pkgs) lib;` instead of `with pkgs.lib;`
+- Add complete meta attributes (description, homepage, license, platforms)
+- Add `passthru.unwrapped` for wrapped packages
+- Use shared library utilities where applicable
+- Use `stdenvNoCC` for pure config packages
+
 ## References
 
 - [Nix flakes](https://nixos.wiki/wiki/Flakes)
 - [Nix packages manual](https://nixos.org/manual/nixpkgs/stable/)
+- [flake-utils](https://github.com/numtide/flake-utils)
