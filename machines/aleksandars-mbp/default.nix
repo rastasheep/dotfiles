@@ -20,6 +20,7 @@ let
   ghostty = import ../../packages/ghostty { inherit pkgs; };
   claude-code = import ../../packages/claude-code { inherit pkgs claudePkgs; };
   _1password-cli = import ../../packages/1password-cli { inherit pkgs; };
+  macos-defaults = import ../../packages/macos-defaults { inherit pkgs; };
 
   # Additional utility packages
   additionalPackages = [
@@ -53,6 +54,9 @@ pkgs.buildEnv {
     ghostty
     claude-code
     _1password-cli
+
+    # System configuration
+    macos-defaults
   ] ++ additionalPackages;
 
   pathsToLink = [ "/bin" "/share" "/etc" "/Applications" ];

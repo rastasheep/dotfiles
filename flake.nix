@@ -40,6 +40,7 @@
       claude-code = import ./packages/claude-code { inherit pkgs claudePkgs; };
       "1password-cli" = import ./packages/1password-cli { inherit pkgs; };
       dircolors = import ./packages/dircolors { inherit pkgs; };
+      macos-defaults = import ./packages/macos-defaults { inherit pkgs; };
 
       # Custom builds (optional - commented out by default)
       # blender = import ./packages/blender { inherit pkgs; };

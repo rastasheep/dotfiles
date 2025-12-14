@@ -113,6 +113,7 @@ alias ll='ls -lah'
 # Machine-specific aliases
 alias apply-dot='cd ~/src/github.com/rastasheep/dotfiles && nix run --impure home-manager/master -- -b bak switch --flake .#rastasheep@aleksandars-mbp'
 alias dev-vpn='sudo openvpn --config ~/Google\ Drive/My\ Drive/fhc-dev-vpn.ovpn'
+alias dev='source dev'
 
 # Git function - defaults to 'git st' when no args
 function git() {
