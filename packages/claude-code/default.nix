@@ -1,9 +1,13 @@
 { pkgs, claudePkgs }:
 
 let
+  inherit (pkgs) lib;
+
   claudeConfig = pkgs.stdenvNoCC.mkDerivation {
     name = "claude-config";
     src = ./config;
+
+    dontBuild = true;
 
     installPhase = ''
       mkdir -p $out/share/claude
@@ -12,14 +16,14 @@ let
   };
 
   claudeWrapped = pkgs.symlinkJoin {
-    name = "claude-code-wrapped";
+    name = "claude-code-configured";
     paths = [ claudePkgs.claude-code ];
     buildInputs = [ pkgs.makeWrapper ];
 
     postBuild = ''
       for bin in $out/bin/*; do
         wrapProgram "$bin" \
-          --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs._1password-cli ]} \
+          --prefix PATH : ${lib.makeBinPath [ pkgs._1password-cli ]} \
           --run '
             # Smart config linking: backup real files, replace symlinks
             if [ -e "$HOME/.claude" ] && [ ! -L "$HOME/.claude" ]; then
@@ -45,8 +49,15 @@ pkgs.buildEnv {
   ];
   pathsToLink = [ "/bin" "/share" ];
 
+  passthru = {
+    unwrapped = claudePkgs.claude-code;
+    version = claudePkgs.claude-code.version or "unknown";
+  };
+
   meta = {
     description = "Claude Code with 1Password integration and custom configuration";
+    homepage = "https://claude.ai/code";
+    platforms = lib.platforms.darwin;
     mainProgram = "claude";
   };
 }

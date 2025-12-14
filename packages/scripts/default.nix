@@ -4,6 +4,9 @@
 # If configuredGit is provided, scripts will use it instead of base git
 # This ensures scripts use your custom git config when part of a machine bundle
 
+let
+  inherit (pkgs) lib;
+in
 pkgs.stdenv.mkDerivation {
   name = "scripts";
   src = ./bin;
@@ -18,7 +21,7 @@ pkgs.stdenv.mkDerivation {
     # Wrap scripts that need external dependencies
     for script in $out/bin/*; do
       wrapProgram "$script" \
-        --prefix PATH : ${pkgs.lib.makeBinPath ([
+        --prefix PATH : ${lib.makeBinPath ([
           (if configuredGit != null then configuredGit else pkgs.git)
           pkgs.fzf
           pkgs.findutils
@@ -29,7 +32,13 @@ pkgs.stdenv.mkDerivation {
     done
   '';
 
-  meta = with pkgs.lib; {
+  passthru = {
+    git = if configuredGit != null then configuredGit else pkgs.git;
+  };
+
+  meta = {
     description = "Custom shell scripts with bundled dependencies";
+    homepage = "https://github.com/rastasheep/dotfiles";
+    platforms = lib.platforms.darwin;
   };
 }

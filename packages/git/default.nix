@@ -1,5 +1,8 @@
 { pkgs }:
 
+let
+  inherit (pkgs) lib;
+in
 pkgs.symlinkJoin {
   name = "git-configured";
   paths = [ pkgs.git pkgs.git-lfs ];
@@ -14,9 +17,15 @@ pkgs.symlinkJoin {
     done
   '';
 
-  meta = with pkgs.lib; {
+  passthru = {
+    unwrapped = pkgs.git;
+    version = pkgs.git.version;
+  };
+
+  meta = {
     description = "Git with custom configuration";
     homepage = "https://git-scm.com/";
-    license = licenses.gpl2;
+    license = lib.licenses.gpl2;
+    platforms = lib.platforms.darwin;
   };
 }

@@ -1,6 +1,8 @@
 { pkgs }:
 
 let
+  inherit (pkgs) lib;
+
   hammerspoonApp = pkgs.stdenvNoCC.mkDerivation rec {
     pname = "hammerspoon";
     version = "1.0.0";
@@ -27,17 +29,19 @@ let
       runHook postInstall
     '';
 
-    meta = with pkgs.lib; {
+    meta = {
       homepage = "https://www.hammerspoon.org";
       description = "Staggeringly powerful macOS desktop automation with Lua";
-      license = licenses.mit;
-      platforms = platforms.darwin;
+      license = lib.licenses.mit;
+      platforms = lib.platforms.darwin;
     };
   };
 
   hammerspoonConfig = pkgs.stdenvNoCC.mkDerivation {
     name = "hammerspoon-config";
     src = ./config;
+
+    dontBuild = true;
 
     installPhase = ''
       mkdir -p $out/share/hammerspoon
@@ -71,10 +75,16 @@ pkgs.buildEnv {
   ];
   pathsToLink = [ "/Applications" "/share" "/bin" ];
 
-  meta = with pkgs.lib; {
+  passthru = {
+    unwrapped = hammerspoonApp;
+    version = hammerspoonApp.version;
+  };
+
+  meta = {
     description = "Hammerspoon with custom configuration";
     homepage = "https://www.hammerspoon.org";
-    license = licenses.mit;
+    license = lib.licenses.mit;
+    platforms = lib.platforms.darwin;
     mainProgram = "hammerspoon";
   };
 }

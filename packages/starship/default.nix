@@ -1,5 +1,8 @@
 { pkgs }:
 
+let
+  inherit (pkgs) lib;
+in
 pkgs.symlinkJoin {
   name = "starship-configured";
   paths = [ pkgs.starship ];
@@ -10,9 +13,15 @@ pkgs.symlinkJoin {
       --set STARSHIP_CONFIG ${./starship.toml}
   '';
 
-  meta = with pkgs.lib; {
+  passthru = {
+    unwrapped = pkgs.starship;
+    version = pkgs.starship.version;
+  };
+
+  meta = {
     description = "Starship prompt with custom configuration";
     homepage = "https://starship.rs";
-    license = licenses.isc;
+    license = lib.licenses.isc;
+    platforms = lib.platforms.darwin;
   };
 }

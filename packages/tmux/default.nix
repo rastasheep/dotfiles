@@ -1,5 +1,8 @@
 { pkgs }:
 
+let
+  inherit (pkgs) lib;
+in
 pkgs.symlinkJoin {
   name = "tmux-configured";
   paths = [ pkgs.tmux ];
@@ -10,9 +13,15 @@ pkgs.symlinkJoin {
       --add-flags "-f ${./tmux.conf}"
   '';
 
-  meta = with pkgs.lib; {
+  passthru = {
+    unwrapped = pkgs.tmux;
+    version = pkgs.tmux.version;
+  };
+
+  meta = {
     description = "Tmux with custom configuration";
     homepage = "https://github.com/tmux/tmux";
-    license = licenses.bsd3;
+    license = lib.licenses.bsd3;
+    platforms = lib.platforms.darwin;
   };
 }

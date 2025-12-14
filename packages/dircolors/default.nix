@@ -1,11 +1,14 @@
 { pkgs }:
 
+let
+  inherit (pkgs) lib;
+in
 pkgs.stdenvNoCC.mkDerivation {
   name = "dircolors-configured";
 
   buildInputs = [ pkgs.coreutils ];
 
-  unpackPhase = "true";  # No source to unpack
+  dontUnpack = true;
 
   buildPhase = ''
     # Generate default dircolors database
@@ -17,9 +20,10 @@ pkgs.stdenvNoCC.mkDerivation {
     cp dir_colors $out/share/dircolors/dircolors
   '';
 
-  meta = with pkgs.lib; {
+  meta = {
     description = "GNU dircolors configuration for colorized ls output";
     homepage = "https://www.gnu.org/software/coreutils/";
-    license = licenses.gpl3Plus;
+    license = lib.licenses.gpl3Plus;
+    platforms = lib.platforms.darwin;
   };
 }

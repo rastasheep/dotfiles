@@ -1,6 +1,8 @@
 { pkgs }:
 
 let
+  inherit (pkgs) lib;
+
   flexoki-neovim = pkgs.vimUtils.buildVimPlugin {
     pname = "flexoki-neovim";
     version = "2025-08-26";
@@ -19,25 +21,40 @@ let
     tree-sitter-elixir
     tree-sitter-heex
   ]);
-in
-pkgs.neovim.override {
-  configure = {
-    customRC = ''
-      lua << EOF
-      ${builtins.readFile ./config/init.lua}
-      EOF
-    '';
-    packages.myPlugins = with pkgs.vimPlugins; {
-      start = [
-        fzf-lua
-        gitsigns-nvim
-        nvim-treesitter-configured
-        flexoki-neovim
-      ];
+
+  configuredNeovim = pkgs.neovim.override {
+    configure = {
+      customRC = ''
+        lua << EOF
+        ${builtins.readFile ./config/init.lua}
+        EOF
+      '';
+      packages.myPlugins = with pkgs.vimPlugins; {
+        start = [
+          fzf-lua
+          gitsigns-nvim
+          nvim-treesitter-configured
+          flexoki-neovim
+        ];
+      };
     };
+
+    withRuby = false;
+    withPython3 = false;
+    withNodeJs = false;
+  };
+in
+configuredNeovim.overrideAttrs (oldAttrs: {
+  passthru = (oldAttrs.passthru or {}) // {
+    unwrapped = pkgs.neovim;
+    version = pkgs.neovim.version;
   };
 
-  withRuby = false;
-  withPython3 = false;
-  withNodeJs = false;
-}
+  meta = (oldAttrs.meta or {}) // {
+    description = "Neovim with custom configuration and plugins";
+    homepage = "https://neovim.io";
+    license = lib.licenses.asl20;
+    platforms = lib.platforms.darwin;
+    mainProgram = "nvim";
+  };
+})

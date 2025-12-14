@@ -1,9 +1,13 @@
 { pkgs }:
 
 let
-  zshConfig = pkgs.stdenv.mkDerivation {
+  inherit (pkgs) lib;
+
+  zshConfig = pkgs.stdenvNoCC.mkDerivation {
     name = "zsh-config";
     src = ./.;
+    dontBuild = true;
+
     installPhase = ''
       mkdir -p $out/etc
       cp ${./zshrc} $out/etc/zshrc
@@ -26,9 +30,15 @@ pkgs.buildEnv {
   ];
   pathsToLink = [ "/bin" "/share" "/etc" ];
 
-  meta = with pkgs.lib; {
+  passthru = {
+    unwrapped = pkgs.zsh;
+    version = pkgs.zsh.version;
+  };
+
+  meta = {
     description = "Zsh with custom configuration and plugins";
     homepage = "https://www.zsh.org/";
-    license = licenses.mit;
+    license = lib.licenses.mit;
+    platforms = lib.platforms.darwin;
   };
 }

@@ -95,7 +95,9 @@ pkgs.stdenv.mkDerivation {
 
       Refactored for modularity, better error handling, and maintainability.
     '';
+    homepage = "https://github.com/rastasheep/dotfiles";
     platforms = lib.platforms.darwin;
     maintainers = [ ];
+    mainProgram = "macos-defaults";
   };
 }

@@ -1,9 +1,13 @@
 { pkgs }:
 
 let
+  inherit (pkgs) lib;
+
   ghosttyConfig = pkgs.stdenvNoCC.mkDerivation {
     name = "ghostty-config";
     src = ./config;
+
+    dontBuild = true;
 
     installPhase = ''
       mkdir -p $out/share/ghostty
@@ -13,7 +17,7 @@ let
 
   # Wrapper to setup config
   ghosttyWrapper = pkgs.symlinkJoin {
-    name = "ghostty-with-config";
+    name = "ghostty-configured";
     paths = [ pkgs.ghostty-bin ];
     buildInputs = [ pkgs.makeWrapper ];
 
@@ -34,9 +38,16 @@ pkgs.buildEnv {
   ];
   pathsToLink = [ "/bin" "/share" "/Applications" ];
 
-  meta = with pkgs.lib; {
+  passthru = {
+    unwrapped = pkgs.ghostty-bin;
+    version = pkgs.ghostty-bin.version or "unknown";
+  };
+
+  meta = {
     description = "Ghostty terminal with custom configuration";
     homepage = "https://ghostty.org";
+    license = lib.licenses.mit;
+    platforms = lib.platforms.darwin;
     mainProgram = "ghostty";
   };
 }
