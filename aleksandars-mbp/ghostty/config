@@ -1,5 +1,0 @@
-theme = light:Flexoki Light,dark:Flexoki Dark
-keybind = shift+enter=text:\n
-background-opacity = 0.9
-background-blur = true
-

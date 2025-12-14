@@ -25,6 +25,7 @@ let
   # Additional utility packages
   additionalPackages = [
     pkgs.ripgrep
+    pkgs.coreutils
     pkgs.openssl
     pkgs.tree
     pkgs.docker

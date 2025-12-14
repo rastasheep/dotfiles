@@ -4,13 +4,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
     claude-nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
-  outputs = { self, nixpkgs, home-manager, claude-nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, claude-nixpkgs, ... }@inputs:
     let
       system = "aarch64-darwin";
       pkgs = import nixpkgs {
@@ -63,19 +60,6 @@
           (import ./packages/nvim { inherit pkgs; })
         ];
         pathsToLink = [ "/bin" "/share" "/etc" ];
-      };
-    };
-
-    # Available through 'home-manager --flake .#your-username@your-hostname'
-
-    homeConfigurations = {
-      "rastasheep@aleksandars-mbp" = home-manager.lib.homeManagerConfiguration {
-        pkgs = pkgs; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = { inherit inputs; }; # Pass flake inputs to our config
-        modules = [
-          ./home.nix
-          ./aleksandars-mbp/rastasheep.nix
-        ];
       };
     };
   };

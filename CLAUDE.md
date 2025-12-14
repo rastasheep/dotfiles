@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a Nix dotfiles repository managed with home-manager and fleek. It configures a macOS development environment for user `rastasheep` on the `aleksandars-mbp` host.
+This is a Nix dotfiles repository that configures a macOS development environment for user `rastasheep` on the `aleksandars-mbp` host. Uses a modular flake-based architecture with per-tool packages.
 
 ## Core Commands
 
@@ -14,12 +14,12 @@ This is a Nix dotfiles repository managed with home-manager and fleek. It config
 apply-dot
 
 # Manual application (what the alias runs)
-cd ~/src/github.com/rastasheep/dotfiles && nix run --impure home-manager/master -- -b bak switch --flake .#rastasheep@aleksandars-mbp
+cd ~/src/github.com/rastasheep/dotfiles && nix profile upgrade --impure ".*aleksandars-mbp.*"
 ```
 
 ### Update and Upgrade
 ```bash
-# Update flake inputs (nixpkgs, home-manager) and apply configuration
+# Update flake inputs (nixpkgs) and apply configuration
 update-dot
 
 # Upgrade Nix installation itself (less frequent)
@@ -35,45 +35,49 @@ dev dotfiles
 ## Architecture
 
 ### Configuration Structure
-- `flake.nix` - Main flake definition with inputs and home-manager configuration
-- `home.nix` - Base configuration with global packages and shell aliases
-- `aleksandars-mbp/rastasheep.nix` - Host-specific configuration including:
-  - User-specific packages
-  - Shell aliases and functions
-  - macOS system defaults
-  - Git configuration
-  - tmux configuration
-  - Zsh configuration with custom prompt
-  - Neovim configuration with plugins
+- `flake.nix` - Main flake definition with individual tool packages and machine bundles
+- `packages/` - Individual tool packages (git, zsh, tmux, nvim, etc.)
+  - Each tool is self-contained with its own configuration
+  - Can be used independently or as part of a machine bundle
+- `machines/aleksandars-mbp/` - Machine-specific configuration bundle
+  - Composes individual tool packages
+  - Adds machine-specific utilities and apps
+  - Includes custom scripts in `bin/` directory
+- `packages/macos-defaults/` - Declarative macOS system preferences
+  - Type-safe configuration in `defaults.nix`
+  - Drift detection and validation
+  - Management CLI for checking and exporting settings
 
 ### Custom Packages
-- `pkgs/blender.nix` - Custom Blender package for macOS ARM64
-- `pkgs/kicad.nix` - Custom KiCad package 
-- Both are defined as overlays in `flake.nix`
+- `packages/blender/` - Custom Blender package for macOS ARM64
+- `packages/kicad/` - Custom KiCad package
+- `packages/ghostty/` - Ghostty terminal with configuration
+- `packages/hammerspoon/` - Hammerspoon with Leaderflow modal keybindings
+- `packages/claude-code/` - Claude Code CLI with 1Password integration
 
 ### Scripts and Utilities
-The `aleksandars-mbp/bin/` directory contains custom shell scripts that are added to PATH:
+Custom shell scripts are available in `packages/scripts/bin/`:
 - Git utilities (git-rank-contributors, git-recent, git-wtf)
 - Development tools (dev, gh-pr, gh-url, mdc, notes)
-- System utilities (extract, headers)
+- System utilities (extract, headers, update-dot)
 
 ## Configuration Management
 
 ### Making Changes
-1. Edit configuration files (primarily in `aleksandars-mbp/rastasheep.nix`)
+1. Edit configuration files in relevant `packages/` directory
 2. Run `apply-dot` to apply changes
-3. Configuration creates backups with `-b bak` flag
+3. Changes are applied via `nix profile upgrade`
 
 ### Host Configuration
-The configuration is specific to `rastasheep@aleksandars-mbp`. To adapt for different hosts:
-- Create new directory under project root (e.g., `new-hostname/`)
-- Add new homeConfiguration in `flake.nix`
-- Reference the new configuration module
+The configuration is specific to `aleksandars-mbp`. To adapt for different hosts:
+- Create new directory under `machines/` (e.g., `machines/new-hostname/`)
+- Create a `default.nix` that composes desired packages
+- Install with `nix profile install .#new-hostname`
 
 ### Package Management
-- Global packages defined in `home.nix`
-- Host-specific packages in `aleksandars-mbp/rastasheep.nix`
-- Custom packages via overlays in `flake.nix`
+- Individual tools in `packages/` directories
+- Machine-specific bundles in `machines/` directories
+- All packages exposed through flake outputs
 
 ## Key Programs Configured
 - **Shell**: Zsh with custom prompt, autosuggestions, and extensive aliases

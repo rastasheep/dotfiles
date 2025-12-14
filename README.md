@@ -47,13 +47,14 @@ nix profile upgrade '.*dotfiles.*'
 nix profile install github:rastasheep/dotfiles#{nvim,git,tmux}
 ```
 
-### Legacy: Home-Manager (Still Available)
+### Option 4: Machine-Specific Bundle
 ```bash
-# Apply home-manager configuration (traditional approach)
-apply-dot
+# Install complete machine-specific bundle
+cd ~/src/github.com/rastasheep/dotfiles
+nix profile install .#aleksandars-mbp
 
-# Update and apply
-update-dot
+# Update later
+apply-dot  # or: nix profile upgrade ".*aleksandars-mbp.*"
 ```
 
 ## Structure
@@ -76,12 +77,8 @@ update-dot
 │   ├── 1password-cli/          # 1Password CLI
 │   ├── blender/                # Custom Blender build (optional)
 │   └── kicad/                  # Custom KiCad build (optional)
-├── machines/                    # Machine-specific bundles
-│   └── aleksandars-mbp/        # Composes tools + apps for this machine
-├── home.nix                     # Global packages (home-manager legacy)
-└── aleksandars-mbp/
-    ├── rastasheep.nix          # Host-specific config (home-manager legacy)
-    └── vim.lua                 # Vim config (legacy, now in packages/nvim/)
+└── machines/                    # Machine-specific bundles
+    └── aleksandars-mbp/        # Composes tools + apps for this machine
 ```
 
 ## Available Packages
@@ -116,4 +113,3 @@ Pre-configured bundles for specific machines:
 
 - [Nix flakes](https://nixos.wiki/wiki/Flakes)
 - [Nix packages manual](https://nixos.org/manual/nixpkgs/stable/)
-- [home-manager](https://nix-community.github.io/home-manager/) (for legacy config)
