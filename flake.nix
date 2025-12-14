@@ -60,6 +60,31 @@
             pathsToLink = [ "/bin" "/share" "/etc" ];
           };
         };
+
+        # Checks - verify packages build correctly
+        checks = {
+          # Verify all core packages build
+          all-packages = pkgs.buildEnv {
+            name = "all-packages-check";
+            paths = [
+              scripts git tmux starship zsh nvim dircolors
+              hammerspoon ghostty claude-code macos-defaults
+            ];
+            pathsToLink = [ "/bin" "/share" "/etc" "/Applications" ];
+          };
+
+          # Verify machine bundle builds
+          machine-bundle = import ./machines/aleksandars-mbp { inherit pkgs claudePkgs; };
+
+          # Verify lib utilities are accessible
+          lib-check = pkgs.runCommand "lib-check" {} ''
+            # Test that lib can be imported and has expected functions
+            ${pkgs.nix}/bin/nix-instantiate --eval --expr '
+              let lib = import ${./lib} { pkgs = import ${pkgs.path} {}; };
+              in lib ? wrapWithConfig && lib ? buildConfig && lib ? smartConfigLink && lib ? mkMeta
+            ' > $out
+          '';
+        };
       }
     );
 }
