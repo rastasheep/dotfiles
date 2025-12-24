@@ -80,6 +80,8 @@
     extraPackages = with pkgs; [
       mesa
       virglrenderer
+      libglvnd  # OpenGL dispatch library
+      egl-wayland  # EGL external platform for Wayland
     ];
   };
 
@@ -93,9 +95,13 @@
   };
 
   # System packages
-  environment.systemPackages = [
+  environment.systemPackages = with pkgs; [
     # Noctalia shell panel/widget system
     noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
+
+    # Graphics debugging tools
+    mesa-demos  # Provides glxinfo for debugging
+    vulkan-tools  # Provides vulkaninfo
   ];
 
   # Enable services required by Noctalia
