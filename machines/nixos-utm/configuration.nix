@@ -73,10 +73,7 @@
   programs.mango.enable = true;
 
   # Graphics and rendering support for Wayland compositors
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
+  hardware.graphics.enable = true;
 
   # System packages
   environment.systemPackages = [
