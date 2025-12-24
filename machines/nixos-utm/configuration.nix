@@ -76,32 +76,18 @@
   # Graphics and rendering support for Wayland compositors
   hardware.graphics = {
     enable = true;
-    # Add Mesa drivers explicitly for virtio GPU 3D acceleration
+    # Mesa provides OpenGL/EGL/GLES drivers for virtio GPU
+    # virglrenderer enables 3D acceleration in virtualized environments
     extraPackages = with pkgs; [
       mesa
       virglrenderer
-      libglvnd  # OpenGL dispatch library
-      egl-wayland  # EGL external platform for Wayland
     ];
-  };
-
-  # Ensure proper OpenGL/Mesa environment for Wayland compositors
-  environment.variables = {
-    # Use software rendering fallback if hardware acceleration fails
-    LIBGL_ALWAYS_SOFTWARE = "0";
-    # Enable Mesa debugging if needed
-    # MESA_DEBUG = "1";
-    # EGL_LOG_LEVEL = "debug";
   };
 
   # System packages
   environment.systemPackages = with pkgs; [
     # Noctalia shell panel/widget system
     noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
-
-    # Graphics debugging tools
-    mesa-demos  # Provides glxinfo for debugging
-    vulkan-tools  # Provides vulkaninfo
   ];
 
   # Enable services required by Noctalia
