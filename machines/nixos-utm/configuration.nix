@@ -79,7 +79,6 @@
     # Add Mesa drivers explicitly for virtio GPU 3D acceleration
     extraPackages = with pkgs; [
       mesa
-      mesa.drivers
       virglrenderer
     ];
   };
