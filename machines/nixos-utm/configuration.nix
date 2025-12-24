@@ -34,11 +34,12 @@
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
-  # Enable the X11 windowing system.
+  # X11 not needed - MangoWC is a Wayland compositor
   # services.xserver.enable = true;
 
-
-  
+  # Wayland compositor requirements
+  # Enable seat management for proper device access (keyboard, mouse, GPU)
+  services.seatd.enable = true;
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -58,10 +59,10 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.rastasheep = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" "video" "seat" ]; # Enable 'sudo', GPU access, and seat management
     packages = with pkgs; [
       tree
     ];
@@ -73,7 +74,24 @@
   programs.mango.enable = true;
 
   # Graphics and rendering support for Wayland compositors
-  hardware.graphics.enable = true;
+  hardware.graphics = {
+    enable = true;
+    # Add Mesa drivers explicitly for virtio GPU 3D acceleration
+    extraPackages = with pkgs; [
+      mesa
+      mesa.drivers
+      virglrenderer
+    ];
+  };
+
+  # Ensure proper OpenGL/Mesa environment for Wayland compositors
+  environment.variables = {
+    # Use software rendering fallback if hardware acceleration fails
+    LIBGL_ALWAYS_SOFTWARE = "0";
+    # Enable Mesa debugging if needed
+    # MESA_DEBUG = "1";
+    # EGL_LOG_LEVEL = "debug";
+  };
 
   # System packages
   environment.systemPackages = [
