@@ -62,7 +62,7 @@
   # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.rastasheep = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "video" "seat" ]; # Enable 'sudo', GPU access, and seat management
+    extraGroups = [ "wheel" "networkmanager" "video" "render" "seat" ]; # Enable 'sudo', GPU access, and seat management
     packages = with pkgs; [
       tree
     ];
