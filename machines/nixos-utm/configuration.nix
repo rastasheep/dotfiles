@@ -2,13 +2,13 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, noctalia, ... }:
+{ config, lib, pkgs, noctalia, mango, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    mango.nixosModules.mango
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -68,6 +68,9 @@
   };
 
   # programs.firefox.enable = true;
+
+  # Enable MangoWC Wayland compositor
+  programs.mango.enable = true;
 
   # System packages
   environment.systemPackages = [

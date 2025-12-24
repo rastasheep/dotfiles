@@ -5,14 +5,15 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     noctalia.url = "github:noctalia-dev/noctalia-shell";
+    mango.url = "github:DreamMaoMao/mango";
   };
 
-  outputs = { self, nixpkgs, flake-utils, noctalia, ... }:
+  outputs = { self, nixpkgs, flake-utils, noctalia, mango, ... }:
     {
       # NixOS system configurations
       nixosConfigurations.nixos-utm = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
-        specialArgs = { inherit noctalia; };
+        specialArgs = { inherit noctalia mango; };
         modules = [ ./machines/nixos-utm/configuration.nix ];
       };
     }
