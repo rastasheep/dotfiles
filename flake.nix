@@ -4,11 +4,16 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    noctalia.url = "github:noctalia-dev/noctalia-shell";
+
+    # Override all flake inputs to use our system nixpkgs
+    # This ensures consistent library versions across all packages
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     mango = {
       url = "github:DreamMaoMao/mango";
-      # Override mango's nixpkgs to use our system nixpkgs
-      # This ensures mango is built against the same Mesa/EGL libraries
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
