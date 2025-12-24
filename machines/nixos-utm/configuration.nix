@@ -72,6 +72,12 @@
   # Enable MangoWC Wayland compositor
   programs.mango.enable = true;
 
+  # Graphics and rendering support for Wayland compositors
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
   # System packages
   environment.systemPackages = [
     # Noctalia shell panel/widget system
