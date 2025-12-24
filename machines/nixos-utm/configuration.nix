@@ -4,6 +4,14 @@
 
 { config, lib, pkgs, noctalia, mango, ... }:
 
+let
+  # Wrap mango with custom configuration
+  mangoConfigured = import ../../packages/mango {
+    inherit pkgs;
+    mangoPackage = mango.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  };
+in
+
 {
   imports = [
     ./hardware-configuration.nix
@@ -70,9 +78,6 @@
 
   # programs.firefox.enable = true;
 
-  # Enable MangoWC Wayland compositor
-  programs.mango.enable = true;
-
   # Graphics and rendering support for Wayland compositors
   hardware.graphics = {
     enable = true;
@@ -86,8 +91,14 @@
 
   # System packages
   environment.systemPackages = with pkgs; [
+    # MangoWC Wayland compositor with custom configuration
+    mangoConfigured
+
     # Noctalia shell panel/widget system
     noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
+
+    # Terminal emulator
+    ghostty
   ];
 
   # Enable services required by Noctalia
