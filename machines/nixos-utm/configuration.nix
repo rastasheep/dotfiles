@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, noctalia, ... }:
 
 {
   imports =
@@ -69,12 +69,16 @@
 
   # programs.firefox.enable = true;
 
-  # List packages installed in system profile.
-  # You can use https://search.nixos.org/ to find more packages (and options).
-  # environment.systemPackages = with pkgs; [
-  #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #   wget
-  # ];
+  # System packages
+  environment.systemPackages = [
+    # Noctalia shell panel/widget system
+    noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
+  ];
+
+  # Enable services required by Noctalia
+  hardware.bluetooth.enable = true;
+  services.upower.enable = true;
+  services.power-profiles-daemon.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -103,6 +107,10 @@
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
   # system.copySystemConfiguration = true;
+
+  # Enable Nix flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.config.allowUnfree = true;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

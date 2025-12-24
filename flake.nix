@@ -4,10 +4,20 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    noctalia.url = "github:noctalia-dev/noctalia-shell";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
-    # Support multiple systems (aarch64-darwin, x86_64-darwin, aarch64-linux, x86_64-linux)
+  outputs = { self, nixpkgs, flake-utils, noctalia, ... }:
+    {
+      # NixOS system configurations
+      nixosConfigurations.nixos-utm = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        specialArgs = { inherit noctalia; };
+        modules = [ ./machines/nixos-utm/configuration.nix ];
+      };
+    }
+    //
+    # User packages (multi-system)
     flake-utils.lib.eachDefaultSystem (system:
       let
         # Main package set with unfree packages enabled
