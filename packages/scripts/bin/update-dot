@@ -12,17 +12,17 @@ cd "$dotfiles_dir"
 
 # Show current lock info
 echo "Current versions:"
-nix flake metadata --no-write-lock-file | grep -E "(nixpkgs|home-manager)" || true
+nix flake metadata --no-write-lock-file | grep -E "nixpkgs" || true
 
 # Update inputs
 nix flake update
 
 echo ""
 echo "→ Applying updated configuration..."
-nix run --impure home-manager/master -- -b bak switch --flake .#rastasheep@aleksandars-mbp
+nix profile upgrade --impure ".*aleksandars-mbp.*"
 
 echo ""
 echo "✓ Dotfiles updated and applied successfully!"
 echo ""
 echo "Updated versions:"
-nix flake metadata --no-write-lock-file | grep -E "(nixpkgs|home-manager)" || true
+nix flake metadata --no-write-lock-file | grep -E "nixpkgs" || true

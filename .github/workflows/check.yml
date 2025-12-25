@@ -1,0 +1,48 @@
+name: Nix Flake Checks
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+# Cancel previous runs on the same branch/PR when new commits are pushed
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Validate Flake
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v14
+
+      - name: Setup Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@v8
+
+      - name: Show flake info
+        run: nix flake show
+
+      - name: Check flake formatting
+        run: nix flake check --show-trace
+
+      - name: Build default package
+        run: nix build .#default --print-build-logs
+
+      - name: Build machine bundle
+        run: nix build .#aleksandars-mbp --print-build-logs
+
+      - name: Verify passthru.unwrapped
+        run: |
+          echo "Testing passthru.unwrapped pattern..."
+          nix eval .#git.version
+          nix eval .#tmux.version
+          nix eval .#starship.version
+          echo "All passthru checks passed!"
