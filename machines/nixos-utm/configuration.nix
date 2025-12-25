@@ -116,9 +116,12 @@ in
 
   # List services that you want to enable:
 
-  # Spice guest toold for UTM 
+  # Spice guest tools for UTM (enables dynamic resolution)
   services.spice-vdagentd.enable = true;
   services.qemuGuest.enable = true;
+
+  # Enable automatic display resolution adjustment
+  services.spice-autorandr.enable = true;
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
