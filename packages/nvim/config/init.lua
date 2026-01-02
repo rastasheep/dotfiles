@@ -132,7 +132,56 @@ vim.api.nvim_create_user_command('Gsigns', 'Gitsigns toggle_signs', {})
 vim.api.nvim_create_user_command('Gshow', 'Gitsigns show <f-args>', { nargs = 1 })
 
 -- lsp
-vim.lsp.enable({'elixirls', 'ts_ls'})
+-- All these servers are bundled privately with neovim
+-- They don't pollute system PATH and project LSPs take precedence
+
+-- Configure LSP servers
+vim.lsp.config('ts_ls', {
+  cmd = { 'typescript-language-server', '--stdio' },
+  filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+  root_markers = { 'package.json', 'tsconfig.json', 'jsconfig.json' },
+})
+
+vim.lsp.config('elixirls', {
+  cmd = { 'elixir-ls' },
+  filetypes = { 'elixir', 'eelixir', 'heex', 'surface' },
+  root_markers = { 'mix.exs' },
+})
+
+vim.lsp.config('lua_ls', {
+  cmd = { 'lua-language-server' },
+  filetypes = { 'lua' },
+  root_markers = { '.luarc.json', '.luarc.jsonc', '.luacheckrc', '.stylua.toml', 'stylua.toml', 'selene.toml', 'selene.yml' },
+})
+
+vim.lsp.config('nil_ls', {
+  cmd = { 'nil' },
+  filetypes = { 'nix' },
+  root_markers = { 'flake.nix', 'default.nix', 'shell.nix' },
+})
+
+vim.lsp.config('html', {
+  cmd = { 'vscode-html-language-server', '--stdio' },
+  filetypes = { 'html' },
+  root_markers = { 'package.json' },
+})
+
+vim.lsp.config('cssls', {
+  cmd = { 'vscode-css-language-server', '--stdio' },
+  filetypes = { 'css', 'scss', 'less' },
+  root_markers = { 'package.json' },
+})
+
+vim.lsp.config('jsonls', {
+  cmd = { 'vscode-json-language-server', '--stdio' },
+  filetypes = { 'json', 'jsonc' },
+  root_markers = { 'package.json' },
+})
+
+-- Enable configured LSP servers (ESLint removed due to configuration issues)
+vim.lsp.enable({ 'ts_ls', 'elixirls', 'lua_ls', 'nil_ls', 'html', 'cssls', 'jsonls' })
+
+-- Enable LSP-based completion
 vim.lsp.completion.enable()
 
 vim.api.nvim_create_autocmd('LspAttach', {
