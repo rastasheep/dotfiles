@@ -111,9 +111,42 @@ alias j='jobs'
 alias ll='ls -lah'
 
 # Machine-specific aliases
-alias apply-dot='cd ~/src/github.com/rastasheep/dotfiles && nix profile upgrade --impure ".*aleksandars-mbp.*"'
+alias apply-dot='cd ~/src/github.com/rastasheep/dotfiles && nix profile upgrade aleksandars-mbp'
 alias dev-vpn='sudo openvpn --config ~/Google\ Drive/My\ Drive/fhc-dev-vpn.ovpn'
-alias dev='source dev'
+
+# Dev function - jump into repo or clone if git ssh url provided
+function dev() {
+  local src=$HOME/src
+  local src_depth=3
+  local fzf_args=(--print-query)
+
+  if [ "$1" ]; then
+    fzf_args+=(-f "$1")
+    fzf_args+=(-e)
+  fi
+
+  local fzf_query=$(find "$src" -maxdepth "$src_depth" -mindepth "$src_depth" -type d | sed -e "s#^$src/##" | fzf "${fzf_args[@]}")
+  local match=$?
+  local query="$(echo "$fzf_query" | tail -n 1)"
+  local destination="$(echo "$query" | sed -e 's#^.*@##' -e 's#\.git$##' | tr ':' '/' | tr '[:upper:]' '[:lower:]')"
+
+  case "$match" in
+    0)
+      cd "$src"/"$destination" || return 1
+      ;;
+    1)
+      if [[ "$query" =~ ".git" && "$query" =~ "@" ]]; then
+        echo "Creating '$src/$destination'"
+        mkdir -p "$src"/"$destination"
+        cd "$src"/"$destination" || return 1
+        git clone "$query" .
+      else
+        echo "'$query' is not a valid git ssh url"
+        return 1
+      fi
+      ;;
+  esac
+}
 
 # Git function - defaults to 'git st' when no args
 function git() {

@@ -10,8 +10,8 @@ This is a modular Nix flake-based dotfiles repository for macOS. It provides por
 
 ### Apply Configuration Changes
 ```bash
-# Update dotfiles installation
-nix profile upgrade ".*aleksandars-mbp.*"
+# Update dotfiles installation (use exact profile name, not regex)
+nix profile upgrade aleksandars-mbp
 
 # Or rebuild from source
 cd ~/src/github.com/rastasheep/dotfiles

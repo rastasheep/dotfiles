@@ -14,10 +14,27 @@ let
     # Add 1Password CLI to PATH
     export PATH="${lib.makeBinPath [ pkgs._1password-cli ]}:$PATH"
 
+    # Ensure ~/.claude directory exists as a writable directory
+    mkdir -p "$HOME/.claude"
+
+    # Link only specific config files, not the entire directory
+    # This allows Claude to create logs, cache, and other files it needs
     ${dotfilesLib.smartConfigLink {
-      from = "${claudeConfig}/share/claude";
-      to = "$HOME/.claude";
+      from = "${claudeConfig}/share/claude/settings.json";
+      to = "$HOME/.claude/settings.json";
     }}
+
+    # Sync commands: copy dotfiles commands while preserving marketplace-installed ones
+    mkdir -p "$HOME/.claude/commands"
+
+    # Remove old symlink if it exists
+    if [ -L "$HOME/.claude/commands" ]; then
+      rm -f "$HOME/.claude/commands"
+      mkdir -p "$HOME/.claude/commands"
+    fi
+
+    # Sync our dotfiles commands (updates our files, preserves marketplace additions)
+    cp -f ${claudeConfig}/share/claude/commands/* "$HOME/.claude/commands/" 2>/dev/null || true
 
     # Load secrets from 1Password
     export AWS_BEARER_TOKEN_BEDROCK=$(op read "op://Private/claude-code/AWS_BEARER_TOKEN_BEDROCK" 2>/dev/null || true)
