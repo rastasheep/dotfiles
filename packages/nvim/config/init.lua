@@ -32,6 +32,7 @@ vim.o.errorbells = false
 vim.o.timeoutlen = 500
 
 vim.o.background = 'dark'
+vim.o.termguicolors = true
 vim.cmd('colorscheme flexoki-dark')
 vim.cmd('highlight clear VertSplit')
 vim.cmd('highlight Normal guibg=none')
@@ -111,11 +112,20 @@ vim.keymap.set('v', '<leader>a', '<cmd>FzfLua grep_visual<cr>', { silent = true 
 vim.keymap.set('n', '<leader>A', ':FzfLua grep_cword<cr>', { silent = true })
 
 -- treesitter
-require('nvim-treesitter.configs').setup({
-  highlight = { enable = true },
-  indent = { enable = true }
+-- Enable highlighting and indentation
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = '*',
+  callback = function()
+    if vim.treesitter.language.get_lang(vim.bo.filetype) then
+      pcall(vim.treesitter.start)
+    end
+  end
 })
 
+-- Register heex to use elixir parser
+vim.treesitter.language.register('elixir', 'heex')
+
+-- Setup folding
 vim.api.nvim_create_autocmd('FileType', {
   callback = function()
     vim.opt_local.foldlevel = 20
