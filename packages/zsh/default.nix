@@ -1,35 +1,35 @@
 { pkgs }:
 
-# Note: zsh requires custom installPhase to generate zshenv, can't use lib.buildConfig directly
 let
   inherit (pkgs) lib;
+  dotfilesLib = import ../../lib { inherit pkgs; };
 
-  zshConfig = pkgs.stdenvNoCC.mkDerivation {
-    name = "zsh-config";
+  zshConfig = dotfilesLib.buildConfig {
+    name = "zsh";
     src = ./.;
-    dontBuild = true;
-
-    installPhase = ''
-      mkdir -p $out/etc
-      cp ${./zshrc} $out/etc/zshrc
-
-      # Create a .zshenv that sources our config
-      cat > $out/etc/zshenv <<'EOF'
-# Source the custom zshrc
-source ${./zshrc}
-EOF
-    '';
   };
+
+  # Wrapper script that handles zshrc symlinking
+  zshWrapper = pkgs.writeShellScriptBin "zsh" ''
+    # Set up ~/.zshrc symlink automatically
+    ${dotfilesLib.smartConfigLink {
+      from = "${zshConfig}/share/zsh/zshrc";
+      to = "$HOME/.zshrc";
+    }}
+
+    # Execute the real zsh binary
+    exec ${pkgs.zsh}/bin/zsh "$@"
+  '';
 in
 pkgs.buildEnv {
   name = "zsh-configured";
   paths = [
-    pkgs.zsh
+    zshWrapper
     pkgs.zsh-autosuggestions
     pkgs.zsh-completions
     zshConfig
   ];
-  pathsToLink = [ "/bin" "/share" "/etc" ];
+  pathsToLink = [ "/bin" "/share" ];
 
   passthru = {
     unwrapped = pkgs.zsh;

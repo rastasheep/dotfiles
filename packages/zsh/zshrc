@@ -80,8 +80,9 @@ fi
 # Initialize dircolors for colorized ls output
 if command -v dircolors &> /dev/null; then
   # Try to use bundled dircolors config
-  if [ -f /nix/store/*/share/dircolors/dircolors ]; then
-    eval "$(dircolors -b /nix/store/*/share/dircolors/dircolors)"
+  dircolors_config=(/nix/store/*/share/dircolors/dircolors(N[1]))
+  if [[ -f "$dircolors_config" ]]; then
+    eval "$(dircolors -b "$dircolors_config")"
   else
     eval "$(dircolors -b)"
   fi
@@ -94,8 +95,9 @@ if command -v dircolors &> /dev/null; then
 fi
 
 # Load zsh-autosuggestions if available
-if [ -f /nix/store/*/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-  source /nix/store/*/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+autosuggestions=(/nix/store/*/share/zsh-autosuggestions/zsh-autosuggestions.zsh(N[1]))
+if [[ -f "$autosuggestions" ]]; then
+  source "$autosuggestions"
 fi
 
 # Shell aliases
@@ -111,41 +113,20 @@ alias j='jobs'
 alias ll='ls -lah'
 
 # Machine-specific aliases
-alias apply-dot='cd ~/src/github.com/rastasheep/dotfiles && nix profile upgrade aleksandars-mbp'
+alias apply-dot='nix profile upgrade aleksandars-mbp'
 alias dev-vpn='sudo openvpn --config ~/Google\ Drive/My\ Drive/fhc-dev-vpn.ovpn'
 
-# Dev function - jump into repo or clone if git ssh url provided
+# Dev function - thin wrapper around dev-find script for directory jumping
 function dev() {
-  local src=$HOME/src
-  local src_depth=3
-  local fzf_args=(--print-query)
+  local destination
+  destination=$(dev-find "$@")
+  local exit_code=$?
 
-  if [ "$1" ]; then
-    fzf_args+=(-f "$1")
-    fzf_args+=(-e)
+  if [ $exit_code -eq 0 ] && [ -n "$destination" ]; then
+    cd "$destination" || return 1
+  else
+    return $exit_code
   fi
-
-  local fzf_query=$(find "$src" -maxdepth "$src_depth" -mindepth "$src_depth" -type d | sed -e "s#^$src/##" | fzf "${fzf_args[@]}")
-  local match=$?
-  local query="$(echo "$fzf_query" | tail -n 1)"
-  local destination="$(echo "$query" | sed -e 's#^.*@##' -e 's#\.git$##' | tr ':' '/' | tr '[:upper:]' '[:lower:]')"
-
-  case "$match" in
-    0)
-      cd "$src"/"$destination" || return 1
-      ;;
-    1)
-      if [[ "$query" =~ ".git" && "$query" =~ "@" ]]; then
-        echo "Creating '$src/$destination'"
-        mkdir -p "$src"/"$destination"
-        cd "$src"/"$destination" || return 1
-        git clone "$query" .
-      else
-        echo "'$query' is not a valid git ssh url"
-        return 1
-      fi
-      ;;
-  esac
 }
 
 # Git function - defaults to 'git st' when no args
