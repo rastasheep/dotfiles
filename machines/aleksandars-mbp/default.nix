@@ -12,6 +12,7 @@ let
   starship = import ../../packages/starship { inherit pkgs; };
   zsh = import ../../packages/zsh { inherit pkgs; };
   nvim = import ../../packages/nvim { inherit pkgs; };
+  helix = import ../../packages/helix { inherit pkgs; };
   dircolors = import ../../packages/dircolors { inherit pkgs; };
   hammerspoon = import ../../packages/hammerspoon { inherit pkgs; };
   ghostty = import ../../packages/ghostty { inherit pkgs; };
@@ -36,6 +37,7 @@ pkgs.buildEnv {
     starship
     zsh
     nvim
+    helix
     dircolors
     hammerspoon
     ghostty
