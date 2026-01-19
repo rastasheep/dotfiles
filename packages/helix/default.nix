@@ -11,8 +11,13 @@ let
     dontBuild = true;
 
     installPhase = ''
-      mkdir -p $out/helix
-      cp ${./config.toml} $out/helix/config.toml
+      mkdir -p $out/helix/themes
+      cp $src/config.toml $out/helix/config.toml
+
+      # Copy all theme files if themes directory exists
+      if [ -d "$src/themes" ]; then
+        cp $src/themes/*.toml $out/helix/themes/ 2>/dev/null || true
+      fi
     '';
   };
 in
@@ -33,7 +38,7 @@ pkgs.symlinkJoin {
   };
 
   meta = {
-    description = "Helix editor configured with Flexoki dark theme and whitespace rendering";
+    description = "Helix editor configured with custom Flexoki Alabaster transparent theme";
     homepage = "https://helix-editor.com";
     license = lib.licenses.mpl20;
     platforms = lib.platforms.unix;

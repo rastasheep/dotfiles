@@ -1,7 +1,12 @@
-theme = "flexoki_dark"
+theme = "flexoki-alabaster-dark"
 
 [editor]
 cursorline = true
+end-of-line-diagnostics = "hint"
+
+[editor.inline-diagnostics]
+cursor-line = "warning"
+other-lines = "disable"
 
 [editor.soft-wrap]
 enable = true
@@ -32,3 +37,6 @@ git-ignore = true
 left = ["mode", "spinner", "version-control"]
 center = ["file-name"]
 right = ["diagnostics", "selections", "position", "file-encoding"]
+
+[keys.normal]
+"#" = ["move_prev_word_start", "select_mode", "move_next_word_end", "search_selection", "normal_mode"]

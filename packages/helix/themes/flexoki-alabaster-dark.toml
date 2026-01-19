@@ -1,0 +1,197 @@
+# flexoki-alabaster-dark.toml
+#
+# A minimal dark Helix theme combining:
+# - Alabaster's minimal syntax highlighting (4 colors only)
+# - Flexoki dark color palette
+# - Full transparency (like base16_transparent)
+# - Highlighted yellow comments
+#
+# PHILOSOPHY:
+#
+# Alabaster Approach (https://github.com/tonsky/sublime-scheme-alabaster):
+#   "Readable syntax, no matter the language"
+#   Only 4 semantic categories receive colors:
+#     - Strings (cyan)    - literal values, text content
+#     - Constants (purple) - fixed values, numbers, booleans
+#     - Comments (yellow)  - documentation, notes
+#     - Definitions (blue) - functions, types, classes
+#   Everything else (keywords, variables, operators) uses default foreground.
+#   Code structure comes from formatting, not color overload.
+#
+# Flexoki Colors (https://stephango.com/flexoki):
+#   "An inky color scheme for prose and code"
+#   Brings the comfort of analog color to digital screens.
+#   Uses Oklab color space for perceptual balance across light/dark modes.
+#   All colors are official Flexoki -400 variants for dark theme.
+#
+# The result: minimal, readable, comfortable for long coding sessions.
+
+# GENERAL - Diagnostics (LSP errors/warnings)
+warning = { fg = "highlight" }
+error = { fg = "error-red" }
+info = { fg = "definition" }
+hint = { fg = "punctuation" }
+diagnostic = { underline = { style = "curl" } }
+
+# UI - Interface elements (mostly transparent)
+"ui.background" = {}
+"ui.text" = { fg = "fg" }
+"ui.text.focus" = { fg = "active", modifiers = ["bold"] }
+
+"ui.cursor" = { bg = "active", fg = "bg-fallback" }
+"ui.cursor.primary" = { bg = "active", fg = "bg-fallback" }
+"ui.cursor.match" = { bg = "selection", modifiers = ["bold"] }
+
+"ui.selection" = { bg = "selection" }
+"ui.selection.primary" = { bg = "selection-primary" }
+
+"ui.highlight" = { bg = "selection-primary" }
+
+"ui.linenr" = { fg = "punctuation" }
+"ui.linenr.selected" = { fg = "active", modifiers = ["bold"] }
+
+"ui.statusline" = { fg = "fg" }
+"ui.statusline.inactive" = { fg = "punctuation" }
+"ui.statusline.normal" = { fg = "bg-fallback", bg = "definition" }
+"ui.statusline.insert" = { fg = "bg-fallback", bg = "active" }
+"ui.statusline.select" = { fg = "bg-fallback", bg = "jump-label" }
+
+"ui.bufferline.active" = { fg = "fg", modifiers = ["bold"] }
+"ui.bufferline.background" = {}
+"ui.bufferline" = { fg = "punctuation" }
+
+"ui.menu" = { fg = "fg", bg = "panel" }
+"ui.menu.selected" = { fg = "bg-fallback", bg = "active" }
+"ui.menu.scroll" = { fg = "punctuation" }
+
+"ui.popup" = { fg = "fg", bg = "panel" }
+"ui.popup.info" = { fg = "fg", bg = "panel" }
+"ui.window" = { fg = "punctuation" }
+"ui.help" = { fg = "fg", bg = "panel" }
+"ui.debug" = { fg = "error-red", bg = "panel" }
+
+"ui.virtual.jump-label" = { fg = "jump-label", modifiers = ["bold"] }
+"ui.virtual.whitespace" = "tx-3"
+"ui.virtual.ruler" = {}
+"ui.virtual.inlay-hint" = { fg = "tx-3" }
+"ui.virtual.indent-guide" = "punctuation"
+"ui.virtual.wrap" = "punctuation"
+
+"ui.cursorline" = {}
+"ui.cursorcolumn" = {}
+
+"diagnostic.error" = { underline = { color = "error-red", style = "curl" } }
+"diagnostic.warning" = { underline = { color = "highlight", style = "curl" } }
+"diagnostic.info" = { underline = { color = "definition", style = "curl" } }
+"diagnostic.hint" = { underline = { color = "punctuation", style = "curl" } }
+"diagnostic.unnecessary" = { modifiers = ["dim"] }
+"diagnostic.deprecated" = { modifiers = ["crossed_out"] }
+
+# SYNTAX HIGHLIGHTING - Alabaster's minimal approach
+# Only 4 categories get colors: strings, constants, comments, definitions
+
+"string" = { fg = "string" }
+"string.regexp" = { fg = "string" }
+"string.special" = { fg = "string" }
+
+"constant" = { fg = "constant" }
+"constant.numeric" = { fg = "constant" }
+"constant.character" = { fg = "constant" }
+"constant.builtin" = { fg = "constant" }
+
+"comment" = { fg = "comment" }
+"comment.line" = { fg = "comment" }
+"comment.block" = { fg = "comment" }
+"comment.block.documentation" = { fg = "comment" }
+
+"function" = { fg = "definition" }
+"function.builtin" = { fg = "definition" }
+"function.method" = { fg = "definition" }
+"function.macro" = { fg = "definition" }
+
+"constructor" = { fg = "definition" }
+"type" = { fg = "definition" }
+"type.builtin" = { fg = "definition" }
+
+# Everything else uses default foreground (minimal highlighting)
+"keyword" = { fg = "fg" }
+"keyword.control" = { fg = "fg" }
+"keyword.control.conditional" = { fg = "fg" }
+"keyword.control.repeat" = { fg = "fg" }
+"keyword.control.return" = { fg = "fg" }
+"keyword.control.import" = { fg = "fg" }
+"keyword.operator" = { fg = "fg" }
+"keyword.function" = { fg = "fg" }
+"keyword.storage" = { fg = "fg" }
+"keyword.storage.type" = { fg = "fg" }
+"keyword.storage.modifier" = { fg = "fg" }
+
+"variable" = { fg = "fg" }
+"variable.parameter" = { fg = "fg" }
+"variable.builtin" = { fg = "fg" }
+"variable.other" = { fg = "fg" }
+"variable.other.member" = { fg = "fg" }
+
+"punctuation" = { fg = "punctuation" }
+"punctuation.bracket" = { fg = "punctuation" }
+"punctuation.delimiter" = { fg = "punctuation" }
+"punctuation.special" = { fg = "punctuation" }
+
+"operator" = { fg = "punctuation" }
+
+"tag" = { fg = "definition" }
+"attribute" = { fg = "fg" }
+"namespace" = { fg = "definition" }
+"label" = { fg = "constant" }
+"special" = { fg = "fg" }
+
+# MARKUP
+"markup.heading" = { fg = "definition", modifiers = ["bold"] }
+"markup.heading.1" = { fg = "definition", modifiers = ["bold"] }
+"markup.heading.2" = { fg = "definition", modifiers = ["bold"] }
+"markup.heading.3" = { fg = "definition", modifiers = ["bold"] }
+"markup.heading.4" = { fg = "definition", modifiers = ["bold"] }
+"markup.heading.5" = { fg = "definition", modifiers = ["bold"] }
+"markup.heading.6" = { fg = "definition", modifiers = ["bold"] }
+"markup.list" = { fg = "fg" }
+"markup.list.unnumbered" = { fg = "fg" }
+"markup.list.numbered" = { fg = "fg" }
+"markup.bold" = { modifiers = ["bold"] }
+"markup.italic" = { modifiers = ["italic"] }
+"markup.strikethrough" = { modifiers = ["crossed_out"] }
+"markup.link.url" = { fg = "string", modifiers = ["underlined"] }
+"markup.link.text" = { fg = "definition" }
+"markup.link.label" = { fg = "definition" }
+"markup.quote" = { fg = "comment" }
+"markup.raw" = { fg = "string" }
+"markup.raw.block" = { fg = "string" }
+"markup.raw.inline" = { fg = "string" }
+
+# DIFF
+"diff.plus" = { fg = "string" }
+"diff.minus" = { fg = "error-red" }
+"diff.delta" = { fg = "highlight" }
+"diff.delta.moved" = { fg = "definition" }
+
+[palette]
+# Flexoki Dark color palette
+fg = "#CECDC3"
+bg-fallback = "#100F0F"
+tx-3 = "#575653"
+
+# The 4 semantic colors (using Flexoki palette)
+string = "#3AA99F"
+constant = "#8B7EC8"
+comment = "#D0A215"
+definition = "#4385BE"
+
+# UI colors
+punctuation = "#878580"
+selection = "#343331"
+selection-primary = "#403E3C"
+active = "#DA702C"
+highlight = "#D0A215"
+error-red = "#D14D41"
+error-bg = "#3D1F1F"
+jump-label = "#CE5D97"
+panel = "#282726"
