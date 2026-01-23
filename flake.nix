@@ -63,7 +63,7 @@
 
         # Custom builds (optional - commented out by default)
         # blender = import ./packages/blender { inherit pkgs; };
-        # kicad = import ./packages/kicad { inherit pkgs; };
+        kicad = import ./packages/kicad { inherit (pkgs) lib stdenvNoCC fetchurl undmg; };
       in
       {
         # Individual tool packages - can be run with 'nix run .#<tool>'
@@ -75,7 +75,8 @@
           inherit hammerspoon ghostty claude-code macos-defaults;
 
           # Custom builds (uncomment in let block above to enable)
-          # inherit blender kicad;
+          # inherit blender;
+          inherit kicad;
 
           # Machine-specific bundles
           aleksandars-mbp = import ./machines/aleksandars-mbp { inherit pkgs claudePkgs; };

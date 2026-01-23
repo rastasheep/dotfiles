@@ -6,12 +6,11 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "kicad";
-  version = "7.0.6";
-  platform = "macos-arm64";
+  version = "9.0.7";
 
   src = fetchurl {
-    url = "https://github.com/KiCad/kicad-source-mirror/releases/download/7.0.6/kicad-unified-universal-7.0.6-0.dmg";
-    sha256 = "sha256-8tz/T8hfEca+qcSnX0BBre7Ept2zFNu58s+aZLHbzdk=";
+    url = "https://github.com/KiCad/kicad-source-mirror/releases/download/${version}/kicad-unified-universal-${version}.dmg";
+    sha256 = "1hl4zm2yli5gkv74vf8537ffqsd2wsjsp9dr6sdcg78imkj2b5a4";
   };
 
   dontPatch = true;
@@ -32,10 +31,20 @@ stdenvNoCC.mkDerivation rec {
     runHook postInstall
   '';
 
-  meta = with lib; {
-    description = "Open Source Electronics Design Automation suite";
+  postInstall = ''
+    # Remove 3D models library to save ~500-800MB
+    rm -rf "$out/Applications/KiCad.app/Contents/SharedSupport/3dmodels"
+
+    # Remove demo projects to save ~50-100MB
+    rm -rf "$out/Applications/KiCad.app/Contents/SharedSupport/demos"
+
+    echo "KiCad installed with minimal footprint (3D models and demos removed)"
+  '';
+
+  meta = {
+    description = "Open Source Electronics Design Automation suite (minimal install without 3D models and demos)";
     homepage = "https://www.kicad.org/";
     license = lib.licenses.gpl3Plus;
-    platforms = platforms.darwin;
+    platforms = lib.platforms.darwin;
   };
 }
