@@ -36,14 +36,17 @@ let
     # Sync our dotfiles commands (updates our files, preserves marketplace additions)
     cp -f ${claudeConfig}/share/claude/commands/* "$HOME/.claude/commands/" 2>/dev/null || true
 
-    # Load secrets from 1Password
-    export AWS_BEARER_TOKEN_BEDROCK=$(op read "op://Private/claude-code/AWS_BEARER_TOKEN_BEDROCK" 2>/dev/null || true)
-    export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT=$(op read "op://Private/claude-code/OTEL_EXPORTER_OTLP_METRICS_ENDPOINT" 2>/dev/null || true)
-    export OTEL_EXPORTER_OTLP_HEADERS=$(op read "op://Private/claude-code/OTEL_EXPORTER_OTLP_HEADERS" 2>/dev/null || true)
-    export OTEL_RESOURCE_ATTRIBUTES=$(op read "op://Private/claude-code/OTEL_RESOURCE_ATTRIBUTES" 2>/dev/null || true)
+    # Define secret references for 1Password
+    export AWS_BEARER_TOKEN_BEDROCK="op://Private/claude-code/AWS_BEARER_TOKEN_BEDROCK"
+    export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT="op://Private/claude-code/OTEL_EXPORTER_OTLP_METRICS_ENDPOINT"
+    export OTEL_EXPORTER_OTLP_HEADERS="op://Private/claude-code/OTEL_EXPORTER_OTLP_HEADERS"
+    export OTEL_RESOURCE_ATTRIBUTES="op://Private/claude-code/OTEL_RESOURCE_ATTRIBUTES"
+    export ANTHROPIC_DEFAULT_SONNET_MODEL="op://Private/claude-code/ANTHROPIC_DEFAULT_SONNET_MODEL"
+    export ANTHROPIC_DEFAULT_HAIKU_MODEL="op://Private/claude-code/ANTHROPIC_DEFAULT_HAIKU_MODEL"
+    export ANTHROPIC_DEFAULT_OPUS_MODEL="op://Private/claude-code/ANTHROPIC_DEFAULT_OPUS_MODEL"
 
-    # Execute the real claude binary
-    exec ${claudePkgs.claude-code}/bin/claude "$@"
+    # Execute claude with secrets loaded via op run
+    exec op run -- script -q /dev/null ${claudePkgs.claude-code}/bin/claude "$@"
   '';
 in
 pkgs.buildEnv {
