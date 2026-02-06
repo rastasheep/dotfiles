@@ -18,6 +18,8 @@ let
   ghostty = import ../../packages/ghostty { inherit pkgs; };
   claude-code = import ../../packages/claude-code { inherit pkgs claudePkgs; };
   macos-defaults = import ../../packages/macos-defaults { inherit pkgs; };
+  leader-key = import ../../packages/leader-key { inherit pkgs; };
+  moves = import ../../packages/moves { inherit pkgs; };
   kicad = import ../../packages/kicad { inherit (pkgs) lib stdenvNoCC fetchurl undmg; };
 
   # Scripts uses configured git
@@ -44,6 +46,8 @@ pkgs.buildEnv {
     ghostty
     claude-code
     macos-defaults
+    leader-key
+    moves
     kicad
 
     # Upstream packages (from nixpkgs)
@@ -58,7 +62,6 @@ pkgs.buildEnv {
     pkgs.docker
     pkgs.openvpn
     pkgs.slack
-    pkgs.raycast
   ];
 
   pathsToLink = [ "/bin" "/share" "/etc" "/Applications" ];
