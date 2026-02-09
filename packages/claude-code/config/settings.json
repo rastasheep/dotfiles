@@ -22,5 +22,8 @@
     "commit-commands@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
     "feature-dev@claude-plugins-official": true
+  },
+  "attribution": {
+    "commit": "Co-Authored-By: Claude <noreply@anthropic.com>"
   }
 }
