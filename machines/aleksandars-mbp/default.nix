@@ -62,6 +62,7 @@ pkgs.buildEnv {
     pkgs.docker
     pkgs.openvpn
     pkgs.slack
+    pkgs.uv
   ];
 
   pathsToLink = [ "/bin" "/share" "/etc" "/Applications" ];
