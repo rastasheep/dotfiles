@@ -48,10 +48,17 @@ let
 
   # Wrapper script to launch the app and setup config
   leaderKeyWrapper = pkgs.writeShellScriptBin "leader-key" ''
-    ${dotfilesLib.smartConfigLink {
-      from = "${leaderKeyConfig}/share/leader-key";
-      to = "$HOME/Library/Application Support/Leader Key";
-    }}
+    # Copy config instead of symlinking to allow UI modifications
+    config_dir="$HOME/Library/Application Support/Leader Key"
+    config_src="${leaderKeyConfig}/share/leader-key"
+
+    # Only copy if config doesn't exist or if source is newer
+    if [ ! -f "$config_dir/config.json" ] || [ "$config_src/config.json" -nt "$config_dir/config.json" ]; then
+      mkdir -p "$config_dir"
+      cp -f "$config_src/config.json" "$config_dir/config.json"
+      chmod 644 "$config_dir/config.json"
+      echo "Leader Key config updated from dotfiles" >&2
+    fi
 
     # Open the app
     open "${leaderKeyApp}/Applications/Leader Key.app"

@@ -59,6 +59,11 @@
       "key" : ".",
       "type" : "url",
       "value" : "leaderkey://settings"
+    },
+    {
+      "key" : "return",
+      "type" : "command",
+      "value" : "osascript -e 'tell application \"System Events\" to keystroke space using command down'"
     }
   ],
   "type" : "group"
