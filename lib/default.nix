@@ -41,7 +41,7 @@ rec {
   #
   # Example:
   #   buildConfig {
-  #     name = "hammerspoon";
+  #     name = "ghostty";
   #     src = ./config;
   #   }
   buildConfig = { name, src, subdir ? "" }:
@@ -64,8 +64,8 @@ rec {
   #
   # Example:
   #   smartConfigLink {
-  #     from = "${config}/share/hammerspoon";
-  #     to = "$HOME/.hammerspoon";
+  #     from = "${config}/share/ghostty";
+  #     to = "$HOME/.config/ghostty";
   #   }
   smartConfigLink = { from, to }:
     ''

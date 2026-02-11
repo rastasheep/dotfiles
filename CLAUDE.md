@@ -64,8 +64,9 @@ nix eval .#git.version
 │   ├── zsh/              # Zsh with plugins
 │   ├── starship/         # Starship prompt
 │   ├── scripts/          # Custom shell scripts
-│   ├── hammerspoon/      # Window management
 │   ├── ghostty/          # Terminal emulator
+│   ├── leader-key/       # Modal keybindings with LeaderKey
+│   ├── moves/            # Window tiling with Moves.app
 │   ├── claude-code/      # Claude Code with 1Password integration
 │   ├── macos-defaults/   # Declarative macOS system defaults
 │   ├── dircolors/        # GNU dircolors configuration
@@ -135,6 +136,8 @@ The flake supports multiple systems via flake-utils:
 
 ### GUI Applications
 - **ghostty**: Terminal emulator with Flexoki theme
+- **leader-key**: Modal keybindings system with custom shortcuts
+- **moves**: Window tiling and management application
 - **claude-code**: Claude Code with 1Password integration for secrets
 - **macos-defaults**: Declarative macOS system defaults management
 

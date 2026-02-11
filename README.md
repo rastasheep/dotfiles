@@ -7,7 +7,7 @@ Portable Nix-based dotfiles for macOS with individual tool wrappers.
 - **Shell**: Zsh with [Starship](https://starship.rs) prompt
 - **Editor**: Neovim 0.11+ with LSP, Treesitter, and completion
 - **Terminal**: [Ghostty](https://ghostty.org) with Flexoki theme
-- **Window Management**: [Hammerspoon](https://www.hammerspoon.org) with Leaderflow modal keybindings
+- **Window Management**: [LeaderKey](https://github.com/dkarter/leader-key) with modal keybindings and [Moves](https://moves.app) for window tiling
 - **Development**: Claude Code, direnv, fzf, ripgrep
 - **Git**: Modern config with rebasing, pruning, and helpful aliases
 - **Portable**: Run tools on any Nix-enabled machine without installation
@@ -73,7 +73,6 @@ apply-dot  # or: nix profile upgrade ".*aleksandars-mbp.*"
 │   ├── starship/               # Starship prompt config
 │   ├── scripts/                # Custom scripts (dev, git-*, etc.)
 │   ├── dircolors/              # GNU dircolors configuration
-│   ├── hammerspoon/            # Hammerspoon app with config
 │   ├── ghostty/                # Ghostty terminal with config
 │   ├── claude-code/            # Claude with 1Password + config
 │   ├── macos-defaults/         # macOS system defaults management
@@ -97,12 +96,12 @@ All packages are exposed individually and can be run or installed standalone.
 - `dircolors` - GNU dircolors configuration
 
 ### GUI Apps & Utilities
-- `hammerspoon` - Hammerspoon with bundled Leaderflow config
 - `ghostty` - Ghostty terminal with custom config
+- `leader-key` - LeaderKey with modal keybindings configuration
+- `moves` - Moves app for window tiling and management
 - `claude-code` - Claude Code with 1Password integration and custom settings
 - `macos-defaults` - Declarative macOS system defaults management
-- `blender` - Custom Blender build (optional, commented out)
-- `kicad` - Custom KiCad build (optional, commented out)
+- `kicad` - Custom KiCad build
 
 **Note:** Common tools like `fzf`, `direnv`, and `1password-cli` are included directly in the machine bundle without custom wrappers.
 
