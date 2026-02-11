@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+#
+# Find and optionally clone a repo, output the destination path
+# Used by the dev() shell function for directory jumping
+#
+# USAGE:
+#
+#  $ dev-find
+#   # => interactive repo list from $SRC, outputs selected path
+#
+#  $ dev-find my-project
+#   # => find matching project, output path
+#
+#  $ dev-find git@git-host.com:me/my-project.git
+#   # => clone repo and output path
+
+src=$HOME/src
+src_depth=3
+
+fzf_args=(
+  --print-query
+)
+
+if [ "$1" ]; then
+    fzf_args+=(-f "$1")
+    fzf_args+=(-e)
+fi
+
+fzf_query=$(find "$src" -maxdepth "$src_depth" -mindepth "$src_depth" -type d | sed -e "s#^$src/##" | fzf "${fzf_args[@]}")
+match=$?
+query="$(echo "$fzf_query" | tail -n 1)"
+destination="$(echo "$query" | sed -e 's#^.*@##' -e 's#\.git$##' | tr ':' '/' | tr '[:upper:]' '[:lower:]')"
+
+case "$match" in
+0)
+    # Found existing repo
+    echo "$src/$destination"
+    exit 0
+    ;;
+1)
+    # No match, check if it's a git URL to clone
+    if [[ "$query" =~ ".git" && "$query" =~ "@" ]]; then
+        echo "Creating '$src/$destination'" >&2
+        mkdir -p "$src"/"$destination"
+        if git clone "$query" "$src/$destination"; then
+            echo "$src/$destination"
+            exit 0
+        else
+            echo "Failed to clone repository" >&2
+            exit 1
+        fi
+    else
+        echo "'$query' is not a valid git ssh url" >&2
+        exit 1
+    fi
+    ;;
+*)
+    # fzf error or cancelled
+    exit 1
+    ;;
+esac

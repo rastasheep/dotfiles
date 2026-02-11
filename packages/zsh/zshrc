@@ -1,0 +1,144 @@
+# Load nix-daemon if available
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
+
+# Completion settings
+# Only check compinit cache once per day for better performance
+autoload -Uz compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
+
+# Matches case insensitive for lowercase
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# Pasting with tabs doesn't perform completion
+zstyle ':completion:*' insert-tab pending
+
+# Shell options
+setopt NO_BG_NICE # don't nice background tasks
+setopt NO_HUP
+setopt NO_LIST_BEEP
+setopt LOCAL_OPTIONS # allow functions to have local options
+setopt LOCAL_TRAPS # allow functions to have local traps
+setopt HIST_VERIFY
+setopt PROMPT_SUBST
+setopt CORRECT
+setopt COMPLETE_IN_WORD
+setopt IGNORE_EOF
+setopt AUTO_CD
+
+# History settings
+setopt APPEND_HISTORY # adds history
+setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
+setopt HIST_IGNORE_ALL_DUPS  # don't record dupes in history
+setopt HIST_REDUCE_BLANKS
+
+# Don't expand aliases _before_ completion has finished
+setopt complete_aliases
+
+# Stop correcting me!
+unsetopt correct_all
+
+# Foreground the last backgrounded job using ctrl+z
+fancy-ctrl-z () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER="fg"
+    zle accept-line
+  else
+    zle push-input
+    zle clear-screen
+  fi
+}
+
+zle -N fancy-ctrl-z
+bindkey '^Z' fancy-ctrl-z
+
+# Default keymap
+bindkey -e
+
+# Session variables
+export LANG=en_US.UTF-8
+
+# History config
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=10000
+
+# Initialize direnv if available
+if command -v direnv &> /dev/null; then
+  eval "$(direnv hook zsh)"
+fi
+
+# Initialize fzf if available
+if command -v fzf &> /dev/null; then
+  source <(fzf --zsh 2>/dev/null || true)
+fi
+
+# Initialize starship prompt if available
+if command -v starship &> /dev/null; then
+  eval "$(starship init zsh)"
+fi
+
+# Initialize dircolors for colorized ls output
+if command -v dircolors &> /dev/null; then
+  # Use profile dircolors config (faster than globbing /nix/store)
+  if [[ -f ~/.nix-profile/share/dircolors/dircolors ]]; then
+    eval "$(dircolors -b ~/.nix-profile/share/dircolors/dircolors)"
+  else
+    eval "$(dircolors -b)"
+  fi
+
+  # Enable colored ls by default
+  alias ls='ls --color=auto'
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+fi
+
+# Load zsh-autosuggestions if available (using direct profile path for speed)
+if [[ -f ~/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
+  source ~/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
+
+# Shell aliases
+alias ..='cd ..'
+alias ack='rg'
+alias dc='docker compose'
+alias df='df -hT'
+alias e='hx'
+alias f='fg'
+alias g='git'
+alias history='fc -El 1'
+alias j='jobs'
+alias ll='ls -lah'
+alias vim='nvim'
+
+# Machine-specific aliases
+alias apply-dot='nix profile upgrade aleksandars-mbp'
+alias dev-vpn='sudo openvpn --config ~/Google\ Drive/My\ Drive/fhc-dev-vpn.ovpn'
+
+# Dev function - thin wrapper around dev-find script for directory jumping
+function dev() {
+  local destination
+  destination=$(dev-find "$@")
+  local exit_code=$?
+
+  if [ $exit_code -eq 0 ] && [ -n "$destination" ]; then
+    cd "$destination" || return 1
+  else
+    return $exit_code
+  fi
+}
+
+# Git function - defaults to 'git st' when no args
+function git() {
+  if [ $# -eq 0 ]; then
+    command git st
+  else
+    command git "$@"
+  fi
+}

@@ -1,0 +1,70 @@
+{
+  "actions" : [
+    {
+      "key" : "t",
+      "type" : "application",
+      "value" : "~/.nix-profile/Applications/Ghostty.app"
+    },
+    {
+      "key" : "b",
+      "type" : "application",
+      "value" : "/Applications/Safari.app"
+    },
+    {
+      "key" : "s",
+      "type" : "application",
+      "value" : "~/.nix-profile/Applications/Slack.app"
+    },
+    {
+      "key" : "i",
+      "type" : "application",
+      "value" : "/System/Applications/Music.app"
+    },
+    {
+      "key" : "c",
+      "type" : "application",
+      "value" : "/Applications/Claude.app"
+    },
+    {
+      "key" : "g",
+      "type" : "url",
+      "value" : "https://github.com/search"
+    },
+    {
+      "key" : "m",
+      "type" : "url",
+      "value" : "http://meet.google.com/new?authuser=aleksandar.diklic@florencehc.com"
+    },
+    {
+      "key" : "h",
+      "type" : "url",
+      "value" : "moves://template/left-half"
+    },
+    {
+      "key" : "l",
+      "type" : "url",
+      "value" : "moves://template/right-half"
+    },
+    {
+      "key" : "j",
+      "type" : "url",
+      "value" : "moves://template/first-fourth"
+    },
+    {
+      "key" : "k",
+      "type" : "url",
+      "value" : "moves://template/last-fourth"
+    },
+    {
+      "key" : ".",
+      "type" : "url",
+      "value" : "leaderkey://settings"
+    },
+    {
+      "key" : "return",
+      "type" : "command",
+      "value" : "osascript -e 'tell application \"System Events\" to keystroke space using command down'"
+    }
+  ],
+  "type" : "group"
+}

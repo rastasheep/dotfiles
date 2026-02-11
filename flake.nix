@@ -1,59 +1,119 @@
 {
-  description = "Fleek Configuration";
+  description = "Modular Nix dotfiles for macOS";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
 
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    # Override all flake inputs to use our system nixpkgs
+    # This ensures consistent library versions across all packages
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    claude-nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-  };
-
-  outputs = { self, nixpkgs, home-manager, claude-nixpkgs, ... }@inputs: 
-    let
-      system = "aarch64-darwin";
-      claudePkgs = import claude-nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-    in {
-    # Available through 'home-manager --flake .#your-username@your-hostname'
-
-    homeConfigurations = {
-      "rastasheep@aleksandars-mbp" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system}; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = { inherit inputs; }; # Pass flake inputs to our config
-        modules = [
-          ./home.nix
-          ./aleksandars-mbp/rastasheep.nix
-          ({
-           nixpkgs.overlays = [
-               (final: prev: {
-                   blender = final.callPackage ./pkgs/blender.nix {};
-                   kicad = final.callPackage ./pkgs/kicad.nix {};
-                   hammerspoon = final.callPackage ./pkgs/hammerspoon.nix {};
-                   claude-code = final.symlinkJoin {
-                     name = "claude-code-wrapped";
-                     paths = [ claudePkgs.claude-code ];
-                     buildInputs = [ final.makeWrapper ];
-                     postBuild = ''
-                       for bin in $out/bin/*; do
-                         wrapProgram "$bin" \
-                           --prefix PATH : ${final.lib.makeBinPath [ final._1password-cli ]} \
-                           --run 'export AWS_BEARER_TOKEN_BEDROCK=$(op read "op://Private/claude-code/AWS_BEARER_TOKEN_BEDROCK")' \
-                           --run 'export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT=$(op read "op://Private/claude-code/OTEL_EXPORTER_OTLP_METRICS_ENDPOINT")' \
-                           --run 'export OTEL_EXPORTER_OTLP_HEADERS=$(op read "op://Private/claude-code/OTEL_EXPORTER_OTLP_HEADERS")' \
-                           --run 'export OTEL_RESOURCE_ATTRIBUTES=$(op read "op://Private/claude-code/OTEL_RESOURCE_ATTRIBUTES")'
-                       done
-                     '';
-                   };
-               })
-           ];
-          })
-
-        ];
-      };
+    mango = {
+      url = "github:DreamMaoMao/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
+  outputs = { self, nixpkgs, flake-utils, noctalia, mango, ... }:
+    {
+      # NixOS system configurations
+      nixosConfigurations.nixos-utm = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        specialArgs = { inherit noctalia mango; };
+        modules = [ ./machines/nixos-utm/configuration.nix ];
+      };
+    }
+    //
+    # User packages (multi-system)
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        # Main package set with unfree packages enabled
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+
+        # Separate pkgs instance for Claude Code
+        # Allows pinning different nixpkgs version for Claude Code if needed in future
+        # Currently uses same nixpkgs but kept separate for flexibility
+        claudePkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+
+        # Import custom packages once, reuse everywhere (DRY principle)
+        # This eliminates duplication and ensures packages are evaluated only once
+        git = import ./packages/git { inherit pkgs; };
+        scripts = import ./packages/scripts { inherit pkgs; configuredGit = git; };
+        tmux = import ./packages/tmux { inherit pkgs; };
+        starship = import ./packages/starship { inherit pkgs; };
+        zsh = import ./packages/zsh { inherit pkgs; };
+        nvim = import ./packages/nvim { inherit pkgs; };
+        helix = import ./packages/helix { inherit pkgs; };
+        dircolors = import ./packages/dircolors { inherit pkgs; };
+
+        ghostty = import ./packages/ghostty { inherit pkgs; };
+        claude-code = import ./packages/claude-code { inherit pkgs claudePkgs; };
+        macos-defaults = import ./packages/macos-defaults { inherit pkgs; };
+        leader-key = import ./packages/leader-key { inherit pkgs; };
+        moves = import ./packages/moves { inherit pkgs; };
+
+        # Custom builds (optional - commented out by default)
+        # blender = import ./packages/blender { inherit pkgs; };
+        kicad = import ./packages/kicad { inherit (pkgs) lib stdenvNoCC fetchurl undmg; };
+      in
+      {
+        # Individual tool packages - can be run with 'nix run .#<tool>'
+        packages = {
+          # Core CLI tools with custom config
+          inherit scripts git tmux starship zsh nvim helix dircolors;
+
+          # GUI apps and utilities
+          inherit ghostty claude-code macos-defaults leader-key moves;
+
+          # Custom builds (uncomment in let block above to enable)
+          # inherit blender;
+          inherit kicad;
+
+          # Machine-specific bundles
+          aleksandars-mbp = import ./machines/aleksandars-mbp { inherit pkgs claudePkgs; };
+
+          # Convenience: all core CLI tools bundle (no machine-specific apps)
+          default = pkgs.buildEnv {
+            name = "dotfiles-core";
+            paths = [ scripts git tmux starship zsh nvim helix dircolors ];
+            pathsToLink = [ "/bin" "/share" "/etc" ];
+          };
+        };
+
+        # Checks - verify packages build correctly
+        checks = {
+          # Verify all core packages build
+          all-packages = pkgs.buildEnv {
+            name = "all-packages-check";
+            paths = [
+              scripts git tmux starship zsh nvim helix dircolors
+              ghostty claude-code macos-defaults leader-key moves
+            ];
+            pathsToLink = [ "/bin" "/share" "/etc" "/Applications" ];
+          };
+
+          # Verify machine bundle builds
+          machine-bundle = import ./machines/aleksandars-mbp { inherit pkgs claudePkgs; };
+
+          # Verify lib utilities are accessible
+          lib-check = pkgs.runCommand "lib-check" {} ''
+            # Test that lib can be imported and has expected functions
+            ${pkgs.nix}/bin/nix-instantiate --eval --expr '
+              let lib = import ${./lib} { pkgs = import ${pkgs.path} {}; };
+              in lib ? wrapWithConfig && lib ? buildConfig && lib ? smartConfigLink && lib ? mkMeta
+            ' > $out
+          '';
+        };
+      }
+    );
 }
