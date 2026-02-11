@@ -134,7 +134,6 @@ The flake supports multiple systems via flake-utils:
 - **dircolors**: GNU dircolors configuration for colorized ls output
 
 ### GUI Applications
-- **hammerspoon**: Window management with Leaderflow modal keybindings
 - **ghostty**: Terminal emulator with Flexoki theme
 - **claude-code**: Claude Code with 1Password integration for secrets
 - **macos-defaults**: Declarative macOS system defaults management
@@ -143,7 +142,7 @@ The flake supports multiple systems via flake-utils:
 The aleksandars-mbp bundle also includes upstream packages:
 - Core utilities: coreutils, ripgrep, openssl, tree, wget
 - Development: direnv, fzf, docker, openvpn, 1password-cli
-- GUI apps: slack, raycast
+- GUI apps: slack
 
 ## Best Practices
 

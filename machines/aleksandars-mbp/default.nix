@@ -14,7 +14,6 @@ let
   nvim = import ../../packages/nvim { inherit pkgs; };
   helix = import ../../packages/helix { inherit pkgs; };
   dircolors = import ../../packages/dircolors { inherit pkgs; };
-  hammerspoon = import ../../packages/hammerspoon { inherit pkgs; };
   ghostty = import ../../packages/ghostty { inherit pkgs; };
   claude-code = import ../../packages/claude-code { inherit pkgs claudePkgs; };
   macos-defaults = import ../../packages/macos-defaults { inherit pkgs; };
@@ -42,7 +41,6 @@ pkgs.buildEnv {
     nvim
     helix
     dircolors
-    hammerspoon
     ghostty
     claude-code
     macos-defaults
