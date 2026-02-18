@@ -91,6 +91,7 @@ diagnostic = { underline = { style = "curl" } }
 # Only 4 categories get colors: strings, constants, comments, definitions
 
 "string" = { fg = "string" }
+"string.documentation" = { fg = "comment" }
 "string.regexp" = { fg = "string" }
 "string.special" = { fg = "string" }
 
