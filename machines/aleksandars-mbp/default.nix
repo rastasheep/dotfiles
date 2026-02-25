@@ -51,6 +51,7 @@ pkgs.buildEnv {
     # Upstream packages (from nixpkgs)
     pkgs.coreutils
     pkgs.ripgrep
+    pkgs.ast-grep
     pkgs.openssl
     pkgs.tree
     pkgs.wget

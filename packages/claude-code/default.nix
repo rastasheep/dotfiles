@@ -24,6 +24,12 @@ let
       to = "$HOME/.claude/settings.json";
     }}
 
+    # Link global CLAUDE.md instructions
+    ${dotfilesLib.smartConfigLink {
+      from = "${claudeConfig}/share/claude/CLAUDE.md";
+      to = "$HOME/.claude/CLAUDE.md";
+    }}
+
     # Sync commands: copy dotfiles commands while preserving marketplace-installed ones
     mkdir -p "$HOME/.claude/commands"
 
