@@ -35,13 +35,13 @@ let
     installPhase = ''
       mkdir -p $out
 
-      # Symlink base runtime directories
-      ln -s ${pkgs.helix}/lib/runtime/grammars $out/grammars
-      ln -s ${pkgs.helix}/lib/runtime/themes $out/themes
-      ln -s ${pkgs.helix}/lib/runtime/tutor $out/tutor
+      # Symlink base runtime directories from helix.passthru.runtime
+      ln -s ${pkgs.helix.passthru.runtime}/grammars $out/grammars
+      ln -s ${pkgs.helix.passthru.runtime}/themes $out/themes
+      ln -s ${pkgs.helix.passthru.runtime}/tutor $out/tutor
 
       # Copy queries so we can overlay our custom ones
-      cp -r ${pkgs.helix}/lib/runtime/queries $out/queries
+      cp -r ${pkgs.helix.passthru.runtime}/queries $out/queries
       chmod -R +w $out/queries
 
       # Overlay custom queries if they exist
