@@ -45,11 +45,11 @@
         "scenefx": "scenefx"
       },
       "locked": {
-        "lastModified": 1771288425,
-        "narHash": "sha256-r8JfWHVV0TePIYuBQBFX0Gl1vbAZYol0lwGE/MDMiB0=",
+        "lastModified": 1772520692,
+        "narHash": "sha256-kF242TbUoMN1WwBu1G37lBZmITxqfmzPRE7IL5gmwIk=",
         "owner": "DreamMaoMao",
         "repo": "mango",
-        "rev": "c3dcee2c8e3ae4e2839fda699a25e2d0a836b341",
+        "rev": "1e1d41e626aa12057c03ec79ed11bcc5619f6748",
         "type": "github"
       },
       "original": {
@@ -60,11 +60,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1771848320,
-        "narHash": "sha256-0MAd+0mun3K/Ns8JATeHT1sX28faLII5hVLq0L3BdZU=",
+        "lastModified": 1772542754,
+        "narHash": "sha256-WGV2hy+VIeQsYXpsLjdr4GvHv5eECMISX1zKLTedhdg=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "2fc6539b481e1d2569f25f8799236694180c0993",
+        "rev": "8c809a146a140c5c8806f13399592dbcb1bb5dc4",
         "type": "github"
       },
       "original": {
@@ -93,19 +93,41 @@
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "noctalia-qs": "noctalia-qs"
       },
       "locked": {
-        "lastModified": 1771335660,
-        "narHash": "sha256-roQW/nWic9toAp/OiBm9H20dFJbeIUcJKNCFNZV/Vpg=",
+        "lastModified": 1772565447,
+        "narHash": "sha256-3oPgLP54zZyAMomElJz5FwlGgA6caW4v4rI2lC5WqvY=",
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
-        "rev": "df94ec485eabf872fea2756d5a0734e16636c0f2",
+        "rev": "ba5f933c582080083f849dcd52fa19133d83b85a",
         "type": "github"
       },
       "original": {
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
+        "type": "github"
+      }
+    },
+    "noctalia-qs": {
+      "inputs": {
+        "nixpkgs": [
+          "noctalia",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1772227064,
+        "narHash": "sha256-f821ZSoGpa/aXrWq0gPpea9qBnX8KDyavGKkptz2Mog=",
+        "owner": "noctalia-dev",
+        "repo": "noctalia-qs",
+        "rev": "0741d27d2f7db567270f139c5d1684614ecf9863",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "repo": "noctalia-qs",
         "type": "github"
       }
     },
