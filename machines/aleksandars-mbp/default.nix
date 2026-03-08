@@ -17,8 +17,7 @@ let
   ghostty = import ../../packages/ghostty { inherit pkgs; };
   claude-code = import ../../packages/claude-code { inherit pkgs claudePkgs; };
   macos-defaults = import ../../packages/macos-defaults { inherit pkgs; };
-  leader-key = import ../../packages/leader-key { inherit pkgs; };
-  moves = import ../../packages/moves { inherit pkgs; };
+  tuna = import ../../packages/tuna { inherit pkgs; };
   kicad = import ../../packages/kicad { inherit (pkgs) lib stdenvNoCC fetchurl undmg; };
 
   # Scripts uses configured git
@@ -44,8 +43,7 @@ pkgs.buildEnv {
     ghostty
     claude-code
     macos-defaults
-    leader-key
-    moves
+    tuna
     kicad
 
     # Upstream packages (from nixpkgs)
