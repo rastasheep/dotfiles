@@ -65,7 +65,6 @@ url = 'tuna://run/TunaSystem.WindowManagementCatalog.Center%20Two%20Thirds/TunaC
 
 [settings]
 catalogPeriodicRescanIntervalMinutes = 60
-clipboardHistoryLimit = 20
 clipboardIgnoredBundleIdentifiers = [ 'com.1password.1password' ]
 leaderModeModifierTrigger = 'hyper'
 leaderModeThemeStyle = 'breadcrumb'
