@@ -49,7 +49,7 @@ pkgs.buildEnv {
     # Upstream packages (from nixpkgs)
     pkgs.coreutils
     pkgs.ripgrep
-    pkgs.ast-grep
+    # pkgs.ast-grep  # Temporarily disabled due to build failure in 0.41.0
     pkgs.openssl
     pkgs.tree
     pkgs.wget
