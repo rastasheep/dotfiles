@@ -3,3 +3,6 @@ keybind = shift+enter=text:\n
 background-opacity = 0.9
 background-blur = true
 
+# Use Nix-managed zsh
+command = ~/.nix-profile/bin/zsh
+

@@ -31,14 +31,13 @@ let
     name = "helix-runtime-custom";
     dontUnpack = true;
     dontBuild = true;
+    dontFixup = false; # Allow symlink checking
 
     installPhase = ''
       mkdir -p $out
 
       # Symlink base runtime directories from helix.passthru.runtime
       ln -s ${pkgs.helix.passthru.runtime}/grammars $out/grammars
-      ln -s ${pkgs.helix.passthru.runtime}/themes $out/themes
-      ln -s ${pkgs.helix.passthru.runtime}/tutor $out/tutor
 
       # Copy queries so we can overlay our custom ones
       cp -r ${pkgs.helix.passthru.runtime}/queries $out/queries
