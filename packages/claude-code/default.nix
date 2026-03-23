@@ -42,6 +42,20 @@ let
     # Sync our dotfiles commands (updates our files, preserves marketplace additions)
     cp -f ${claudeConfig}/share/claude/commands/* "$HOME/.claude/commands/" 2>/dev/null || true
 
+    # Sync skills: copy dotfiles skills while preserving marketplace-installed ones
+    mkdir -p "$HOME/.claude/skills"
+
+    # Remove old symlink if it exists
+    if [ -L "$HOME/.claude/skills" ]; then
+      rm -f "$HOME/.claude/skills"
+      mkdir -p "$HOME/.claude/skills"
+    fi
+
+    # Sync our dotfiles skills (updates our files, preserves marketplace additions)
+    if [ -d "${claudeConfig}/share/claude/skills" ]; then
+      cp -rf ${claudeConfig}/share/claude/skills/* "$HOME/.claude/skills/" 2>/dev/null || true
+    fi
+
     # Define secret references for 1Password
     export AWS_BEARER_TOKEN_BEDROCK="op://Private/claude-code/AWS_BEARER_TOKEN_BEDROCK"
     export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT="op://Private/claude-code/OTEL_EXPORTER_OTLP_METRICS_ENDPOINT"
