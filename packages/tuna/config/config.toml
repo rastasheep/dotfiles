@@ -63,12 +63,17 @@ url = "tuna://run/text.osascript%2520-e%2520'tell%2520application%2520%2522Syste
 key = 'f'
 url = 'tuna://run/TunaSystem.WindowManagementCatalog.Center%20Two%20Thirds/TunaCore.CommonActionsCatalog.Run'
 
+[[leaderMode.bindings]]
+key = 'space'
+url = 'tuna://run/Tuna.ModesCatalog.Fuzzy%20Mode/TunaCore.CommonActionsCatalog.Switch'
+
 [settings]
 catalogPeriodicRescanIntervalMinutes = 60
 clipboardIgnoredBundleIdentifiers = [ 'com.1password.1password' ]
 leaderModeModifierTrigger = 'hyper'
 leaderModeThemeStyle = 'breadcrumb'
 leaderModeTriggerType = 'modifier'
+physicalHyperKeyQuickPressBehavior = 'triggersEscape'
 shelfAutoCloseWhenTasksComplete = true
 spacebarBehavior = 'switchToTextMode'
 talkModeModifierTrigger = 'rightCommandOption'
