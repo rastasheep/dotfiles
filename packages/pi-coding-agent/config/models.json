@@ -1,0 +1,53 @@
+{
+  "providers": {
+    "bedrock": {
+      "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+      "api": "bedrock-converse-stream",
+      "apiKey": "AWS_BEARER_TOKEN_BEDROCK",
+      "models": [
+        {
+          "id": "op://Private/claude-code/ANTHROPIC_DEFAULT_SONNET_MODEL",
+          "name": "Claude Sonnet (Bedrock)",
+          "reasoning": true,
+          "input": ["text", "image"],
+          "contextWindow": 200000,
+          "maxTokens": 8192,
+          "cost": {
+            "input": 3.0,
+            "output": 15.0,
+            "cacheRead": 0.3,
+            "cacheWrite": 3.75
+          }
+        },
+        {
+          "id": "op://Private/claude-code/ANTHROPIC_DEFAULT_OPUS_MODEL",
+          "name": "Claude Opus (Bedrock)",
+          "reasoning": true,
+          "input": ["text", "image"],
+          "contextWindow": 200000,
+          "maxTokens": 4096,
+          "cost": {
+            "input": 15.0,
+            "output": 75.0,
+            "cacheRead": 1.5,
+            "cacheWrite": 18.75
+          }
+        },
+        {
+          "id": "op://Private/claude-code/ANTHROPIC_DEFAULT_HAIKU_MODEL",
+          "name": "Claude Haiku (Bedrock)",
+          "reasoning": false,
+          "input": ["text", "image"],
+          "contextWindow": 200000,
+          "maxTokens": 8192,
+          "cost": {
+            "input": 0.8,
+            "output": 4.0,
+            "cacheRead": 0.08,
+            "cacheWrite": 1.0
+          }
+        }
+      ]
+    }
+  }
+}

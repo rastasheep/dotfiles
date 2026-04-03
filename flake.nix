@@ -58,6 +58,7 @@
 
         ghostty = import ./packages/ghostty { inherit pkgs; };
         claude-code = import ./packages/claude-code { inherit pkgs claudePkgs; };
+        pi-coding-agent = import ./packages/pi-coding-agent { inherit pkgs claudePkgs; };
         macos-defaults = import ./packages/macos-defaults { inherit pkgs; };
         tuna = import ./packages/tuna { inherit pkgs; };
 
@@ -72,7 +73,7 @@
           inherit scripts git tmux starship zsh nvim helix dircolors;
 
           # GUI apps and utilities
-          inherit ghostty claude-code macos-defaults tuna;
+          inherit ghostty claude-code pi-coding-agent macos-defaults tuna;
 
           # Custom builds (uncomment in let block above to enable)
           # inherit blender;
@@ -96,7 +97,7 @@
             name = "all-packages-check";
             paths = [
               scripts git tmux starship zsh nvim helix dircolors
-              ghostty claude-code macos-defaults tuna
+              ghostty claude-code pi-coding-agent macos-defaults tuna
             ];
             pathsToLink = [ "/bin" "/share" "/etc" "/Applications" ];
           };

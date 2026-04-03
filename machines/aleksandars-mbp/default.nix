@@ -16,6 +16,7 @@ let
   dircolors = import ../../packages/dircolors { inherit pkgs; };
   ghostty = import ../../packages/ghostty { inherit pkgs; };
   claude-code = import ../../packages/claude-code { inherit pkgs claudePkgs; };
+  pi-coding-agent = import ../../packages/pi-coding-agent { inherit pkgs claudePkgs; };
   macos-defaults = import ../../packages/macos-defaults { inherit pkgs; };
   tuna = import ../../packages/tuna { inherit pkgs; };
   kicad = import ../../packages/kicad { inherit (pkgs) lib stdenvNoCC fetchurl undmg; };
@@ -42,6 +43,7 @@ pkgs.buildEnv {
     dircolors
     ghostty
     claude-code
+    pi-coding-agent
     macos-defaults
     tuna
     kicad
