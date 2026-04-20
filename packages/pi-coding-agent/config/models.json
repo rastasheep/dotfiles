@@ -1,4 +1,5 @@
 {
+  "_comment": "Cache write costs are for 5-minute cache (default). When PI_CACHE_RETENTION=long is set, multiply cacheWrite by 1.6x for 1-hour cache (Sonnet 4.5: 3.75→6.00, Opus 4.5: 6.25→10.00, Haiku 4.5: 1.00→2.00 per 1M tokens). See AWS Bedrock pricing for details.",
   "providers": {
     "bedrock": {
       "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
@@ -11,7 +12,7 @@
           "reasoning": true,
           "input": ["text", "image"],
           "contextWindow": 200000,
-          "maxTokens": 8192,
+          "maxTokens": 64000,
           "cost": {
             "input": 3.0,
             "output": 15.0,
@@ -25,26 +26,26 @@
           "reasoning": true,
           "input": ["text", "image"],
           "contextWindow": 200000,
-          "maxTokens": 4096,
+          "maxTokens": 64000,
           "cost": {
-            "input": 15.0,
-            "output": 75.0,
-            "cacheRead": 1.5,
-            "cacheWrite": 18.75
+            "input": 5.0,
+            "output": 25.0,
+            "cacheRead": 0.5,
+            "cacheWrite": 6.25
           }
         },
         {
           "id": "op://Private/claude-code/ANTHROPIC_DEFAULT_HAIKU_MODEL",
           "name": "Claude Haiku (Bedrock)",
-          "reasoning": false,
+          "reasoning": true,
           "input": ["text", "image"],
           "contextWindow": 200000,
-          "maxTokens": 8192,
+          "maxTokens": 64000,
           "cost": {
-            "input": 0.8,
-            "output": 4.0,
-            "cacheRead": 0.08,
-            "cacheWrite": 1.0
+            "input": 1.0,
+            "output": 5.0,
+            "cacheRead": 0.1,
+            "cacheWrite": 1.25
           }
         }
       ]
