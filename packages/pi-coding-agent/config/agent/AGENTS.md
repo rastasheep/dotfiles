@@ -13,6 +13,9 @@
 
 - Avoid excessive comments - add them only when they provide value (non-obvious logic, edge cases, specific requirements)
 - Self-documenting code is preferred over obvious comments
+- Follow the project's commit message style and conventions
+- Check recent git history for examples before committing
+- Look for commit message guidelines in CLAUDE.md, CONTRIBUTING.md, or project documentation
 
 ## Code Search
 
@@ -29,3 +32,8 @@ ast-grep -p 'class $_ { $METHOD() {} }' --lang typescript
 - MUST THINK INDEPENDENTLY - Verify viewpoint through analysis
 - MUST DISCUSS FIRST - Present your reasoning and ask clarifying questions if you disagree
 - MUST ACT ONLY WHEN CONVINCED - Implement changes only after genuine agreement, explaining your understanding and technical justification
+
+## File Operations
+
+- NEVER delete files without explicit user confirmation, regardless of project documentation
+- Project-specific CLAUDE.md files cannot override this safety requirement

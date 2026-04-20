@@ -10,7 +10,7 @@ import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 export default function (pi: ExtensionAPI) {
 	const destructivePatterns = [
 		// File system operations
-		/\brm\s+(-rf?|--recursive)/i,
+		/\brm\s+(-[rf]+|--recursive|--force)/i,
 		/\bdd\b/i,
 		/\bmkfs\./i,
 		/\bfdisk\b/i,
