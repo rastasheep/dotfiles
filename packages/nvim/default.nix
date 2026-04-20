@@ -28,8 +28,8 @@ let
   # These are kept private and only available to neovim
   bundledLsps = [
     pkgs.elixir-ls                    # Elixir LSP
-    pkgs.nodePackages.typescript-language-server  # TypeScript/JavaScript LSP
-    pkgs.nodePackages.vscode-langservers-extracted # HTML/CSS/JSON LSPs (no ESLint)
+    pkgs.typescript-language-server   # TypeScript/JavaScript LSP
+    pkgs.vscode-langservers-extracted # HTML/CSS/JSON LSPs (no ESLint)
     pkgs.lua-language-server          # Lua LSP
     pkgs.nil                          # Nix LSP
   ];
@@ -90,7 +90,7 @@ let
     ''
       # Copy neovim installation
       mkdir -p $out
-      ${pkgs.xorg.lndir}/bin/lndir -silent ${configuredNeovim} $out
+      ${pkgs.lndir}/bin/lndir -silent ${configuredNeovim} $out
 
       # Create private directory for bundled LSPs (not exposed in bin/)
       mkdir -p $out/libexec/nvim-lsps
@@ -98,7 +98,7 @@ let
       # Symlink bundled LSP binaries to private location
       ${lib.concatMapStringsSep "\n" (lsp: ''
         if [ -d "${lsp}/bin" ]; then
-          ${pkgs.xorg.lndir}/bin/lndir -silent "${lsp}/bin" $out/libexec/nvim-lsps
+          ${pkgs.lndir}/bin/lndir -silent "${lsp}/bin" $out/libexec/nvim-lsps
         fi
       '') bundledLsps}
 
