@@ -12,7 +12,7 @@ let
   # Install pi-coding-agent using bun
   piPackage = pkgs.stdenvNoCC.mkDerivation {
     name = "pi-coding-agent";
-    version = "0.65.0";
+    version = "0.67.68";
 
     nativeBuildInputs = [ pkgs.bun pkgs.makeWrapper ];
 
@@ -64,6 +64,13 @@ let
     # Link AGENTS.md (only if it doesn't exist or is a symlink)
     if [ ! -e "$HOME/.pi/agent/AGENTS.md" ] || [ -L "$HOME/.pi/agent/AGENTS.md" ]; then
       ln -sf "${piConfig}/share/pi/agent/AGENTS.md" "$HOME/.pi/agent/AGENTS.md"
+    fi
+
+    # Sync extensions (preserves user-added extensions)
+    mkdir -p "$HOME/.pi/agent/extensions"
+    if [ -d "${piConfig}/share/pi/extensions" ]; then
+      cp -f "${piConfig}/share/pi/extensions"/*.ts "$HOME/.pi/agent/extensions/" 2>/dev/null || true
+      cp -f "${piConfig}/share/pi/extensions"/*.md "$HOME/.pi/agent/extensions/" 2>/dev/null || true
     fi
 
     # Pi environment configuration
