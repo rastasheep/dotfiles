@@ -1,5 +1,65 @@
 schemaVersion = 1
 
+[[comboMode.bindings]]
+key = 't'
+url = 'tuna://run/path.%252FUsers%252Frastasheep%252F.nix-profile%252FApplications%252FGhostty.app/Open'
+
+[[comboMode.bindings]]
+key = 'b'
+url = 'tuna://run/path.%252FApplications%252FSafari.app/Open'
+
+[[comboMode.bindings]]
+key = 's'
+url = 'tuna://run/path.%252FUsers%252Frastasheep%252F.nix-profile%252FApplications%252FSlack.app/Open'
+
+[[comboMode.bindings]]
+key = 'i'
+url = 'tuna://run/path.%252FSystem%252FApplications%252FMusic.app/Open'
+
+[[comboMode.bindings]]
+key = 'c'
+url = 'tuna://run/path.%252FApplications%252FClaude.app/Open'
+
+[[comboMode.bindings]]
+key = 'g'
+url = 'tuna://run/Tuna.CurrentSelectionCatalog.Current%20Text%20Selection/TunaSmartLinks.SmartLinksActionsCatalog.Send%20to%20Smart%20Link%E2%80%A6/TunaSmartLinks.SmartLinksCatalog.GitHub'
+
+[[comboMode.bindings]]
+key = 'm'
+url = 'tuna://run/url.http:%252F%252Fmeet.google.com%252Fnew%253Fauthuser=aleksandar.diklic@florencehc.com/Open%20URL'
+
+[[comboMode.bindings]]
+key = 'h'
+url = 'tuna://run/TunaSystem.WindowManagementCatalog.Left%20Half/TunaCore.CommonActionsCatalog.Run'
+
+[[comboMode.bindings]]
+key = 'l'
+url = 'tuna://run/TunaSystem.WindowManagementCatalog.Right%20Half/TunaCore.CommonActionsCatalog.Run'
+
+[[comboMode.bindings]]
+key = 'j'
+url = 'tuna://run/TunaSystem.WindowManagementCatalog.First%20Fourth/TunaCore.CommonActionsCatalog.Run'
+
+[[comboMode.bindings]]
+key = 'k'
+url = 'tuna://run/TunaSystem.WindowManagementCatalog.Last%20Fourth/TunaCore.CommonActionsCatalog.Run'
+
+[[comboMode.bindings]]
+key = 'enter'
+url = "tuna://run/text.osascript%2520-e%2520'tell%2520application%2520%2522System%2520Events%2522%2520to%2520keystroke%2520space%2520using%2520command%2520down'/Run%20Text%20as%20Shell%20Command"
+
+[[comboMode.bindings]]
+key = 'f'
+url = 'tuna://run/TunaSystem.WindowManagementCatalog.Center%20Two%20Thirds/TunaCore.CommonActionsCatalog.Run'
+
+[[comboMode.bindings]]
+key = 'space'
+url = 'tuna://run/Tuna.ModesCatalog.Fuzzy%20Mode/TunaCore.CommonActionsCatalog.Switch'
+
+[[comboMode.bindings]]
+key = '='
+url = 'tuna://run/Tuna.Internal.ShelfCatalog.Shelf/Tuna.BasicActionsCatalog.Toggle%20Shelf'
+
 [hotkeys]
 custom = []
 
@@ -11,68 +71,12 @@ custom = []
     carbonKeyCode = 45
     carbonModifiers = 6912
 
-[[leaderMode.bindings]]
-key = 't'
-url = 'tuna://run/path.%252FUsers%252Frastasheep%252F.nix-profile%252FApplications%252FGhostty.app/Open'
-
-[[leaderMode.bindings]]
-key = 'b'
-url = 'tuna://run/path.%252FApplications%252FSafari.app/Open'
-
-[[leaderMode.bindings]]
-key = 's'
-url = 'tuna://run/path.%252FUsers%252Frastasheep%252F.nix-profile%252FApplications%252FSlack.app/Open'
-
-[[leaderMode.bindings]]
-key = 'i'
-url = 'tuna://run/path.%252FSystem%252FApplications%252FMusic.app/Open'
-
-[[leaderMode.bindings]]
-key = 'c'
-url = 'tuna://run/path.%252FApplications%252FClaude.app/Open'
-
-[[leaderMode.bindings]]
-key = 'g'
-url = 'tuna://run/Tuna.CurrentSelectionCatalog.Current%20Text%20Selection/TunaSmartLinks.SmartLinksActionsCatalog.Send%20to%20Smart%20Link%E2%80%A6/TunaSmartLinks.SmartLinksCatalog.GitHub'
-
-[[leaderMode.bindings]]
-key = 'm'
-url = 'tuna://run/url.http:%252F%252Fmeet.google.com%252Fnew%253Fauthuser=aleksandar.diklic@florencehc.com/Open%20URL'
-
-[[leaderMode.bindings]]
-key = 'h'
-url = 'tuna://run/TunaSystem.WindowManagementCatalog.Left%20Half/TunaCore.CommonActionsCatalog.Run'
-
-[[leaderMode.bindings]]
-key = 'l'
-url = 'tuna://run/TunaSystem.WindowManagementCatalog.Right%20Half/TunaCore.CommonActionsCatalog.Run'
-
-[[leaderMode.bindings]]
-key = 'j'
-url = 'tuna://run/TunaSystem.WindowManagementCatalog.First%20Fourth/TunaCore.CommonActionsCatalog.Run'
-
-[[leaderMode.bindings]]
-key = 'k'
-url = 'tuna://run/TunaSystem.WindowManagementCatalog.Last%20Fourth/TunaCore.CommonActionsCatalog.Run'
-
-[[leaderMode.bindings]]
-key = 'enter'
-url = "tuna://run/text.osascript%2520-e%2520'tell%2520application%2520%2522System%2520Events%2522%2520to%2520keystroke%2520space%2520using%2520command%2520down'/Run%20Text%20as%20Shell%20Command"
-
-[[leaderMode.bindings]]
-key = 'f'
-url = 'tuna://run/TunaSystem.WindowManagementCatalog.Center%20Two%20Thirds/TunaCore.CommonActionsCatalog.Run'
-
-[[leaderMode.bindings]]
-key = 'space'
-url = 'tuna://run/Tuna.ModesCatalog.Fuzzy%20Mode/TunaCore.CommonActionsCatalog.Switch'
-
 [settings]
 catalogPeriodicRescanIntervalMinutes = 60
 clipboardIgnoredBundleIdentifiers = [ 'com.1password.1password' ]
-leaderModeModifierTrigger = 'hyper'
-leaderModeThemeStyle = 'breadcrumb'
-leaderModeTriggerType = 'modifier'
+comboModeModifierTrigger = 'hyper'
+comboModeThemeStyle = 'breadcrumb'
+comboModeTriggerType = 'modifier'
 physicalHyperKeyQuickPressBehavior = 'triggersEscape'
 shelfAutoCloseWhenTasksComplete = true
 spacebarBehavior = 'switchToTextMode'
