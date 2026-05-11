@@ -49,6 +49,17 @@ Rings a terminal bell when the agent finishes processing:
 
 Useful for long-running tasks when you've switched away from the terminal.
 
+### tag.ts
+
+Tags the last assistant message and allows rewinding to tagged points:
+- **Usage:** `/tag [label]` - tags the last assistant message
+- **Usage:** `/rewind [label]` - jumps back to a tagged entry without summary
+- If no label provided for `/tag`, generates one automatically (e.g., `tag-1234567890`)
+- If no label provided for `/rewind`, shows interactive selection dialog
+- Tags appear in the tree view for quick navigation to important points
+- Rewind navigates without creating a summary (fast, no LLM call)
+- Useful for marking checkpoints and quickly returning to them during development
+
 ## Customization
 
 To add or remove patterns:
