@@ -1,5 +1,13 @@
 schemaVersion = 1
 
+[catalogConfiguration]
+customFolders = []
+scriptsDirectories = []
+
+    [[catalogConfiguration.folderDepthOverrides]]
+    catalogIdentifier = 'TunaCore.UserFoldersCatalog'
+    depthRawValue = 5
+
 [[comboMode.bindings]]
 key = 't'
 url = 'tuna://run/path.%252FUsers%252Frastasheep%252F.nix-profile%252FApplications%252FGhostty.app/Open'
@@ -78,8 +86,10 @@ comboModeModifierTrigger = 'hyper'
 comboModeThemeStyle = 'breadcrumb'
 comboModeTriggerType = 'modifier'
 physicalHyperKeyQuickPressBehavior = 'triggersEscape'
+physicalHyperKeySource = 'capsLock'
 shelfAutoCloseWhenTasksComplete = true
 spacebarBehavior = 'switchToTextMode'
+switchToTextModeWhenNoResults = true
 talkModeModifierTrigger = 'rightCommandOption'
 talkModeTriggerType = 'modifier'
 themeIdentifier = 'com.brnbw.tuna.themes.default'
