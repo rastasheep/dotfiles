@@ -166,4 +166,3 @@ The aleksandars-mbp bundle also includes upstream packages:
 - Use conventional commit format (feat:, fix:, refactor:, docs:)
 - Include what changed and why
 - Reference specific files when relevant
-- Add co-author attribution for Claude Code contributions
