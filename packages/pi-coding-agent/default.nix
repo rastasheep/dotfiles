@@ -12,7 +12,7 @@ let
   # Install pi-coding-agent using bun
   piPackage = pkgs.stdenvNoCC.mkDerivation {
     name = "pi-coding-agent";
-    version = "0.73.1";
+    version = "0.74.0";
 
     nativeBuildInputs = [ pkgs.bun pkgs.makeWrapper ];
 
@@ -23,7 +23,7 @@ let
       mkdir -p $HOME
 
       # Install the package locally
-      ${pkgs.bun}/bin/bun install --no-save @mariozechner/pi-coding-agent
+      ${pkgs.bun}/bin/bun install --no-save @earendil-works/pi-coding-agent
     '';
 
     installPhase = ''
@@ -34,12 +34,12 @@ let
       mkdir -p $out/bin
       makeWrapper ${pkgs.bun}/bin/bun $out/bin/pi \
         --set NODE_PATH "$out/lib/node_modules" \
-        --add-flags "$out/lib/node_modules/@mariozechner/pi-coding-agent/dist/cli.js"
+        --add-flags "$out/lib/node_modules/@earendil-works/pi-coding-agent/dist/cli.js"
     '';
 
     meta = {
       description = "Pi - minimal terminal coding harness";
-      homepage = "https://shittycodingagent.ai/";
+      homepage = "https://github.com/earendil-works/pi-mono";
       platforms = lib.platforms.unix;
     };
   };
@@ -109,7 +109,7 @@ pkgs.buildEnv {
 
   meta = {
     description = "Pi coding agent with 1Password integration and Bedrock configuration";
-    homepage = "https://shittycodingagent.ai/";
+    homepage = "https://github.com/earendil-works/pi-mono";
     platforms = lib.platforms.unix;
     mainProgram = "pi";
   };
