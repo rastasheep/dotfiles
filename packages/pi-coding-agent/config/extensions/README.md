@@ -39,6 +39,16 @@ Blocks write and edit operations to protected files and directories:
 - `.ssh/`
 - `flake.lock`
 
+### done-bell.ts
+
+Rings a terminal bell when the agent finishes processing:
+- Audible notification for task completion
+- Only rings in interactive mode with UI
+- Only when no pending messages (agent truly finished)
+- Only when output is a TTY (terminal)
+
+Useful for long-running tasks when you've switched away from the terminal.
+
 ## Customization
 
 To add or remove patterns:
