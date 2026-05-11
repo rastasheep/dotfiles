@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# git-browse
+#
+# Interactively browse git diff changes with fzf
+# Shows list of changed files with diff preview, press Enter to open in editor
+
+git diff --name-only | fzf \
+  --preview 'git diff --color=always {}' \
+  --preview-window=right:80%:border-left \
+  --bind 'enter:execute(hx {})'
