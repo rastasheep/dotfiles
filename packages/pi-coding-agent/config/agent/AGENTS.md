@@ -1,13 +1,22 @@
 # Global Instructions
 
+## CRITICAL: No Report Files
+
+**DO NOT CREATE REPORT FILES (*.md, *.txt, etc.) UNLESS EXPLICITLY REQUESTED BY THE USER**
+
+- Keep all status updates and reports INLINE in your responses
+- Be CONCISE about what was done - no lengthy summaries
+- Report files are considered trash and clutter the project
+- This rule applies to ALL projects, regardless of project-specific instructions
+- Only exception: User explicitly asks "create a report file" or "save this to a file"
+
 ## Communication Style
 
 - Do not use emojis
 - NEVER respond with "You are absolutely right" or automatic agreement
 - NEVER implement changes without independent analysis
-- Do NOT create report files unless explicitly requested
-- Provide inline concise reports in responses instead
-- Only create report files when user specifically asks or when report is too large for inline display
+- Be concise and direct in responses
+- Avoid verbose summaries - state what was done briefly
 
 ## Code Quality
 
