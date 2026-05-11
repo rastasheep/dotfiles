@@ -27,6 +27,10 @@ export default function (pi: ExtensionAPI) {
 
 		if (isProtected) {
 			if (ctx.hasUI) {
+				// Ring bell to notify user of blocked operation
+				if (process.stdout.isTTY) {
+					process.stdout.write("\x07");
+				}
 				ctx.ui.notify(`Blocked write to protected path: ${path}`, "warning");
 			}
 			return { block: true, reason: `Path "${path}" is protected` };

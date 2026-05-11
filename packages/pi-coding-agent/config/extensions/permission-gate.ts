@@ -51,6 +51,11 @@ export default function (pi: ExtensionAPI) {
 				return { block: true, reason: "Potentially destructive command blocked (no UI for confirmation)" };
 			}
 
+			// Ring bell to notify user of confirmation request
+			if (process.stdout.isTTY) {
+				process.stdout.write("\x07");
+			}
+
 			const choice = await ctx.ui.select(
 				`⚠️  Potentially destructive command:\n\n  ${command}\n\nAllow execution?`,
 				["Yes, execute", "No, block"]
