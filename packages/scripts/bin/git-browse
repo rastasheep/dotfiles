@@ -2,10 +2,28 @@
 #
 # git-browse
 #
-# Interactively browse git diff changes with fzf
-# Shows list of changed files with diff preview, press Enter to open in editor
+# Interactively browse all git changes with fzf
+# Shows list of all changed files (modified, staged, untracked) with preview
+# Press Enter to open in editor
 
-git diff --name-only | fzf \
-  --preview 'git diff --color=always {}' \
+# Get all changed files: modified, staged, and untracked
+git status --porcelain | awk '{print $NF}' | fzf \
+  --ansi \
+  --preview '
+    # Try to show unstaged diff first (modified tracked files)
+    diff_output=$(git diff --color=always -- {} 2>/dev/null)
+    if [ -n "$diff_output" ]; then
+      echo "$diff_output"
+    else
+      # Try to show staged diff (files added to index)
+      cached_output=$(git diff --cached --color=always -- {} 2>/dev/null)
+      if [ -n "$cached_output" ]; then
+        echo "$cached_output"
+      else
+        # For untracked files, show as if they are being added (with syntax highlighting)
+        git diff --no-index --color=always /dev/null {} 2>/dev/null || cat {}
+      fi
+    fi
+  ' \
   --preview-window=right:80%:border-left \
   --bind 'enter:execute(hx {})'
