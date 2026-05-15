@@ -3,6 +3,7 @@ theme = "flexoki-alabaster-dark"
 [editor]
 cursorline = true
 end-of-line-diagnostics = "hint"
+trim-trailing-whitespace = true
 
 [editor.inline-diagnostics]
 cursor-line = "warning"
