@@ -1,12 +1,34 @@
 schemaVersion = 1
 
 [catalogConfiguration]
-customFolders = []
 scriptsDirectories = []
 
     [[catalogConfiguration.folderDepthOverrides]]
     catalogIdentifier = 'TunaCore.UserFoldersCatalog'
     depthRawValue = 5
+
+[catalogs]
+sortOrders = []
+
+    [[catalogs.globalScopes]]
+    catalogIdentifier = 'Tuna.EffectsCatalog'
+    mode = 'none'
+    selectedItemKeys = []
+
+    [[catalogs.globalScopes]]
+    catalogIdentifier = 'TunaCore.ApplicationsCatalog'
+    mode = 'all'
+    selectedItemKeys = []
+
+    [[catalogs.globalScopes]]
+    catalogIdentifier = 'TunaCore.UserFoldersCatalog'
+    mode = 'none'
+    selectedItemKeys = []
+
+    [[catalogs.globalScopes]]
+    catalogIdentifier = 'TunaEmoji.EmojiCatalog'
+    mode = 'none'
+    selectedItemKeys = []
 
 [[comboMode.bindings]]
 key = 't'
@@ -75,6 +97,10 @@ custom = []
     carbonKeyCode = 49
     carbonModifiers = 256
 
+    [hotkeys.app.comboMode]
+    carbonKeyCode = 18
+    carbonModifiers = 6912
+
     [hotkeys.app.stageFinderSelection]
     carbonKeyCode = 45
     carbonModifiers = 6912
@@ -92,6 +118,7 @@ spacebarBehavior = 'switchToTextMode'
 switchToTextModeWhenNoResults = true
 talkModeModifierTrigger = 'rightCommandOption'
 talkModeTriggerType = 'modifier'
+textModeTriggerType = 'disabled'
 themeIdentifier = 'com.brnbw.tuna.themes.default'
 
 [[catalogSettings]]
