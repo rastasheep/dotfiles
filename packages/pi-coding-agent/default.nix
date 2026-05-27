@@ -12,7 +12,7 @@ let
   # Install pi-coding-agent using bun
   piPackage = pkgs.stdenvNoCC.mkDerivation {
     name = "pi-coding-agent";
-    version = "0.75.4";
+    version = "0.75.5";
 
     nativeBuildInputs = [ pkgs.bun pkgs.makeWrapper ];
 
@@ -71,6 +71,24 @@ let
     if [ -d "${piConfig}/share/pi/extensions" ]; then
       cp -f "${piConfig}/share/pi/extensions"/*.ts "$HOME/.pi/agent/extensions/" 2>/dev/null || true
       cp -f "${piConfig}/share/pi/extensions"/*.md "$HOME/.pi/agent/extensions/" 2>/dev/null || true
+    fi
+
+    # Sync subagent extension (multi-file structure)
+    if [ -d "${piConfig}/share/pi/extensions/subagent" ]; then
+      mkdir -p "$HOME/.pi/agent/extensions/subagent"
+      cp -f "${piConfig}/share/pi/extensions/subagent"/*.ts "$HOME/.pi/agent/extensions/subagent/" 2>/dev/null || true
+    fi
+
+    # Sync agent definitions (user can add their own)
+    if [ -d "${piConfig}/share/pi/agent/agents" ]; then
+      mkdir -p "$HOME/.pi/agent/agents"
+      cp -f "${piConfig}/share/pi/agent/agents"/*.md "$HOME/.pi/agent/agents/" 2>/dev/null || true
+    fi
+
+    # Sync workflow prompts
+    if [ -d "${piConfig}/share/pi/prompts" ]; then
+      mkdir -p "$HOME/.pi/agent/prompts"
+      cp -f "${piConfig}/share/pi/prompts"/*.md "$HOME/.pi/agent/prompts/" 2>/dev/null || true
     fi
 
     # Pi environment configuration

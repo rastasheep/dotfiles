@@ -60,6 +60,68 @@ Tags the last assistant message and allows rewinding to tagged points:
 - Rewind navigates without creating a summary (fast, no LLM call)
 - Useful for marking checkpoints and quickly returning to them during development
 
+### qna.ts
+
+Extracts questions from assistant responses for review and answering:
+- Analyzes the last assistant message for questions
+- Uses LLM to identify questions requiring user input
+- Presents questions in an interactive list
+- Helps ensure no questions are missed in long responses
+
+### handoff.ts
+
+Transfers context to a new focused session:
+- **Usage:** `/handoff <goal for new thread>`
+- Analyzes current conversation and generates a focused prompt
+- Creates new session with generated context
+- Prompt appears in editor for review before submission
+- Alternative to compaction that preserves what matters for next task
+
+### subagent/
+
+Delegates tasks to specialized subagents with isolated context windows:
+
+**Modes:**
+- **Single:** One agent handles one task
+- **Parallel:** Multiple agents run concurrently (max 8 tasks, 4 concurrent)
+- **Chain:** Sequential execution with `{previous}` placeholder for passing context
+
+**Usage examples:**
+```
+Use scout to find all authentication code
+Run 2 scouts in parallel: one to find models, one to find providers
+Use a chain: first have scout find the read tool, then have planner suggest improvements
+```
+
+**Workflow commands:**
+- `/implement <task>` - scout → planner → worker workflow
+- `/scout-and-plan <task>` - scout → planner (no implementation)
+- `/implement-and-review <task>` - worker → reviewer → worker workflow
+
+**Sample agents:**
+- `scout` - Fast codebase reconnaissance (Haiku)
+- `planner` - Implementation planning (Sonnet)
+- `reviewer` - Code review (Sonnet)
+- `worker` - General-purpose agent (Sonnet)
+
+**Custom agents:**
+Create `.md` files in `~/.pi/agent/agents/` with YAML frontmatter:
+```markdown
+---
+name: my-agent
+description: What this agent does
+tools: read, grep, find, ls
+model: claude-haiku-4-5
+---
+
+System prompt for the agent goes here.
+```
+
+**Security:**
+- By default, only loads user-level agents from `~/.pi/agent/agents/`
+- Project-level agents (`.pi/agents/`) require `agentScope: "both"` parameter
+- Interactive confirmation prompts when using project agents
+
 ## Customization
 
 To add or remove patterns:
