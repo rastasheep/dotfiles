@@ -56,14 +56,22 @@ let
       cp -rf ${claudeConfig}/share/claude/skills/* "$HOME/.claude/skills/" 2>/dev/null || true
     fi
 
-    # Define secret references for 1Password
-    export AWS_BEARER_TOKEN_BEDROCK="op://Private/claude-code/AWS_BEARER_TOKEN_BEDROCK"
-    export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT="op://Private/claude-code/OTEL_EXPORTER_OTLP_METRICS_ENDPOINT"
-    export OTEL_EXPORTER_OTLP_HEADERS="op://Private/claude-code/OTEL_EXPORTER_OTLP_HEADERS"
-    export OTEL_RESOURCE_ATTRIBUTES="op://Private/claude-code/OTEL_RESOURCE_ATTRIBUTES"
-    export ANTHROPIC_DEFAULT_SONNET_MODEL="op://Private/claude-code/ANTHROPIC_DEFAULT_SONNET_MODEL"
-    export ANTHROPIC_DEFAULT_HAIKU_MODEL="op://Private/claude-code/ANTHROPIC_DEFAULT_HAIKU_MODEL"
-    export ANTHROPIC_DEFAULT_OPUS_MODEL="op://Private/claude-code/ANTHROPIC_DEFAULT_OPUS_MODEL"
+    # AWS Bedrock configuration from 1Password
+    export CLAUDE_CODE_USE_BEDROCK="true"
+    export AWS_REGION="us-east-1"
+    export AWS_ACCESS_KEY_ID="op://Private/claude-code-2/AWS_ACCESS_KEY_ID"
+    export AWS_SECRET_ACCESS_KEY="op://Private/claude-code-2/AWS_SECRET_ACCESS_KEY"
+
+    export ANTHROPIC_DEFAULT_SONNET_MODEL="op://Private/claude-code-2/ANTHROPIC_DEFAULT_SONNET_MODEL"
+    export ANTHROPIC_DEFAULT_HAIKU_MODEL="op://Private/claude-code-2/ANTHROPIC_DEFAULT_HAIKU_MODEL"
+    export ANTHROPIC_DEFAULT_OPUS_MODEL="op://Private/claude-code-2/ANTHROPIC_DEFAULT_OPUS_MODEL"
+
+    export CLAUDE_CODE_ENABLE_TELEMETRY="1"
+    export OTEL_METRICS_EXPORTER="otlp"
+    export OTEL_EXPORTER_OTLP_PROTOCOL="http/json"
+    export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT="op://Private/claude-code-2/OTEL_EXPORTER_OTLP_METRICS_ENDPOINT"
+    export OTEL_EXPORTER_OTLP_HEADERS="op://Private/claude-code-2/OTEL_EXPORTER_OTLP_HEADERS"
+    export OTEL_RESOURCE_ATTRIBUTES="op://Private/claude-code-2/OTEL_RESOURCE_ATTRIBUTES"
 
     # Execute claude with secrets loaded via op run
     exec op run -- script -q /dev/null ${claudePkgs.claude-code}/bin/claude "$@"
