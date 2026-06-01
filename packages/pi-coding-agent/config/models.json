@@ -4,7 +4,7 @@
     "bedrock": {
       "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
       "api": "bedrock-converse-stream",
-      "apiKey": "AWS_BEARER_TOKEN_BEDROCK",
+      "apiKey": "$AWS_BEARER_TOKEN_BEDROCK",
       "models": [
         {
           "id": "op://Private/claude-code/ANTHROPIC_DEFAULT_SONNET_MODEL",
