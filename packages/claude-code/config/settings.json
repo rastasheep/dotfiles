@@ -14,5 +14,10 @@
   },
   "attribution": {
     "commit": "Co-Authored-By: Claude <noreply@anthropic.com>"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "jq -r '(env.PWD // \"–\") + \"\\n\" + (.session_id // \"–\") + \" \" + (.model.display_name // \"–\") + \" \" + (.effort.level // \"–\") + \" $\" + (.cost.total_cost_usd // 0 | tostring) + \" \" + (.context_window.used_percentage // 0 | tostring) + \"%\"'",
+    "refreshInterval": 10
   }
 }
