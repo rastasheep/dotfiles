@@ -8,7 +8,7 @@
       "models": [
         {
           "id": "op://Private/claude-code/ANTHROPIC_DEFAULT_SONNET_MODEL",
-          "name": "Claude Sonnet (Bedrock)",
+          "name": "claude-sonnet-4-bedrock",
           "reasoning": true,
           "input": ["text", "image"],
           "contextWindow": 200000,
@@ -22,7 +22,7 @@
         },
         {
           "id": "op://Private/claude-code/ANTHROPIC_DEFAULT_OPUS_MODEL",
-          "name": "Claude Opus (Bedrock)",
+          "name": "claude-opus-4-bedrock",
           "reasoning": true,
           "input": ["text", "image"],
           "contextWindow": 200000,
@@ -36,7 +36,7 @@
         },
         {
           "id": "op://Private/claude-code/ANTHROPIC_DEFAULT_HAIKU_MODEL",
-          "name": "Claude Haiku (Bedrock)",
+          "name": "claude-haiku-4-bedrock",
           "reasoning": true,
           "input": ["text", "image"],
           "contextWindow": 200000,

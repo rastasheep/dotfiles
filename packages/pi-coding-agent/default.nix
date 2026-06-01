@@ -108,7 +108,7 @@ let
     # Set favorite models for Ctrl+P cycling (only your 3 bedrock models)
     exec ${piPackage}/bin/pi \
       --provider bedrock \
-      --models "Claude Sonnet (Bedrock),Claude Opus (Bedrock),Claude Haiku (Bedrock)" \
+      --models "claude-sonnet-4-bedrock,claude-opus-4-bedrock,claude-haiku-4-bedrock" \
       "$@"
   '';
 in
