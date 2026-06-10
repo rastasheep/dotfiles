@@ -1,7 +1,14 @@
 schemaVersion = 1
 
 [catalogConfiguration]
+customItems = []
 scriptsDirectories = []
+
+    [[catalogConfiguration.customFolders]]
+    depthRawValue = 1
+    entryType = 'directory'
+    id = '5242EA7A-D7B1-4169-B548-711BA55534C6'
+    path = '~/.nix-profile/bin'
 
     [[catalogConfiguration.folderDepthOverrides]]
     catalogIdentifier = 'TunaCore.UserFoldersCatalog'
@@ -28,6 +35,11 @@ sortOrders = []
     [[catalogs.globalScopes]]
     catalogIdentifier = 'TunaEmoji.EmojiCatalog'
     mode = 'none'
+    selectedItemKeys = []
+
+    [[catalogs.globalScopes]]
+    catalogIdentifier = 'TunaPrompts.AIPromptCatalog'
+    mode = 'all'
     selectedItemKeys = []
 
 [[comboMode.bindings]]
@@ -126,6 +138,12 @@ catalogIdentifier = 'TunaCore.TextActionsCatalog'
 
     [catalogSettings.values]
     TextActionsFileExtension = 'txt'
+
+[[catalogSettings]]
+catalogIdentifier = 'TunaPrompts.AIPromptCatalog'
+
+    [catalogSettings.values]
+    Provider = 'apple'
 
 [[catalogSettings]]
 catalogIdentifier = 'com.brnbw.tuna.themes.default'
