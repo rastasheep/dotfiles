@@ -12,7 +12,7 @@ let
   # Install pi-coding-agent using bun
   piPackage = pkgs.stdenvNoCC.mkDerivation {
     name = "pi-coding-agent";
-    version = "0.79.1";
+    version = "0.80.2";
 
     nativeBuildInputs = [ pkgs.bun pkgs.makeWrapper ];
 
