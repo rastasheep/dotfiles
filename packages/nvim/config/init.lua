@@ -100,6 +100,7 @@ vim.keymap.set('v', '<leader>de', [[c<c-r>=system('base64 --decode', @")<cr><esc
 -- fzf
 require('fzf-lua').setup({
   global = {
+    query_delay = 200,
     pickers = {
       { 'git_files' },
       { 'buffers',  prefix = '#' },
