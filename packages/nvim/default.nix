@@ -3,18 +3,15 @@
 let
   inherit (pkgs) lib;
 
-  # Flexoki theme plugin
+  # Flexoki theme — local single-file implementation
   flexoki-neovim = pkgs.vimUtils.buildVimPlugin {
     pname = "flexoki-neovim";
-    version = "2025-08-26";
-    src = pkgs.fetchurl {
-      url = "https://github.com/kepano/flexoki-neovim/archive/c3e2251e813d29d885a7cbbe9808a7af234d845d.tar.gz";
-      sha256 = "sha256-ere25TqoPfyc2/6yQKZgAQhJXz1wxtI/VZj/0LGMwNw=";
-    };
+    version = "1.0.0";
+    src = ./theme;
   };
 
-  # Treesitter with language parsers
-  nvim-treesitter-configured = pkgs.vimPlugins.nvim-treesitter.withPlugins (p: with p; [
+  # Treesitter parsers with queries, without the archived nvim-treesitter plugin
+  treesitterParsers = map pkgs.neovimUtils.grammarToPlugin (with pkgs.tree-sitter-grammars; [
     tree-sitter-lua
     tree-sitter-javascript
     tree-sitter-typescript
@@ -22,6 +19,7 @@ let
     tree-sitter-nix
     tree-sitter-elixir
     tree-sitter-heex
+    tree-sitter-python
   ]);
 
   # LSP servers bundled with neovim (not exposed to system)
@@ -32,6 +30,8 @@ let
     pkgs.vscode-langservers-extracted # HTML/CSS/JSON LSPs (no ESLint)
     pkgs.lua-language-server          # Lua LSP
     pkgs.nil                          # Nix LSP
+    pkgs.basedpyright                 # Python LSP
+    pkgs.ruff                         # Python linter + formatter
   ];
 
   # Base neovim configuration
@@ -46,9 +46,8 @@ let
         start = [
           fzf-lua
           gitsigns-nvim
-          nvim-treesitter-configured
           flexoki-neovim
-        ];
+        ] ++ treesitterParsers;
       };
     };
 

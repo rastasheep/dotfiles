@@ -2,40 +2,29 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
---
--- settings
---
-
 vim.o.mouse = ''
-vim.o.undofile = false
-vim.o.undolevels = 1000
-vim.o.history = 1000
-vim.o.backup = false
 vim.o.writebackup = false
 vim.o.swapfile = false
+vim.o.undofile = true
 vim.o.autowrite = true
 
 vim.o.number = true
-vim.o.statusline = '%#identifier#%f%M'
+vim.o.signcolumn = 'yes'
+vim.o.statusline = '%f%M'
 
 vim.o.tabstop = 2
-vim.o.softtabstop = 2
 vim.o.shiftwidth = 2
 vim.o.shiftround = true
 vim.o.expandtab = true
-vim.o.smartindent = true
 
-vim.o.laststatus = 2
 vim.o.title = true
-vim.o.visualbell = false
-vim.o.errorbells = false
 vim.o.timeoutlen = 500
+vim.o.updatetime = 250
+vim.o.splitbelow = true
+vim.o.splitright = true
 
-vim.o.background = 'dark'
 vim.o.termguicolors = true
 vim.cmd('colorscheme flexoki-dark')
-vim.cmd('highlight clear VertSplit')
-vim.cmd('highlight Normal guibg=none')
 
 vim.o.list = true
 vim.o.listchars = [[tab:¦\ ,trail:⋅,conceal:┊,extends:❯,precedes:❮]]
@@ -43,19 +32,26 @@ vim.o.listchars = [[tab:¦\ ,trail:⋅,conceal:┊,extends:❯,precedes:❮]]
 vim.o.showbreak = '↪ '
 vim.o.breakindent = true
 vim.o.linebreak = true
-vim.o.wrap = true
 
 vim.o.confirm = true
-vim.o.modeline = false
+vim.o.autocomplete = true
+vim.o.completeopt = 'menuone,noselect'
+vim.o.pumheight = 5
+vim.o.pumborder = 'rounded'
+vim.o.winborder = 'rounded'
+vim.o.wildmode = 'longest:full,full'
+vim.opt.complete:append('o')
 vim.o.shortmess = 'filnxtToOfcI'
 vim.o.scrolloff = 10
+
+vim.o.path = '.,**'
+vim.o.wildignore = '*.git/*,*/node_modules/*,*/dist/*,*/build/*,*/_build/*,*/deps/*,.elixir_ls/*'
 
 vim.o.inccommand = 'split'
 vim.o.ignorecase = true
 vim.o.smartcase = true
-vim.opt.matchpairs = '(:),{:},[:],<:>'
+vim.opt.matchpairs:append('<:>')
 
-vim.g.netrw_localrmdir = 'rm -rf'
 vim.g.netrw_banner = 0
 vim.g.netrw_preview = 1
 vim.g.netrw_liststyle = 3
@@ -85,7 +81,6 @@ vim.api.nvim_create_user_command('E', 'Explore', {})
 vim.keymap.set('n', 'Y', 'yy', { silent = true })
 vim.keymap.set('n', '<leader>\\', ':vs<cr>', { silent = true })
 vim.keymap.set('n', '<leader>-', ':split<cr>', { silent = true })
-vim.keymap.set('n', '<leader>1', ':e ~/.config/nvim/init.lua<cr>', { silent = true })
 
 -- visual mode
 vim.keymap.set('v', '>', '>gv', { silent = true })
@@ -103,100 +98,109 @@ vim.keymap.set('v', '<leader>de', [[c<c-r>=system('base64 --decode', @")<cr><esc
 --
 
 -- fzf
-require('fzf-lua').setup()
+require('fzf-lua').setup({
+  global = {
+    pickers = {
+      { 'git_files' },
+      { 'buffers',  prefix = '#' },
+    },
+  },
+})
 
-vim.keymap.set('n', '<leader>t', ':FzfLua git_files<cr>', { silent = true })
-vim.keymap.set('n', '<leader>l', ':FzfLua buffers<cr>', { silent = true })
-vim.keymap.set('n', '<leader>a', ':FzfLua live_grep resume=true<cr>', { silent = true })
-vim.keymap.set('v', '<leader>a', '<cmd>FzfLua grep_visual<cr>', { silent = true })
+vim.keymap.set('n', '<leader>t', ':FzfLua global<cr>', { silent = true })
+vim.keymap.set('n', '<leader>p', ':FzfLua builtin<cr>', { silent = true })
+vim.keymap.set('n', '<leader>g', ':FzfLua git_status<cr>', { silent = true })
+vim.keymap.set('v', '<leader>a', ':FzfLua grep_visual<cr>', { silent = true })
 vim.keymap.set('n', '<leader>A', ':FzfLua grep_cword<cr>', { silent = true })
 
 -- treesitter
--- Enable highlighting and indentation
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = '*',
   callback = function()
     if vim.treesitter.language.get_lang(vim.bo.filetype) then
-      pcall(vim.treesitter.start)
+      if pcall(vim.treesitter.start) then
+        vim.opt_local.foldlevel = 20
+        vim.wo.foldmethod = 'expr'
+        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+      end
     end
   end
 })
 
--- Register heex to use elixir parser
-vim.treesitter.language.register('elixir', 'heex')
-
--- Setup folding
-vim.api.nvim_create_autocmd('FileType', {
-  callback = function()
-    vim.opt_local.foldlevel = 20
-    vim.wo.foldmethod = 'expr'
-    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-  end
-})
-
 -- gitsigns
-require('gitsigns').setup()
+require('gitsigns').setup({
+  signs        = { add = { text = '▎' }, change = { text = '▎' } },
+  signs_staged = { add = { text = '▎' }, change = { text = '▎' } },
+})
 
 vim.api.nvim_create_user_command('Gblame', 'Gitsigns blame_line full=true', {})
 vim.api.nvim_create_user_command('Gsigns', 'Gitsigns toggle_signs', {})
-vim.api.nvim_create_user_command('Gshow', 'Gitsigns show <f-args>', { nargs = 1 })
 
 -- lsp
--- All these servers are bundled privately with neovim
--- They don't pollute system PATH and project LSPs take precedence
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { silent = true })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { silent = true })
+vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1 }) end, { silent = true })
+vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1 }) end, { silent = true })
 
--- Configure LSP servers
-vim.lsp.config('ts_ls', {
-  cmd = { 'typescript-language-server', '--stdio' },
-  filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
-  root_markers = { 'package.json', 'tsconfig.json', 'jsconfig.json' },
-})
+local servers = {
+  ts_ls = {
+    cmd = { 'typescript-language-server', '--stdio' },
+    filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    root_markers = { 'package.json', 'tsconfig.json', 'jsconfig.json' },
+  },
+  elixirls = {
+    cmd = { 'elixir-ls' },
+    filetypes = { 'elixir', 'eelixir', 'heex', 'surface' },
+    root_markers = { 'mix.exs' },
+  },
+  lua_ls = {
+    cmd = { 'lua-language-server' },
+    filetypes = { 'lua' },
+    root_markers = { '.luarc.json', '.luarc.jsonc', '.luacheckrc', '.stylua.toml', 'stylua.toml', 'selene.toml', 'selene.yml' },
+  },
+  nil_ls = {
+    cmd = { 'nil' },
+    filetypes = { 'nix' },
+    root_markers = { 'flake.nix', 'default.nix', 'shell.nix' },
+  },
+  html = {
+    cmd = { 'vscode-html-language-server', '--stdio' },
+    filetypes = { 'html' },
+    root_markers = { 'package.json' },
+  },
+  cssls = {
+    cmd = { 'vscode-css-language-server', '--stdio' },
+    filetypes = { 'css', 'scss', 'less' },
+    root_markers = { 'package.json' },
+  },
+  jsonls = {
+    cmd = { 'vscode-json-language-server', '--stdio' },
+    filetypes = { 'json', 'jsonc' },
+    root_markers = { 'package.json' },
+  },
+  basedpyright = {
+    cmd = { 'basedpyright-langserver', '--stdio' },
+    filetypes = { 'python' },
+    root_markers = { 'pyproject.toml', 'setup.py', 'setup.cfg', '.git' },
+  },
+  ruff = {
+    cmd = { 'ruff', 'server' },
+    filetypes = { 'python' },
+    root_markers = { 'pyproject.toml', 'ruff.toml', '.git' },
+  },
+}
 
-vim.lsp.config('elixirls', {
-  cmd = { 'elixir-ls' },
-  filetypes = { 'elixir', 'eelixir', 'heex', 'surface' },
-  root_markers = { 'mix.exs' },
-})
-
-vim.lsp.config('lua_ls', {
-  cmd = { 'lua-language-server' },
-  filetypes = { 'lua' },
-  root_markers = { '.luarc.json', '.luarc.jsonc', '.luacheckrc', '.stylua.toml', 'stylua.toml', 'selene.toml', 'selene.yml' },
-})
-
-vim.lsp.config('nil_ls', {
-  cmd = { 'nil' },
-  filetypes = { 'nix' },
-  root_markers = { 'flake.nix', 'default.nix', 'shell.nix' },
-})
-
-vim.lsp.config('html', {
-  cmd = { 'vscode-html-language-server', '--stdio' },
-  filetypes = { 'html' },
-  root_markers = { 'package.json' },
-})
-
-vim.lsp.config('cssls', {
-  cmd = { 'vscode-css-language-server', '--stdio' },
-  filetypes = { 'css', 'scss', 'less' },
-  root_markers = { 'package.json' },
-})
-
-vim.lsp.config('jsonls', {
-  cmd = { 'vscode-json-language-server', '--stdio' },
-  filetypes = { 'json', 'jsonc' },
-  root_markers = { 'package.json' },
-})
-
--- Enable configured LSP servers (ESLint removed due to configuration issues)
-vim.lsp.enable({ 'ts_ls', 'elixirls', 'lua_ls', 'nil_ls', 'html', 'cssls', 'jsonls' })
-
--- Enable LSP-based completion
-vim.lsp.completion.enable()
+for name, config in pairs(servers) do
+  vim.lsp.config(name, config)
+end
+vim.lsp.enable(vim.tbl_keys(servers))
 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
+    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     local opts = { buffer = args.buf, silent = true }
+    if client:supports_method('textDocument/completion') then
+      vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+    end
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
@@ -209,6 +213,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format({ async = true }) end, opts)
   end,
 })
-
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { silent = true })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { silent = true })
