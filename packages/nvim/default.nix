@@ -10,14 +10,7 @@ let
     src = ./theme;
   };
 
-  # Force query installation for all grammars — grammar-repo queries work for
-  # our minimal capture set even though nvim-treesitter marks them "incompatible"
-  grammarToPlugin = grammar:
-    (pkgs.neovimUtils.grammarToPlugin grammar).overrideAttrs (_: {
-      installQueries = true;
-    });
-
-  treesitterParsers = map grammarToPlugin (with pkgs.tree-sitter-grammars; [
+  treesitterParsers = map pkgs.neovimUtils.grammarToPlugin (with pkgs.tree-sitter-grammars; [
     tree-sitter-lua
     tree-sitter-javascript
     tree-sitter-typescript
