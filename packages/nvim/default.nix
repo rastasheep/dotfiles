@@ -19,6 +19,7 @@ let
     tree-sitter-elixir
     tree-sitter-heex
     tree-sitter-python
+    tree-sitter-swift
   ]);
 
   # LSP servers bundled with neovim (not exposed to system)
