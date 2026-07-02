@@ -115,6 +115,7 @@ require('fzf-lua').setup({
 vim.keymap.set('n', '<leader>t', ':FzfLua global<cr>', { silent = true })
 vim.keymap.set('n', '<leader>p', ':FzfLua builtin<cr>', { silent = true })
 vim.keymap.set('n', '<leader>g', ':FzfLua git_status<cr>', { silent = true })
+vim.keymap.set('n', '<leader>a', ':FzfLua live_grep<cr>', { silent = true })
 vim.keymap.set('v', '<leader>a', ':FzfLua grep_visual<cr>', { silent = true })
 vim.keymap.set('n', '<leader>A', ':FzfLua grep_cword<cr>', { silent = true })
 
