@@ -2,7 +2,6 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.o.mouse = ''
 vim.o.writebackup = false
 vim.o.swapfile = false
 vim.o.undofile = true
@@ -81,6 +80,11 @@ vim.api.nvim_create_user_command('E', 'Explore', {})
 vim.keymap.set('n', 'Y', 'yy', { silent = true })
 vim.keymap.set('n', '<leader>\\', ':vs<cr>', { silent = true })
 vim.keymap.set('n', '<leader>-', ':split<cr>', { silent = true })
+
+-- clipboard
+vim.keymap.set('v', '<D-c>', '"+y')
+vim.keymap.set('v', '<D-v>', '"+p')
+vim.keymap.set('i', '<D-v>', '<C-r>+')
 
 -- visual mode
 vim.keymap.set('v', '>', '>gv', { silent = true })
