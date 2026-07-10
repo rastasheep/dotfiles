@@ -38,10 +38,9 @@ Changes appear automatically in `git status` as you modify settings in Tuna's UI
 - `config/config.toml` - Live config file (Tuna reads/writes directly to this location)
 - `default.nix` - Placeholder Nix package
 
-## Replacing LeaderKey and Moves
+## Features
 
-Tuna replaces:
-- `packages/leader-key/` - Modal keybindings (Tuna's Leader Mode)
-- `packages/moves/` - Window tiling (Tuna URL schemes)
-
-Old packages can be removed after confirming Tuna works.
+Tuna provides:
+- **Leader Mode**: Modal keybindings for quick actions
+- **Window Management**: Tiling, moving, resizing via URL schemes  
+- **Bookmarks**: Numbered bookmarks with instant recall

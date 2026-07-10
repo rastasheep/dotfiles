@@ -4,11 +4,11 @@ Portable Nix-based dotfiles for macOS with individual tool wrappers.
 
 ## Features
 
-- **Shell**: Zsh with [Starship](https://starship.rs) prompt
+- **Shell**: Zsh with native prompt and git integration
 - **Editor**: Neovim 0.11+ with LSP, Treesitter, and completion
 - **Terminal**: [Ghostty](https://ghostty.org) with Flexoki theme
-- **Window Management**: [LeaderKey](https://github.com/dkarter/leader-key) with modal keybindings and [Moves](https://moves.app) for window tiling
-- **Development**: Claude Code, direnv, fzf, ripgrep
+- **Window Management**: [Tuna](https://tuna.voidstern.sc) for bookmarks, leader mode, and window management
+- **Development**: Claude Code, pi coding agent, direnv, fzf, ripgrep
 - **Git**: Modern config with rebasing, pruning, and helpful aliases
 - **Portable**: Run tools on any Nix-enabled machine without installation
 
@@ -90,16 +90,16 @@ All packages are exposed individually and can be run or installed standalone.
 - `nvim` - Neovim with plugins (treesitter, gitsigns, fzf-lua) and custom config
 - `git` - Git with custom config and aliases
 - `tmux` - Tmux with vi-mode and custom keybindings
-- `zsh` - Zsh with plugins (autosuggestions, completions) and config
-- `starship` - Starship prompt with minimal config
+- `zsh` - Zsh with plugins (autosuggestions, completions) and native prompt
+- `helix` - Helix editor with custom config
 - `scripts` - Custom shell scripts (dev, git-*, gh-*, etc.)
 - `dircolors` - GNU dircolors configuration
 
 ### GUI Apps & Utilities
 - `ghostty` - Ghostty terminal with custom config
-- `leader-key` - LeaderKey with modal keybindings configuration
-- `moves` - Moves app for window tiling and management
+- `tuna` - Tuna for bookmarks, leader mode, and window management
 - `claude-code` - Claude Code with 1Password integration and custom settings
+- `pi-coding-agent` - Pi coding agent with Bedrock integration
 - `macos-defaults` - Declarative macOS system defaults management
 - `kicad` - Custom KiCad build
 

@@ -61,13 +61,13 @@ nix eval .#git.version
 │   ├── git/              # Git with custom config
 │   ├── tmux/             # Tmux with custom config
 │   ├── nvim/             # Neovim with plugins
-│   ├── zsh/              # Zsh with plugins
-│   ├── starship/         # Starship prompt
+│   ├── zsh/              # Zsh with plugins and native prompt
+│   ├── helix/            # Helix editor
 │   ├── scripts/          # Custom shell scripts
 │   ├── ghostty/          # Terminal emulator
-│   ├── leader-key/       # Modal keybindings with LeaderKey
-│   ├── moves/            # Window tiling with Moves.app
+│   ├── tuna/             # Bookmarks, leader mode, and window management
 │   ├── claude-code/      # Claude Code with 1Password integration
+│   ├── pi-coding-agent/  # Pi coding agent with Bedrock integration
 │   ├── macos-defaults/   # Declarative macOS system defaults
 │   ├── dircolors/        # GNU dircolors configuration
 │   └── ...
@@ -128,17 +128,17 @@ The flake supports multiple systems via flake-utils:
 ### CLI Tools
 - **git**: Custom config with rebasing, pruning, helpful aliases, LFS support
 - **tmux**: Vi key bindings, custom prefix, status bar configuration
-- **zsh**: Autosuggestions, completions, custom sourcing
-- **starship**: Minimal prompt configuration
+- **zsh**: Autosuggestions, completions, native prompt with git integration
 - **nvim**: Treesitter, LSP, completion, fzf-lua, gitsigns, Flexoki theme
+- **helix**: Modern text editor with custom configuration
 - **scripts**: Custom shell scripts (dev, git-*, gh-*, etc.)
 - **dircolors**: GNU dircolors configuration for colorized ls output
 
 ### GUI Applications
 - **ghostty**: Terminal emulator with Flexoki theme
-- **leader-key**: Modal keybindings system with custom shortcuts
-- **moves**: Window tiling and management application
+- **tuna**: Bookmarks, leader mode, and window management
 - **claude-code**: Claude Code with 1Password integration for secrets
+- **pi-coding-agent**: Pi coding agent with Bedrock integration
 - **macos-defaults**: Declarative macOS system defaults management
 
 ### Machine Bundle Includes
