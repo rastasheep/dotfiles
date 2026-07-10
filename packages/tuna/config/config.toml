@@ -102,6 +102,22 @@ url = 'tuna://run/Tuna.ModesCatalog.Fuzzy%20Mode/TunaCore.CommonActionsCatalog.S
 key = '='
 url = 'tuna://run/Tuna.Internal.ShelfCatalog.Shelf/Tuna.BasicActionsCatalog.Toggle%20Shelf'
 
+[[comboMode.bindings]]
+key = '1'
+url = 'tuna://run/url.https:%252F%252Fmail.google.com%252Fmail%252Fu%252F0%252F%2523inbox/Open%20URL'
+
+[[comboMode.bindings]]
+key = '2'
+url = 'tuna://run/url.https:%252F%252Fmail.google.com%252Fmail%252Fu%252F1%252F%253Fogbl%2523inbox/Open%20URL'
+
+[[comboMode.bindings]]
+key = '3'
+url = 'tuna://run/url.https:%252F%252Fcalendar.google.com%252Fcalendar%252Fu%252F1%252Fr%253Fpli=1/Open%20URL'
+
+[[comboMode.bindings]]
+key = '`'
+url = 'tuna://run/url.https:%252F%252Fgithub.com%252FFlorenceHC/Open%20URL'
+
 [hotkeys]
 custom = []
 
