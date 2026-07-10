@@ -44,8 +44,8 @@ let
     };
   };
 
-  # Wrapper script that handles config setup and environment
-  piWrapper = pkgs.writeShellScriptBin "pi" ''
+  # Common setup for both modes
+  commonSetup = ''
     set -euo pipefail
 
     # Add 1Password CLI and bun to PATH
@@ -53,13 +53,6 @@ let
 
     # Ensure ~/.pi/agent directory exists as a writable directory
     mkdir -p "$HOME/.pi/agent"
-
-    # Generate models.json with ARNs from 1Password (overwrite each time)
-    # op inject resolves op:// references in the template file
-    if ! op inject -i "${piConfig}/share/pi/models.json" -o "$HOME/.pi/agent/models.json" -f; then
-      echo "Error: Failed to inject model ARNs from 1Password" >&2
-      exit 1
-    fi
 
     # Link AGENTS.md (only if it doesn't exist or is a symlink)
     if [ ! -e "$HOME/.pi/agent/AGENTS.md" ] || [ -L "$HOME/.pi/agent/AGENTS.md" ]; then
@@ -90,6 +83,26 @@ let
       mkdir -p "$HOME/.pi/agent/prompts"
       cp -f "${piConfig}/share/pi/prompts"/*.md "$HOME/.pi/agent/prompts/" 2>/dev/null || true
     fi
+  '';
+
+  # Pure mode wrapper (manual API key setup)
+  piPureWrapper = pkgs.writeShellScriptBin "pi" ''
+    ${commonSetup}
+
+    # Execute pi without AWS/Bedrock setup
+    exec ${piPackage}/bin/pi "$@"
+  '';
+
+  # AWS Bedrock wrapper (with 1Password credentials)
+  piAwsWrapper = pkgs.writeShellScriptBin "pi-aws" ''
+    ${commonSetup}
+
+    # Generate models.json with ARNs from 1Password (overwrite each time)
+    # op inject resolves op:// references in the template file
+    if ! op inject -i "${piConfig}/share/pi/models.json" -o "$HOME/.pi/agent/models.json" -f; then
+      echo "Error: Failed to inject model ARNs from 1Password" >&2
+      exit 1
+    fi
 
     # Pi environment configuration
     export AWS_REGION="us-east-1"
@@ -98,13 +111,13 @@ let
     export AWS_BEDROCK_FORCE_CACHE="1"
 
     # Load bearer token from 1Password for runtime
-    if ! AWS_BEARER_TOKEN_BEDROCK=$(op read "op://Private/claude-code/AWS_BEARER_TOKEN_BEDROCK"); then
+    if ! AWS_BEARER_TOKEN_BEDROCK=$(op read "op://Private/claude-code-2/AWS_BEARER_TOKEN_BEDROCK"); then
       echo "Error: Failed to read bearer token from 1Password" >&2
       exit 1
     fi
     export AWS_BEARER_TOKEN_BEDROCK
 
-    # Execute pi directly (not through op run) to preserve TTY
+    # Execute pi with Bedrock configuration
     # Set favorite models for Ctrl+P cycling (only your 3 bedrock models)
     exec ${piPackage}/bin/pi \
       --provider bedrock \
@@ -115,7 +128,8 @@ in
 pkgs.buildEnv {
   name = "pi-coding-agent-configured";
   paths = [
-    piWrapper
+    piPureWrapper
+    piAwsWrapper
     piConfig
   ];
   pathsToLink = [ "/bin" "/share" ];
@@ -126,7 +140,7 @@ pkgs.buildEnv {
   };
 
   meta = {
-    description = "Pi coding agent with 1Password integration and Bedrock configuration";
+    description = "Pi coding agent with pure and AWS Bedrock modes";
     homepage = "https://github.com/earendil-works/pi-mono";
     platforms = lib.platforms.unix;
     mainProgram = "pi";

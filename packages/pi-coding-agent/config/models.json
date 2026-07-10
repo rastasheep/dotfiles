@@ -7,7 +7,7 @@
       "apiKey": "$AWS_BEARER_TOKEN_BEDROCK",
       "models": [
         {
-          "id": "op://Private/claude-code/ANTHROPIC_DEFAULT_SONNET_MODEL",
+          "id": "op://Private/claude-code-2/ANTHROPIC_DEFAULT_SONNET_MODEL",
           "name": "claude-sonnet-4-bedrock",
           "reasoning": true,
           "input": ["text", "image"],
@@ -21,7 +21,7 @@
           }
         },
         {
-          "id": "op://Private/claude-code/ANTHROPIC_DEFAULT_OPUS_MODEL",
+          "id": "op://Private/claude-code-2/ANTHROPIC_DEFAULT_OPUS_MODEL",
           "name": "claude-opus-4-bedrock",
           "reasoning": true,
           "input": ["text", "image"],
@@ -35,7 +35,7 @@
           }
         },
         {
-          "id": "op://Private/claude-code/ANTHROPIC_DEFAULT_HAIKU_MODEL",
+          "id": "op://Private/claude-code-2/ANTHROPIC_DEFAULT_HAIKU_MODEL",
           "name": "claude-haiku-4-bedrock",
           "reasoning": true,
           "input": ["text", "image"],
