@@ -19,6 +19,7 @@ let
   macos-defaults = import ../../packages/macos-defaults { inherit pkgs; };
   tuna = import ../../packages/tuna { inherit pkgs; };
   kicad = import ../../packages/kicad { inherit (pkgs) lib stdenvNoCC fetchurl undmg; };
+  xcode-build-server = import ../../packages/xcode-build-server { inherit pkgs; };
 
   # Scripts uses configured git
   scripts = import ../../packages/scripts {
@@ -45,6 +46,7 @@ pkgs.buildEnv {
     macos-defaults
     tuna
     kicad
+    xcode-build-server
 
     # Upstream packages (from nixpkgs)
     pkgs.coreutils

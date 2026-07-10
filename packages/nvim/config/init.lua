@@ -193,6 +193,11 @@ local servers = {
     filetypes = { 'python' },
     root_markers = { 'pyproject.toml', 'ruff.toml', '.git' },
   },
+  sourcekit = {
+    cmd = { 'sourcekit-lsp' },
+    filetypes = { 'swift' },
+    root_markers = { 'buildServer.json', 'Package.swift', '.git' },
+  },
 }
 
 for name, config in pairs(servers) do

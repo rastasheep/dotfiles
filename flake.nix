@@ -60,6 +60,7 @@
         pi-coding-agent = import ./packages/pi-coding-agent { inherit pkgs claudePkgs; };
         macos-defaults = import ./packages/macos-defaults { inherit pkgs; };
         tuna = import ./packages/tuna { inherit pkgs; };
+        xcode-build-server = import ./packages/xcode-build-server { inherit pkgs; };
 
         # Custom builds (optional - commented out by default)
         # blender = import ./packages/blender { inherit pkgs; };
@@ -73,6 +74,9 @@
 
           # GUI apps and utilities
           inherit ghostty claude-code pi-coding-agent macos-defaults tuna;
+
+          # Dev tooling
+          inherit xcode-build-server;
 
           # Custom builds (uncomment in let block above to enable)
           # inherit blender;
@@ -97,6 +101,7 @@
             paths = [
               scripts git tmux zsh nvim helix dircolors
               ghostty claude-code pi-coding-agent macos-defaults tuna
+              xcode-build-server
             ];
             pathsToLink = [ "/bin" "/share" "/etc" "/Applications" ];
           };
