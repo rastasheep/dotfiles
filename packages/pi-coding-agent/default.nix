@@ -97,31 +97,22 @@ let
   piAwsWrapper = pkgs.writeShellScriptBin "pi-aws" ''
     ${commonSetup}
 
-    # Generate models.json with ARNs from 1Password (overwrite each time)
-    # op inject resolves op:// references in the template file
-    if ! op inject -i "${piConfig}/share/pi/models.json" -o "$HOME/.pi/agent/models.json" -f; then
-      echo "Error: Failed to inject model ARNs from 1Password" >&2
-      exit 1
-    fi
-
-    # Pi environment configuration
+    # AWS Bedrock configuration from 1Password
     export AWS_REGION="us-east-1"
-    export AWS_BEDROCK_SKIP_AUTH="1"
     export PI_CACHE_RETENTION="long"
     export AWS_BEDROCK_FORCE_CACHE="1"
+    export AWS_ACCESS_KEY_ID="op://Private/claude-code-2/AWS_ACCESS_KEY_ID"
+    export AWS_SECRET_ACCESS_KEY="op://Private/claude-code-2/AWS_SECRET_ACCESS_KEY"
 
-    # Load bearer token from 1Password for runtime
-    if ! AWS_BEARER_TOKEN_BEDROCK=$(op read "op://Private/claude-code-2/AWS_BEARER_TOKEN_BEDROCK"); then
-      echo "Error: Failed to read bearer token from 1Password" >&2
-      exit 1
-    fi
-    export AWS_BEARER_TOKEN_BEDROCK
-
-    # Execute pi with Bedrock configuration
-    # Set favorite models for Ctrl+P cycling (only your 3 bedrock models)
-    exec ${piPackage}/bin/pi \
-      --provider bedrock \
-      --models "claude-sonnet-4-bedrock,claude-opus-4-bedrock,claude-haiku-4-bedrock" \
+    # Execute pi with 1Password secrets loaded via op run.
+    # op run pipes stdout to scan for secrets, which makes pi see a non-TTY
+    # stdout and fall back to non-interactive print mode. script allocates a
+    # pseudo-TTY so pi still detects an interactive terminal (same fix as claude-code).
+    # Set favorite models for Ctrl+P cycling (cross-region inference profile IDs,
+    # required since this AWS account has no direct on-demand model access)
+    exec op run -- script -q /dev/null ${piPackage}/bin/pi \
+      --provider amazon-bedrock \
+      --models "us.anthropic.claude-sonnet-5,us.anthropic.claude-opus-4-8,us.anthropic.claude-haiku-4-5-20251001-v1:0" \
       "$@"
   '';
 in
