@@ -78,10 +78,18 @@ if command -v fzf &> /dev/null; then
   source <(fzf --zsh 2>/dev/null || true)
 fi
 
-# Initialize starship prompt if available
-if command -v starship &> /dev/null; then
-  eval "$(starship init zsh)"
-fi
+# Native zsh prompt with git integration
+autoload -Uz vcs_info
+
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr '+'
+zstyle ':vcs_info:git:*' unstagedstr '*'
+zstyle ':vcs_info:git:*' formats ' %F{magenta}[%b]%f%F{red}%c%u%f'
+zstyle ':vcs_info:git:*' actionformats ' %F{magenta}[%b|%a]%f'
+
+precmd_functions+=(vcs_info)
+
+PROMPT='%F{cyan}%1~%f${vcs_info_msg_0_} %(?.%F{green}.%F{red})❯%f '
 
 # Initialize dircolors for colorized ls output
 if command -v dircolors &> /dev/null; then

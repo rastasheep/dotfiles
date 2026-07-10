@@ -50,7 +50,6 @@
         git = import ./packages/git { inherit pkgs; };
         scripts = import ./packages/scripts { inherit pkgs; configuredGit = git; };
         tmux = import ./packages/tmux { inherit pkgs; };
-        starship = import ./packages/starship { inherit pkgs; };
         zsh = import ./packages/zsh { inherit pkgs; };
         nvim = import ./packages/nvim { inherit pkgs; };
         helix = import ./packages/helix { inherit pkgs; };
@@ -70,7 +69,7 @@
         # Individual tool packages - can be run with 'nix run .#<tool>'
         packages = {
           # Core CLI tools with custom config
-          inherit scripts git tmux starship zsh nvim helix dircolors;
+          inherit scripts git tmux zsh nvim helix dircolors;
 
           # GUI apps and utilities
           inherit ghostty claude-code pi-coding-agent macos-defaults tuna;
@@ -85,7 +84,7 @@
           # Convenience: all core CLI tools bundle (no machine-specific apps)
           default = pkgs.buildEnv {
             name = "dotfiles-core";
-            paths = [ scripts git tmux starship zsh nvim helix dircolors ];
+            paths = [ scripts git tmux zsh nvim helix dircolors ];
             pathsToLink = [ "/bin" "/share" "/etc" ];
           };
         };
@@ -96,7 +95,7 @@
           all-packages = pkgs.buildEnv {
             name = "all-packages-check";
             paths = [
-              scripts git tmux starship zsh nvim helix dircolors
+              scripts git tmux zsh nvim helix dircolors
               ghostty claude-code pi-coding-agent macos-defaults tuna
             ];
             pathsToLink = [ "/bin" "/share" "/etc" "/Applications" ];

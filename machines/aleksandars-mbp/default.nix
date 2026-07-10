@@ -9,7 +9,6 @@ let
   # Import custom packages
   git = import ../../packages/git { inherit pkgs; };
   tmux = import ../../packages/tmux { inherit pkgs; };
-  starship = import ../../packages/starship { inherit pkgs; };
   zsh = import ../../packages/zsh { inherit pkgs; };
   nvim = import ../../packages/nvim { inherit pkgs; };
   helix = import ../../packages/helix { inherit pkgs; };
@@ -36,7 +35,6 @@ pkgs.buildEnv {
     scripts
     git
     tmux
-    starship
     zsh
     nvim
     helix
