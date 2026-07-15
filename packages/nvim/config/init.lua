@@ -78,8 +78,20 @@ vim.api.nvim_create_user_command('E', 'Explore', {})
 --
 
 vim.keymap.set('n', 'Y', 'yy', { silent = true })
-vim.keymap.set('n', '<leader>\\', ':vs<cr>', { silent = true })
-vim.keymap.set('n', '<leader>-', ':split<cr>', { silent = true })
+
+-- smart autotiled split
+local function autotile(file, ratio)
+  local width = vim.api.nvim_win_get_width(0)
+  local height = vim.api.nvim_win_get_height(0)
+  local cmd = (width >= height * (ratio or 2)) and 'vsplit' or 'split'
+  vim.cmd(file and file ~= '' and (cmd .. ' ' .. file) or cmd)
+end
+
+vim.api.nvim_create_user_command('Split', function(opts)
+  autotile(opts.args)
+end, { nargs = '?', complete = 'file' })
+
+vim.keymap.set('n', '<leader>\\', autotile, { silent = true })
 
 -- clipboard
 vim.keymap.set('v', '<D-c>', '"+y')
@@ -102,7 +114,9 @@ vim.keymap.set('v', '<leader>de', [[c<c-r>=system('base64 --decode', @")<cr><esc
 --
 
 -- fzf
-require('fzf-lua').setup({
+local fzf = require('fzf-lua')
+
+fzf.setup({
   global = {
     query_delay = 200,
     pickers = {
@@ -112,12 +126,19 @@ require('fzf-lua').setup({
   },
 })
 
+fzf.config.defaults.actions.files['alt-enter'] = function(selected, opts)
+  if not selected or #selected == 0 then return end
+  local file = fzf.path.entry_to_file(selected[1], opts).path
+  vim.cmd('Split ' .. vim.fn.fnameescape(file))
+end
+
 vim.keymap.set('n', '<leader>t', ':FzfLua global<cr>', { silent = true })
 vim.keymap.set('n', '<leader>p', ':FzfLua builtin<cr>', { silent = true })
 vim.keymap.set('n', '<leader>g', ':FzfLua git_status<cr>', { silent = true })
 vim.keymap.set('n', '<leader>a', ':FzfLua live_grep<cr>', { silent = true })
 vim.keymap.set('v', '<leader>a', ':FzfLua grep_visual<cr>', { silent = true })
 vim.keymap.set('n', '<leader>A', ':FzfLua grep_cword<cr>', { silent = true })
+vim.keymap.set('n', '<leader>l', ':FzfLua buffers<cr>', { silent = true })
 
 -- treesitter
 vim.api.nvim_create_autocmd('FileType', {
