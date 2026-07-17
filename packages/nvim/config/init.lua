@@ -51,9 +51,8 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.opt.matchpairs:append('<:>')
 
-vim.g.netrw_banner = 0
-vim.g.netrw_preview = 1
-vim.g.netrw_liststyle = 3
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 --
 -- autocommands
@@ -72,6 +71,30 @@ vim.api.nvim_create_user_command('W', 'w', {})
 vim.api.nvim_create_user_command('Q', 'q', { bang = true })
 vim.api.nvim_create_user_command('Wq', 'wq', {})
 vim.api.nvim_create_user_command('E', 'Explore', {})
+
+--
+-- terminal
+--
+
+vim.api.nvim_create_user_command('T', function(o)
+  local cmd = o.args ~= '' and { vim.o.shell, '-c', o.args } or vim.o.shell
+  local label = o.args ~= '' and o.args or 'shell'
+  vim.cmd('botright new | resize 15')
+  local buf = vim.api.nvim_get_current_buf()
+  local job = vim.fn.jobstart(cmd, {
+    term = true,
+    on_exit = function() vim.cmd('stopinsert') end,
+  })
+  vim.api.nvim_buf_set_name(buf, string.format('T://%s:%d', label, vim.fn.jobpid(job)))
+  vim.cmd.startinsert()
+end, { nargs = '*', complete = 'shellcmd', desc = 'Run terminal command' })
+
+vim.api.nvim_create_autocmd('TermOpen', {
+  callback = function(args)
+    if vim.bo[args.buf].filetype == 'fzf' then return end
+    vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], { buffer = args.buf })
+  end,
+})
 
 --
 -- keymaps
@@ -124,6 +147,12 @@ fzf.setup({
       { 'buffers',  prefix = '#' },
     },
   },
+  winopts = {
+    height = 0.85,
+    width = 0.85,
+    border = 'rounded',
+    title_pos = 'center',
+  },
 })
 
 fzf.config.defaults.actions.files['alt-enter'] = function(selected, opts)
@@ -139,6 +168,46 @@ vim.keymap.set('n', '<leader>a', ':FzfLua live_grep<cr>', { silent = true })
 vim.keymap.set('v', '<leader>a', ':FzfLua grep_visual<cr>', { silent = true })
 vim.keymap.set('n', '<leader>A', ':FzfLua grep_cword<cr>', { silent = true })
 vim.keymap.set('n', '<leader>l', ':FzfLua buffers<cr>', { silent = true })
+
+-- file browser
+local function browse(cwd)
+  cwd = vim.fs.normalize(cwd or vim.uv.cwd())
+
+  local dirs, files = {}, {}
+  for name, typ in vim.fs.dir(cwd) do
+    if typ == 'directory' then
+      dirs[#dirs + 1] = fzf.utils.ansi_codes.blue(name .. '/')
+    else
+      files[#files + 1] = name
+    end
+  end
+
+  local entries = vim.iter({ fzf.utils.ansi_codes.blue('../'), dirs, files }):flatten():totable()
+
+  fzf.fzf_exec(entries, {
+    prompt = vim.fn.fnamemodify(cwd, ':~') .. '/ ',
+    winopts = { height = 0.85, width = 0.85 },
+    actions = {
+      default = {
+        reuse = true,
+        fn = function(sel)
+          if not sel[1] then return end
+          local target = vim.fs.normalize(vim.fs.joinpath(cwd, (sel[1]:gsub('/$', ''))))
+          if vim.fn.isdirectory(target) == 1 then
+            browse(target)
+          else
+            fzf.utils.fzf_winobj():close()
+            vim.cmd.edit(vim.fn.fnameescape(target))
+          end
+        end,
+      },
+    },
+  })
+end
+
+vim.api.nvim_create_user_command('Explore', function()
+  browse(vim.fn.expand('%:p:h'))
+end, {})
 
 -- treesitter
 vim.api.nvim_create_autocmd('FileType', {
