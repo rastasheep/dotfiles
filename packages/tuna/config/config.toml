@@ -118,6 +118,10 @@ url = 'tuna://run/url.https:%252F%252Fcalendar.google.com%252Fcalendar%252Fu%252
 key = '`'
 url = 'tuna://run/url.https:%252F%252Fgithub.com%252FFlorenceHC/Open%20URL'
 
+[[comboMode.bindings]]
+key = 'a'
+url = 'tuna://run/TunaSmartLinks.SmartLinksCatalog.Google%20AI/TunaSmartLinks.SmartLinksActionsCatalog.Open%20Smart%20Link%E2%80%A6/Tuna.CurrentSelectionCatalog.Current%20Text%20Selection'
+
 [hotkeys]
 custom = []
 
@@ -148,6 +152,42 @@ talkModeModifierTrigger = 'rightCommandOption'
 talkModeTriggerType = 'modifier'
 textModeTriggerType = 'disabled'
 themeIdentifier = 'com.brnbw.tuna.themes.default'
+
+[[smartLinks.entries]]
+enabled = true
+name = 'GitHub'
+requiresInput = true
+template = 'https://github.com/search?q={{input}}'
+
+[[smartLinks.entries]]
+enabled = true
+name = 'Google'
+requiresInput = true
+template = 'https://www.google.com/search?q={{input}}'
+
+[[smartLinks.entries]]
+enabled = true
+name = 'Google AI'
+requiresInput = true
+template = 'https://www.google.com/search?q={{input}}&udm=50'
+
+[[smartLinks.entries]]
+enabled = true
+name = 'Stack Overflow'
+requiresInput = true
+template = 'https://stackoverflow.com/search?q={{input}}'
+
+[[smartLinks.entries]]
+enabled = true
+name = 'Wikipedia'
+requiresInput = true
+template = 'https://en.wikipedia.org/wiki/Special:Search?search={{input}}'
+
+[[smartLinks.entries]]
+enabled = true
+name = 'YouTube'
+requiresInput = true
+template = 'https://www.youtube.com/results?search_query={{input}}'
 
 [[catalogSettings]]
 catalogIdentifier = 'TunaCore.TextActionsCatalog'
