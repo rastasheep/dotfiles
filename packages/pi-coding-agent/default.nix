@@ -9,10 +9,12 @@ let
     src = ./config;
   };
 
+  piVersion = "0.80.8";
+
   # Install pi-coding-agent using bun
   piPackage = pkgs.stdenvNoCC.mkDerivation {
     name = "pi-coding-agent";
-    version = "0.80.6";
+    version = piVersion;
 
     nativeBuildInputs = [ pkgs.bun pkgs.makeWrapper ];
 
@@ -23,7 +25,7 @@ let
       mkdir -p $HOME
 
       # Install the package locally
-      ${pkgs.bun}/bin/bun install --no-save @earendil-works/pi-coding-agent
+      ${pkgs.bun}/bin/bun install --no-save @earendil-works/pi-coding-agent@${piVersion}
     '';
 
     installPhase = ''

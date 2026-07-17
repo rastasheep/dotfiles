@@ -59,6 +59,7 @@ pkgs.buildEnv {
     pkgs.fzf
     pkgs._1password-cli
     pkgs.docker
+    pkgs.container
     pkgs.openvpn
     pkgs.slack
     pkgs.uv
