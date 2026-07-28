@@ -10,7 +10,11 @@ This is a modular Nix flake-based dotfiles repository for macOS. It provides por
 
 ### Apply Configuration Changes
 ```bash
-# Update dotfiles installation (use exact profile name, not regex)
+# Upgrade the profile AND re-run every package's post-upgrade activation
+# step (LaunchAgents, `defaults write`, etc. - see mkDotfilesApply below)
+dotfiles-apply
+
+# Equivalent to just the upgrade half, without activation
 nix profile upgrade aleksandars-mbp
 
 # Or rebuild from source
@@ -81,6 +85,7 @@ All packages use shared utilities to ensure consistency:
 - `buildConfig`: Config directory builder (installs to /share/{name})
 - `smartConfigLink`: Backup and symlink logic for existing configs
 - `mkMeta`: Standardized meta attributes template
+- `mkDotfilesApply`: Builds a machine's `dotfiles-apply` command by collecting `passthru.activationCommand` off its package list
 
 ### Package Patterns
 All packages follow consistent patterns:
@@ -103,19 +108,28 @@ The flake supports multiple systems via flake-utils:
 1. Create package directory in `packages/`
 2. Use shared library utilities from `lib/default.nix`
 3. Follow package patterns (inherit lib, complete meta, passthru)
-4. Add package import to `flake.nix` let block
-5. Export in `packages` output
-6. Add to machine bundle in `machines/aleksandars-mbp/default.nix`
-7. Run `nix flake check` to verify
+4. If the package writes persistent state that `nix profile upgrade` won't
+   re-apply on its own (a LaunchAgent, `defaults write`, etc.) and has no
+   other natural trigger, expose `passthru.activationCommand` (see
+   `packages/macos-defaults/default.nix`). Skip this if the package already
+   self-heals its own config on every invocation (see `claude-code`, `zsh`).
+5. Add package import to `flake.nix` let block
+6. Export in `packages` output
+7. Add to machine bundle in `machines/aleksandars-mbp/default.nix`
+8. Run `nix flake check` to verify
 
 ### Creating a New Machine Bundle
 1. Create directory in `machines/` (e.g., `machines/new-machine/`)
-2. Create `default.nix` that imports and composes packages
+2. Create `default.nix` that imports and composes packages into a named
+   `packages` list, then build its `dotfiles-apply` command with
+   `lib.mkDotfilesApply { machineName = "new-machine"; inherit packages; }`
+   and append it to `buildEnv`'s `paths` (see `machines/aleksandars-mbp/default.nix`)
 3. Add to `flake.nix` packages output:
    ```nix
    new-machine = import ./machines/new-machine { inherit pkgs claudePkgs; };
    ```
 4. Install with: `nix profile install .#new-machine`
+5. Update later with: `dotfiles-apply`
 
 ### Modifying Existing Packages
 1. Edit package in `packages/{name}/default.nix`

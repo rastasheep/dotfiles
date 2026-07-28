@@ -53,8 +53,9 @@ nix profile install github:rastasheep/dotfiles#{nvim,git,tmux}
 cd ~/src/github.com/rastasheep/dotfiles
 nix profile install .#aleksandars-mbp
 
-# Update later
-apply-dot  # or: nix profile upgrade ".*aleksandars-mbp.*"
+# Update later: upgrades the profile, then re-runs every package's
+# post-upgrade activation step (see "Activation Commands" below)
+dotfiles-apply
 ```
 
 ## Structure
@@ -126,6 +127,7 @@ All packages use shared utilities from `lib/default.nix`:
 - `buildConfig`: Config directory builder
 - `smartConfigLink`: Backup and symlink logic
 - `mkMeta`: Standardized meta attributes
+- `mkDotfilesApply`: Builds a machine's `dotfiles-apply` command from its package list
 
 This ensures consistency and reduces code duplication across all packages.
 
@@ -141,6 +143,9 @@ nix run .#git.unwrapped status
 # Check version
 nix eval .#git.version
 ```
+
+### Activation Commands
+`nix profile upgrade` only swaps store paths onto `$PATH` — it never runs anything. Packages that write persistent state Nix itself won't touch again (a LaunchAgent, a `defaults write` setting) expose `passthru.activationCommand`, a string naming the command(s) to re-run after every upgrade (see `packages/macos-defaults/default.nix`). A machine bundle collects these automatically via `lib.mkDotfilesApply` into its `dotfiles-apply` command — no per-package wiring needed elsewhere. This is *not* for config that's already self-healing on every invocation (e.g. `claude`/`pi`/`zsh` re-sync their own `$HOME` config on each run) — only for state with no other natural trigger.
 
 ### Flake Checks
 Validate packages build correctly:

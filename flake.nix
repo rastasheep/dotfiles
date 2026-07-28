@@ -114,7 +114,7 @@
             # Test that lib can be imported and has expected functions
             ${pkgs.nix}/bin/nix-instantiate --eval --expr '
               let lib = import ${./lib} { pkgs = import ${pkgs.path} {}; };
-              in lib ? wrapWithConfig && lib ? buildConfig && lib ? smartConfigLink && lib ? mkMeta
+              in lib ? wrapWithConfig && lib ? buildConfig && lib ? smartConfigLink && lib ? mkMeta && lib ? mkDotfilesApply
             ' > $out
           '';
         };

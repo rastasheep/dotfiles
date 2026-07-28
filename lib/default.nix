@@ -98,4 +98,28 @@ rec {
       license = license;
       mainProgram = mainProgram;
     };
+
+  # Builds a per-machine `dotfiles-apply` command: upgrades the named
+  # profile, then runs every package's `activationCommand` passthru (see
+  # packages/macos-defaults/default.nix for the convention). Packages
+  # without an activationCommand are skipped.
+  #
+  # Example:
+  #   mkDotfilesApply {
+  #     machineName = "aleksandars-mbp";
+  #     packages = [ git tmux macos-defaults ... ];
+  #   }
+  mkDotfilesApply = { machineName, packages }:
+    let
+      activationCommands =
+        lib.filter (c: c != null && c != "") (map (p: p.activationCommand or null) packages);
+    in
+    pkgs.writeShellScriptBin "dotfiles-apply" ''
+      set -euo pipefail
+      echo "[INFO] Upgrading ${machineName} profile..."
+      nix profile upgrade ${machineName}
+      echo "[INFO] Running activation commands..."
+      ${lib.concatMapStringsSep "\n" (c: "echo '[INFO] -> ${c}'\n${c}") activationCommands}
+      echo "[INFO] Sync complete."
+    '';
 }

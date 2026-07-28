@@ -29,7 +29,11 @@ let
           typeFlag = helpers.typeToFlag meta.type;
           valueStr = helpers.valueToString meta.value meta.type;
         in
-          "apply_setting ${domainArg} ${keyArg} ${typeFlag} ${valueStr}"
+          # `|| true`: apply_setting already tallies SUCCESS_COUNT/FAIL_COUNT
+          # and returns non-zero on failure; without this, set -e (in
+          # apply-defaults.sh) would abort the whole script on the first
+          # failing setting, silently skipping every setting listed after it.
+          "apply_setting ${domainArg} ${keyArg} ${typeFlag} ${valueStr} || true"
       ) settings
     ) config.domains
   );
@@ -109,6 +113,12 @@ pkgs.stdenv.mkDerivation {
     cp ${keyboardRemapPlist} $out/share/macos-defaults/${keyboardRemapConfig.label}.plist
     cp ${keyboardRemapApplyScript} $out/bin/keyboard-remap-apply  # Already executable from writeTextFile
   '';
+
+  # Consumed by lib.mkDotfilesApply: both commands only take effect if
+  # re-run after every profile upgrade (defaults writes and the LaunchAgent
+  # plist aren't managed by `nix profile upgrade` itself), and both are
+  # idempotent so it's safe to run them on every `dotfiles-apply`.
+  passthru.activationCommand = "macos-defaults-apply && keyboard-remap-apply";
 
   meta = {
     description = "macOS system defaults configuration and management";

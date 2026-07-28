@@ -27,11 +27,9 @@ let
     configuredGit = git;
   };
 
-in
-pkgs.buildEnv {
-  name = "aleksandars-mbp";
+  dotfilesLib = import ../../lib { inherit pkgs; };
 
-  paths = [
+  packages = [
     # Custom configured packages
     scripts
     git
@@ -64,6 +62,17 @@ pkgs.buildEnv {
     pkgs.slack
     pkgs.uv
   ];
+
+  dotfilesApply = dotfilesLib.mkDotfilesApply {
+    machineName = "aleksandars-mbp";
+    inherit packages;
+  };
+
+in
+pkgs.buildEnv {
+  name = "aleksandars-mbp";
+
+  paths = packages ++ [ dotfilesApply ];
 
   pathsToLink = [ "/bin" "/share" "/etc" "/Applications" ];
 
