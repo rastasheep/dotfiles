@@ -44,7 +44,7 @@ sortOrders = []
 
 [[comboMode.bindings]]
 key = 't'
-url = 'tuna://run/path.%252FUsers%252Frastasheep%252F.nix-profile%252FApplications%252FGhostty.app/Open'
+url = 'tuna://run/TunaCore.RunningProcessesCatalog.Ghostty/TunaCore.CommonActionsCatalog.Open'
 
 [[comboMode.bindings]]
 key = 'b'
@@ -80,11 +80,11 @@ url = 'tuna://run/TunaSystem.WindowManagementCatalog.Right%20Half/TunaCore.Commo
 
 [[comboMode.bindings]]
 key = 'j'
-url = 'tuna://run/TunaSystem.WindowManagementCatalog.First%20Fourth/TunaCore.CommonActionsCatalog.Run'
+url = 'tuna://run/TunaSystem.WindowManagementCatalog.Bottom%20Left%20Quarter/TunaCore.CommonActionsCatalog.Run'
 
 [[comboMode.bindings]]
 key = 'k'
-url = 'tuna://run/TunaSystem.WindowManagementCatalog.Last%20Fourth/TunaCore.CommonActionsCatalog.Run'
+url = 'tuna://run/TunaSystem.WindowManagementCatalog.Top%20Left%20Quarter/TunaCore.CommonActionsCatalog.Run'
 
 [[comboMode.bindings]]
 key = 'enter'
@@ -122,6 +122,10 @@ url = 'tuna://run/url.https:%252F%252Fgithub.com%252FFlorenceHC/Open%20URL'
 key = 'a'
 url = 'tuna://run/TunaSmartLinks.SmartLinksCatalog.Google%20AI/TunaSmartLinks.SmartLinksActionsCatalog.Open%20Smart%20Link%E2%80%A6/Tuna.CurrentSelectionCatalog.Current%20Text%20Selection'
 
+[[comboMode.bindings]]
+key = 'tab'
+url = 'tuna://run/TunaSystem.AllWindowsSearchCatalog.Windows/TunaCore.CommonActionsCatalog.Browse'
+
 [hotkeys]
 custom = []
 
@@ -130,8 +134,8 @@ custom = []
     carbonModifiers = 256
 
     [hotkeys.app.comboMode]
-    carbonKeyCode = 18
-    carbonModifiers = 6912
+    carbonKeyCode = 111
+    carbonModifiers = 0
 
     [hotkeys.app.stageFinderSelection]
     carbonKeyCode = 45
@@ -142,13 +146,14 @@ catalogPeriodicRescanIntervalMinutes = 60
 clipboardIgnoredBundleIdentifiers = [ 'com.1password.1password' ]
 comboModeModifierTrigger = 'hyper'
 comboModeThemeStyle = 'breadcrumb'
-comboModeTriggerType = 'modifier'
+dictationWindowPosition = 'bottomLeft'
 physicalHyperKeyQuickPressBehavior = 'triggersEscape'
-physicalHyperKeySource = 'capsLock'
 shelfAutoCloseWhenTasksComplete = true
+showResultsImmediatelyOnActivation = true
 spacebarBehavior = 'switchToTextMode'
 switchToTextModeWhenNoResults = true
-talkModeModifierTrigger = 'rightCommandOption'
+talkModeDoublePressTrigger = 'rightCommand'
+talkModeModifierTrigger = 'rightCommand'
 talkModeTriggerType = 'modifier'
 textModeTriggerType = 'disabled'
 themeIdentifier = 'com.brnbw.tuna.themes.default'
@@ -197,6 +202,18 @@ catalogIdentifier = 'TunaCore.TextActionsCatalog'
 
 [[catalogSettings]]
 catalogIdentifier = 'TunaPrompts.AIPromptCatalog'
+
+    [catalogSettings.values]
+    Provider = 'apple'
+
+[[catalogSettings]]
+catalogIdentifier = 'TunaSystem.WindowManagementCatalog'
+
+    [catalogSettings.values]
+    Cycling = 'sizes'
+
+[[catalogSettings]]
+catalogIdentifier = 'com.brnbw.TunaPrompts'
 
     [catalogSettings.values]
     Provider = 'apple'
