@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+#
+# Like `nix-shell -p`, but the GC root lives under /tmp instead of being tied
+# to the shell's lifetime. Packages survive `nix store gc` until macOS's
+# tmp_cleaner sweeps /tmp (~3 days of disuse) rather than vanishing the
+# instant the shell exits - no permanent profile install, no manual cleanup.
+#
+# USAGE:
+#
+#  $ tmp-shell ffmpeg ripgrep
+#   # => drop into a shell with both on PATH
+#
+#  $ tmp-shell ffmpeg -- ffmpeg -version
+#   # => run a command directly, no subshell
+
+set -euo pipefail
+
+root=/tmp/nix-shell-gcroots
+mkdir -p "$root"
+
+pkgs=()
+cmd=()
+past_separator=0
+for arg in "$@"; do
+    if [ "$arg" = "--" ]; then
+        past_separator=1
+    elif [ "$past_separator" -eq 0 ]; then
+        pkgs+=("$arg")
+    else
+        cmd+=("$arg")
+    fi
+done
+
+bindirs=()
+for pkg in "${pkgs[@]}"; do
+    nix build "nixpkgs#${pkg}" --out-link "${root}/${pkg}"
+    bindirs+=("${root}/${pkg}/bin")
+done
+
+new_path=$(IFS=:; echo "${bindirs[*]}"):$PATH
+
+if [ ${#cmd[@]} -eq 0 ]; then
+    exec env PATH="$new_path" "${SHELL:-zsh}"
+else
+    exec env PATH="$new_path" "${cmd[@]}"
+fi

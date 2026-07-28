@@ -44,7 +44,7 @@ sortOrders = []
 
 [[comboMode.bindings]]
 key = 't'
-url = 'tuna://run/TunaCore.RunningProcessesCatalog.Ghostty/TunaCore.CommonActionsCatalog.Open'
+url = 'tuna://run/path.%252FUsers%252Frastasheep%252F.nix-profile%252FApplications%252FGhostty.app/Open'
 
 [[comboMode.bindings]]
 key = 'b'
