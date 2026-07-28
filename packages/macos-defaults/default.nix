@@ -68,6 +68,29 @@ let
     }
   '';
 
+  # Keyboard remapping (hidutil + LaunchAgent), separate from the `defaults
+  # write` settings above since it's a different mechanism entirely.
+  keyboardRemapConfig = import ./keyboard-remaps.nix;
+  keyboardRemapLib = import ./lib/keyboard-remap.nix { inherit pkgs; };
+
+  userKeyMappingJson = keyboardRemapLib.buildUserKeyMappingJson keyboardRemapConfig.mappings;
+
+  keyboardRemapPlist = pkgs.writeText "${keyboardRemapConfig.label}.plist" (
+    keyboardRemapLib.buildLaunchAgentPlist {
+      label = keyboardRemapConfig.label;
+      inherit userKeyMappingJson;
+    }
+  );
+
+  keyboardRemapApplyScript = pkgs.writeTextFile {
+    name = "keyboard-remap-apply";
+    text = builtins.replaceStrings
+      ["@LABEL@" "@PLIST_SRC@"]
+      [keyboardRemapConfig.label "${keyboardRemapPlist}"]
+      (builtins.readFile ./scripts/apply-keyboard-remap.sh);
+    executable = true;
+  };
+
 in
 pkgs.stdenv.mkDerivation {
   name = "macos-defaults-configured";
@@ -82,6 +105,9 @@ pkgs.stdenv.mkDerivation {
     cp ${configJson} $out/share/macos-defaults/config.json
     cp ${applyScript} $out/bin/macos-defaults-apply  # Already executable from writeTextFile
     cp ${managementScript}/bin/macos-defaults $out/bin/macos-defaults
+
+    cp ${keyboardRemapPlist} $out/share/macos-defaults/${keyboardRemapConfig.label}.plist
+    cp ${keyboardRemapApplyScript} $out/bin/keyboard-remap-apply  # Already executable from writeTextFile
   '';
 
   meta = {
@@ -89,9 +115,10 @@ pkgs.stdenv.mkDerivation {
     longDescription = ''
       Manages macOS system defaults with declarative configuration.
 
-      Includes two tools:
+      Includes three tools:
       - macos-defaults: Check drift, list settings, export, and discover
-      - macos-defaults-apply: Apply the configuration (supports DRY_RUN=1 and VERBOSE=1)
+      - macos-defaults-apply: Apply the `defaults write` configuration (supports DRY_RUN=1 and VERBOSE=1)
+      - keyboard-remap-apply: Install and load the hidutil keyboard remap LaunchAgent (see keyboard-remaps.nix)
 
       Refactored for modularity, better error handling, and maintainability.
     '';
