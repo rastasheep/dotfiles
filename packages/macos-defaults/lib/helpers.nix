@@ -28,11 +28,15 @@ in rec {
     if type == "bool" then
       (if value then "true" else "false")
     else if type == "array" then
-      # Escape JSON for shell - wrap in single quotes and escape existing quotes
-      escapeShellArg (builtins.toJSON value)
+      # `defaults write ... -array` takes each element as its own shell
+      # argument (and zero arguments for an empty array) - NOT one opaque
+      # JSON-encoded string.
+      lib.concatMapStringsSep " " (v: escapeShellArg (toString v)) value
     else if type == "dict" then
-      # Escape dict representation for shell
-      escapeShellArg (builtins.toJSON value)
+      # `defaults write ... -dict` takes alternating key/value arguments.
+      lib.concatStringsSep " " (lib.concatLists (lib.mapAttrsToList
+        (k: v: [ (escapeShellArg k) (escapeShellArg (toString v)) ])
+        value))
     else if type == "string" then
       if builtins.match ".*\\$.*" value != null then
         # Preserve $VAR for runtime shell expansion - use double quotes

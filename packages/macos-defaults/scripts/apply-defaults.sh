@@ -72,23 +72,26 @@ apply_setting() {
     local key=$2
     local type_flag=$3
     shift 3
-    local value="$*"
+    # Remaining args ($@) are passed through as-is (not rejoined into one
+    # string) so multi-value types (e.g. -array with one argument per
+    # element, or zero arguments for an empty array) stay correctly split.
 
     TOTAL_COUNT=$((TOTAL_COUNT + 1))
 
-    log_verbose "Setting ${domain} ${key} ${type_flag} ${value}"
+    log_verbose "Setting ${domain} ${key} ${type_flag} $*"
 
     if [[ $DRY_RUN -eq 1 ]]; then
-        echo "  Would run: defaults write ${domain} ${key} ${type_flag} ${value}"
+        echo "  Would run: defaults write ${domain} ${key} ${type_flag} $*"
         SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
         return 0
     fi
 
-    if defaults write "${domain}" "${key}" "${type_flag}" ${value} 2>/dev/null; then
+    local write_error
+    if write_error=$(defaults write "${domain}" "${key}" "${type_flag}" "$@" 2>&1); then
         SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
         return 0
     else
-        log_warn "Failed to set ${domain}.${key}"
+        log_warn "Failed to set ${domain}.${key}: ${write_error}"
         FAIL_COUNT=$((FAIL_COUNT + 1))
         return 1
     fi

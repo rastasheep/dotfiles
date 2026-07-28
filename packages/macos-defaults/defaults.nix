@@ -148,9 +148,9 @@
         description = "Position Dock on left side of screen";
       };
       tilesize = {
-        value = 28;
+        value = 33;
         type = "int";
-        description = "Set icon size of Dock items to 28 pixels";
+        description = "Set icon size of Dock items to 33 pixels";
       };
       autohide = {
         value = true;

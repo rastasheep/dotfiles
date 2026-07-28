@@ -20,7 +20,9 @@ fi
 mkdir -p "$HOME/Library/LaunchAgents"
 
 echo "[INFO] Installing LaunchAgent to ${PLIST_DEST}"
-cp "${PLIST_SRC}" "${PLIST_DEST}"
+# -f: the destination may already exist with the read-only mode it inherited
+# from the Nix store source on a prior install; force-remove and recreate it.
+cp -f "${PLIST_SRC}" "${PLIST_DEST}"
 
 readonly GUI_DOMAIN="gui/$(id -u)"
 
