@@ -1,4 +1,4 @@
-schemaVersion = 1
+schemaVersion = 4
 
 [catalogConfiguration]
 customItems = []
@@ -15,116 +15,104 @@ scriptsDirectories = []
     depthRawValue = 5
 
 [catalogs]
+searchPriorities = []
 sortOrders = []
 
     [[catalogs.globalScopes]]
-    catalogIdentifier = 'Tuna.EffectsCatalog'
-    mode = 'none'
-    selectedItemKeys = []
+    catalogIdentifier = 'tuna.effects'
+
+        [catalogs.globalScopes.scope]
+        kind = 'none'
 
     [[catalogs.globalScopes]]
-    catalogIdentifier = 'TunaCore.ApplicationsCatalog'
-    mode = 'all'
-    selectedItemKeys = []
+    catalogIdentifier = 'tuna.emoji'
 
-    [[catalogs.globalScopes]]
-    catalogIdentifier = 'TunaCore.UserFoldersCatalog'
-    mode = 'none'
-    selectedItemKeys = []
-
-    [[catalogs.globalScopes]]
-    catalogIdentifier = 'TunaEmoji.EmojiCatalog'
-    mode = 'none'
-    selectedItemKeys = []
-
-    [[catalogs.globalScopes]]
-    catalogIdentifier = 'TunaPrompts.AIPromptCatalog'
-    mode = 'all'
-    selectedItemKeys = []
+        [catalogs.globalScopes.scope]
+        kind = 'none'
 
 [[comboMode.bindings]]
 key = 't'
-url = 'tuna://run/path.%252FUsers%252Frastasheep%252F.nix-profile%252FApplications%252FGhostty.app/Open'
+url = 'tuna://run?subject=path.%252FUsers%252Frastasheep%252F.nix-profile%252FApplications%252FGhostty.app&action=Open'
 
 [[comboMode.bindings]]
 key = 'b'
-url = 'tuna://run/path.%252FApplications%252FSafari.app/Open'
+url = 'tuna://run?subject=path.%252FApplications%252FSafari.app&action=Open'
 
 [[comboMode.bindings]]
 key = 's'
-url = 'tuna://run/path.%252FUsers%252Frastasheep%252F.nix-profile%252FApplications%252FSlack.app/Open'
+url = 'tuna://run?subject=path.%252FUsers%252Frastasheep%252F.nix-profile%252FApplications%252FSlack.app&action=Open'
 
 [[comboMode.bindings]]
 key = 'i'
-url = 'tuna://run/path.%252FSystem%252FApplications%252FMusic.app/Open'
+url = 'tuna://run?subject=path.%252FSystem%252FApplications%252FMusic.app&action=Open'
 
 [[comboMode.bindings]]
 key = 'c'
-url = 'tuna://run/path.%252FApplications%252FClaude.app/Open'
+url = 'tuna://run?subject=path.%252FApplications%252FClaude.app&action=Open'
 
 [[comboMode.bindings]]
 key = 'g'
-url = 'tuna://run/Tuna.CurrentSelectionCatalog.Current%20Text%20Selection/TunaSmartLinks.SmartLinksActionsCatalog.Send%20to%20Smart%20Link%E2%80%A6/TunaSmartLinks.SmartLinksCatalog.GitHub'
+url = 'tuna://run?subject=Tuna.CurrentSelectionCatalog.Current%20Text%20Selection&action=tuna.smart-links.actions/send-to-smart-link&target=TunaSmartLinks.SmartLinksCatalog.GitHub'
 
 [[comboMode.bindings]]
 key = 'm'
-url = 'tuna://run/url.http:%252F%252Fmeet.google.com%252Fnew%253Fauthuser=aleksandar.diklic@florencehc.com/Open%20URL'
+url = 'tuna://run?subject=url.http:%252F%252Fmeet.google.com%252Fnew%253Fauthuser%3Daleksandar.diklic@florencehc.com&action=Open%20URL'
 
 [[comboMode.bindings]]
 key = 'h'
-url = 'tuna://run/TunaSystem.WindowManagementCatalog.Left%20Half/TunaCore.CommonActionsCatalog.Run'
+url = 'tuna://run?subject=tuna.window-management/left-half&action=tuna.common-actions/run'
 
 [[comboMode.bindings]]
 key = 'l'
-url = 'tuna://run/TunaSystem.WindowManagementCatalog.Right%20Half/TunaCore.CommonActionsCatalog.Run'
+url = 'tuna://run?subject=tuna.window-management/right-half&action=tuna.common-actions/run'
 
 [[comboMode.bindings]]
 key = 'j'
-url = 'tuna://run/TunaSystem.WindowManagementCatalog.Bottom%20Left%20Quarter/TunaCore.CommonActionsCatalog.Run'
+url = 'tuna://run?subject=tuna.window-management/bottom-left-quarter&action=tuna.common-actions/run'
 
 [[comboMode.bindings]]
 key = 'k'
-url = 'tuna://run/TunaSystem.WindowManagementCatalog.Top%20Left%20Quarter/TunaCore.CommonActionsCatalog.Run'
+url = 'tuna://run?subject=tuna.window-management/top-left-quarter&action=tuna.common-actions/run'
 
 [[comboMode.bindings]]
 key = 'enter'
-url = "tuna://run/text.osascript%2520-e%2520'tell%2520application%2520%2522System%2520Events%2522%2520to%2520keystroke%2520space%2520using%2520command%2520down'/Run%20Text%20as%20Shell%20Command"
+url = "tuna://run?subject=text.osascript%2520-e%2520'tell%2520application%2520%2522System%2520Events%2522%2520to%2520keystroke%2520space%2520using%2520command%2520down'&action=Run%20Text%20as%20Shell%20Command"
 
 [[comboMode.bindings]]
 key = 'f'
-url = 'tuna://run/TunaSystem.WindowManagementCatalog.Center%20Two%20Thirds/TunaCore.CommonActionsCatalog.Run'
+url = 'tuna://run?subject=tuna.window-management/center-two-thirds&action=tuna.common-actions/run'
 
 [[comboMode.bindings]]
 key = 'space'
-url = 'tuna://run/Tuna.ModesCatalog.Fuzzy%20Mode/TunaCore.CommonActionsCatalog.Switch'
+url = 'tuna://run?subject=Tuna.ModesCatalog.Fuzzy%20Mode&action=tuna.common-actions/switch'
 
 [[comboMode.bindings]]
 key = '='
-url = 'tuna://run/Tuna.Internal.ShelfCatalog.Shelf/Tuna.BasicActionsCatalog.Toggle%20Shelf'
+url = 'tuna://run?subject=Tuna.Internal.ShelfCatalog.Shelf&action=tuna.common-actions/toggle-shelf'
 
 [[comboMode.bindings]]
 key = '1'
-url = 'tuna://run/url.https:%252F%252Fmail.google.com%252Fmail%252Fu%252F0%252F%2523inbox/Open%20URL'
+url = 'tuna://run?subject=url.https:%252F%252Fmail.google.com%252Fmail%252Fu%252F0%252F%2523inbox&action=Open%20URL'
 
 [[comboMode.bindings]]
 key = '2'
-url = 'tuna://run/url.https:%252F%252Fmail.google.com%252Fmail%252Fu%252F1%252F%253Fogbl%2523inbox/Open%20URL'
+url = 'tuna://run?subject=url.https:%252F%252Fmail.google.com%252Fmail%252Fu%252F1%252F%253Fogbl%2523inbox&action=Open%20URL'
 
 [[comboMode.bindings]]
 key = '3'
-url = 'tuna://run/url.https:%252F%252Fcalendar.google.com%252Fcalendar%252Fu%252F1%252Fr%253Fpli=1/Open%20URL'
+url = 'tuna://run?subject=url.https:%252F%252Fcalendar.google.com%252Fcalendar%252Fu%252F1%252Fr%253Fpli%3D1&action=Open%20URL'
 
 [[comboMode.bindings]]
 key = '`'
-url = 'tuna://run/url.https:%252F%252Fgithub.com%252FFlorenceHC/Open%20URL'
+url = 'tuna://run?subject=url.https:%252F%252Fgithub.com%252FFlorenceHC&action=Open%20URL'
 
 [[comboMode.bindings]]
 key = 'a'
-url = 'tuna://run/TunaSmartLinks.SmartLinksCatalog.Google%20AI/TunaSmartLinks.SmartLinksActionsCatalog.Open%20Smart%20Link%E2%80%A6/Tuna.CurrentSelectionCatalog.Current%20Text%20Selection'
+url = 'tuna://run?subject=TunaSmartLinks.SmartLinksCatalog.Google%20AI&action=tuna.smart-links.actions/open-smart-link&target=Tuna.CurrentSelectionCatalog.Current%20Text%20Selection'
 
 [[comboMode.bindings]]
 key = 'tab'
-url = 'tuna://run/TunaSystem.AllWindowsSearchCatalog.Windows/TunaCore.CommonActionsCatalog.Browse'
+url = 'tuna://run?subject=tuna.windows.search/allWindows.search&action=tuna.common-actions/browse'
 
 [hotkeys]
 custom = []
@@ -156,7 +144,6 @@ talkModeDoublePressTrigger = 'rightCommand'
 talkModeModifierTrigger = 'rightCommand'
 talkModeTriggerType = 'modifier'
 textModeTriggerType = 'disabled'
-themeIdentifier = 'com.brnbw.tuna.themes.default'
 
 [[smartLinks.entries]]
 enabled = true
