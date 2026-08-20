@@ -26,232 +26,6 @@ sortOrders = []
         kind = 'none'
 
 [[comboMode.bindings]]
-id = '94A9EBFA-399F-41BD-AD5C-027E23B4680D'
-key = 't'
-
-    [comboMode.bindings.destination]
-    type = 'command'
-
-        [comboMode.bindings.destination.command]
-        actionIdentifier = 'tuna.common-actions/open'
-        behavior = 'run'
-        presentation = 'automatic'
-        subjectIdentifiers = [ 'path:/Users/rastasheep/.nix-profile/Applications/Ghostty.app' ]
-        type = 'savedCommand'
-
-[[comboMode.bindings]]
-id = '01F6F532-EF7C-479C-A941-6C5868F523B1'
-key = 'b'
-
-    [comboMode.bindings.destination]
-    type = 'command'
-
-        [comboMode.bindings.destination.command]
-        actionIdentifier = 'tuna.common-actions/open'
-        behavior = 'run'
-        presentation = 'automatic'
-        subjectIdentifiers = [ 'path:/Applications/Safari.app' ]
-        type = 'savedCommand'
-
-[[comboMode.bindings]]
-id = 'D53B4BCA-7F2E-4544-A128-75E324503271'
-key = 's'
-
-    [comboMode.bindings.destination]
-    type = 'command'
-
-        [comboMode.bindings.destination.command]
-        actionIdentifier = 'tuna.common-actions/open'
-        behavior = 'run'
-        presentation = 'automatic'
-        subjectIdentifiers = [ 'path:/Users/rastasheep/.nix-profile/Applications/Slack.app' ]
-        type = 'savedCommand'
-
-[[comboMode.bindings]]
-id = '503A3207-4C87-4D00-ADB9-9895DF1F51FC'
-key = 'i'
-
-    [comboMode.bindings.destination]
-    type = 'command'
-
-        [comboMode.bindings.destination.command]
-        actionIdentifier = 'tuna.common-actions/open'
-        behavior = 'run'
-        presentation = 'automatic'
-        subjectIdentifiers = [ 'path:/System/Applications/Music.app' ]
-        type = 'savedCommand'
-
-[[comboMode.bindings]]
-id = '935B1FB5-A28F-40DD-B90B-CF320F44A085'
-key = 'c'
-
-    [comboMode.bindings.destination]
-    type = 'command'
-
-        [comboMode.bindings.destination.command]
-        actionIdentifier = 'tuna.common-actions/open'
-        behavior = 'run'
-        presentation = 'automatic'
-        subjectIdentifiers = [ 'path:/Applications/Claude.app' ]
-        type = 'savedCommand'
-
-[[comboMode.bindings]]
-id = '6DF9D1A7-7237-4935-90BC-93D9CFF74CBE'
-key = 'g'
-
-    [comboMode.bindings.destination]
-    type = 'command'
-
-        [comboMode.bindings.destination.command]
-        actionIdentifier = 'tuna.smart-links.actions/send-to-smart-link'
-        behavior = 'run'
-        presentation = 'automatic'
-        subjectIdentifiers = [ 'tuna.current-selection/Current Selection' ]
-        targetIdentifier = 'tuna.smart-links/4C2D2141-4C54-4C4C-9976-A1B59BA1B5EB'
-        type = 'savedCommand'
-
-[[comboMode.bindings]]
-id = 'E58B0A1D-550F-439D-B930-A7F7EEC307B7'
-key = 'm'
-
-    [comboMode.bindings.destination]
-    type = 'command'
-
-        [comboMode.bindings.destination.command]
-        actionIdentifier = 'tuna.common-actions/open-url'
-        behavior = 'run'
-        presentation = 'automatic'
-        subjectIdentifiers = [ 'url:http://meet.google.com/new?authuser=aleksandar.diklic@florencehc.com' ]
-        type = 'savedCommand'
-
-[[comboMode.bindings]]
-id = 'BD0266E9-4661-460A-B0AE-B251B5E89C55'
-key = 'h'
-
-    [comboMode.bindings.destination]
-    type = 'command'
-
-        [comboMode.bindings.destination.command]
-        actionIdentifier = 'tuna.common-actions/run'
-        behavior = 'run'
-        presentation = 'automatic'
-        subjectIdentifiers = [ 'tuna.window-management/left-half' ]
-        type = 'savedCommand'
-
-[[comboMode.bindings]]
-id = '65B06BEF-0E0B-4BEB-B848-294ABC2C63A8'
-key = 'l'
-
-    [comboMode.bindings.destination]
-    type = 'command'
-
-        [comboMode.bindings.destination.command]
-        actionIdentifier = 'tuna.common-actions/run'
-        behavior = 'run'
-        presentation = 'automatic'
-        subjectIdentifiers = [ 'tuna.window-management/right-half' ]
-        type = 'savedCommand'
-
-[[comboMode.bindings]]
-id = '4D0360C6-3A25-4E1A-99C1-58569A049C9F'
-key = 'j'
-
-    [comboMode.bindings.destination]
-    type = 'command'
-
-        [comboMode.bindings.destination.command]
-        actionIdentifier = 'tuna.common-actions/run'
-        behavior = 'run'
-        presentation = 'automatic'
-        subjectIdentifiers = [ 'tuna.window-management/bottom-left-quarter' ]
-        type = 'savedCommand'
-
-[[comboMode.bindings]]
-id = 'E280F768-0C41-42C8-AB85-C429F60A40A8'
-key = 'k'
-
-    [comboMode.bindings.destination]
-    type = 'command'
-
-        [comboMode.bindings.destination.command]
-        actionIdentifier = 'tuna.common-actions/run'
-        behavior = 'run'
-        presentation = 'automatic'
-        subjectIdentifiers = [ 'tuna.window-management/top-left-quarter' ]
-        type = 'savedCommand'
-
-[[comboMode.bindings]]
-id = '009F681E-A8B8-4E40-8B80-539AD485E40F'
-key = 'enter'
-
-    [comboMode.bindings.destination]
-    type = 'command'
-
-        [comboMode.bindings.destination.command]
-        actionIdentifier = 'tuna.common-actions/run-text-as-shell-command'
-        behavior = 'run'
-        presentation = 'automatic'
-        subjectIdentifiers = [ "text:osascript -e 'tell application \"System Events\" to keystroke space using command down'" ]
-        type = 'savedCommand'
-
-[[comboMode.bindings]]
-id = '528C36FC-C34D-460A-BE6F-79347BAC0C33'
-key = 'f'
-
-    [comboMode.bindings.destination]
-    type = 'command'
-
-        [comboMode.bindings.destination.command]
-        actionIdentifier = 'tuna.common-actions/run'
-        behavior = 'run'
-        presentation = 'automatic'
-        subjectIdentifiers = [ 'tuna.window-management/center-two-thirds' ]
-        type = 'savedCommand'
-
-[[comboMode.bindings]]
-id = 'EC00E22D-2DE9-46AE-9753-39BAA23816B4'
-key = '1'
-
-    [comboMode.bindings.destination]
-    type = 'command'
-
-        [comboMode.bindings.destination.command]
-        actionIdentifier = 'tuna.common-actions/open-url'
-        behavior = 'run'
-        presentation = 'automatic'
-        subjectIdentifiers = [ 'url:https://mail.google.com/mail/u/0/#inbox' ]
-        type = 'savedCommand'
-
-[[comboMode.bindings]]
-id = '32F171B1-F810-4C35-AC28-42197FFB3C04'
-key = '2'
-
-    [comboMode.bindings.destination]
-    type = 'command'
-
-        [comboMode.bindings.destination.command]
-        actionIdentifier = 'tuna.common-actions/open-url'
-        behavior = 'run'
-        presentation = 'automatic'
-        subjectIdentifiers = [ 'url:https://mail.google.com/mail/u/1/?ogbl#inbox' ]
-        type = 'savedCommand'
-
-[[comboMode.bindings]]
-id = 'F67644A2-5303-4D4E-8A71-B1E56A012E78'
-key = '3'
-
-    [comboMode.bindings.destination]
-    type = 'command'
-
-        [comboMode.bindings.destination.command]
-        actionIdentifier = 'tuna.common-actions/open-url'
-        behavior = 'run'
-        presentation = 'automatic'
-        subjectIdentifiers = [ 'url:https://calendar.google.com/calendar/u/1/r?pli=1' ]
-        type = 'savedCommand'
-
-[[comboMode.bindings]]
-id = '8B20304C-5976-48DD-92BD-CB543756A22E'
 key = '`'
 
     [comboMode.bindings.destination]
@@ -265,7 +39,45 @@ key = '`'
         type = 'savedCommand'
 
 [[comboMode.bindings]]
-id = '350A4EE0-1532-4D65-B2D7-DA453F5CFB51'
+key = '1'
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/open-url'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'url:https://mail.google.com/mail/u/0/#inbox' ]
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
+key = '2'
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/open-url'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'url:https://mail.google.com/mail/u/1/?ogbl#inbox' ]
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
+key = '3'
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/open-url'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'url:https://calendar.google.com/calendar/u/1/r?pli=1' ]
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
 key = 'a'
 
     [comboMode.bindings.destination]
@@ -276,11 +88,193 @@ key = 'a'
         behavior = 'run'
         presentation = 'automatic'
         subjectIdentifiers = [ 'tuna.current-selection/Current Selection' ]
-        targetIdentifier = 'tuna.smart-links/D77B8396-7F8D-4496-BD23-9C6AB3A425BF'
+        targetIdentifier = 'tuna.smart-links/Google AI'
         type = 'savedCommand'
 
 [[comboMode.bindings]]
-id = '44DD1C4F-06A7-4FEC-BF55-604F727C3271'
+key = 'b'
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/open'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'path:/Applications/Safari.app' ]
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
+key = 'c'
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/open'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'path:/Applications/Claude.app' ]
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
+key = 'enter'
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/switch'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'tuna.modes/search' ]
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
+key = 'f'
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/run'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'tuna.window-management/center-two-thirds' ]
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
+key = 'g'
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.smart-links.actions/send-to-smart-link'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'tuna.current-selection/Current Selection' ]
+        targetIdentifier = 'tuna.smart-links/GitHub'
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
+key = 'h'
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/run'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'tuna.window-management/left-half' ]
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
+key = 'i'
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/open'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'path:/System/Applications/Music.app' ]
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
+key = 'j'
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/run'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'tuna.window-management/bottom-left-quarter' ]
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
+key = 'k'
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/run'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'tuna.window-management/top-left-quarter' ]
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
+key = 'l'
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/run'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'tuna.window-management/right-half' ]
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
+key = 'm'
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/open-url'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'url:http://meet.google.com/new?authuser=aleksandar.diklic@florencehc.com' ]
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
+key = 'S'
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/switch'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'tuna.modes/talk' ]
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
+key = 's'
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/open'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'path:/Users/rastasheep/.nix-profile/Applications/Slack.app' ]
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
+key = 't'
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/open'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'path:/Users/rastasheep/.nix-profile/Applications/Ghostty.app' ]
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
 key = 'tab'
 
     [comboMode.bindings.destination]
@@ -309,7 +303,6 @@ custom = []
     carbonModifiers = 6912
 
 [settings]
-catalogPeriodicRescanIntervalMinutes = 60
 clipboardIgnoredBundleIdentifiers = [ 'com.1password.1password' ]
 comboModeModifierTrigger = 'hyper'
 comboModeThemeStyle = 'breadcrumb'
@@ -320,48 +313,42 @@ showResultsImmediatelyOnActivation = true
 spacebarBehavior = 'switchToTextMode'
 switchToTextModeWhenNoResults = true
 talkModeDoublePressTrigger = 'rightCommand'
-talkModeModifierTrigger = 'rightCommand'
+talkModeModifierTrigger = 'rightCommandOption'
 talkModeTriggerType = 'modifier'
 textModeTriggerType = 'disabled'
 
 [[smartLinks.entries]]
 enabled = true
-id = '4C2D2141-4C54-4C4C-9976-A1B59BA1B5EB'
 name = 'GitHub'
 requiresInput = true
 template = 'https://github.com/search?q={{input}}'
 
 [[smartLinks.entries]]
 enabled = true
-id = '04D4A6AA-300A-4FF1-B99B-2B8E541B7AA3'
 name = 'Google'
 requiresInput = true
 template = 'https://www.google.com/search?q={{input}}'
 
 [[smartLinks.entries]]
 enabled = true
-id = 'D77B8396-7F8D-4496-BD23-9C6AB3A425BF'
 name = 'Google AI'
 requiresInput = true
 template = 'https://www.google.com/search?q={{input}}&udm=50'
 
 [[smartLinks.entries]]
 enabled = true
-id = 'B7B15CC9-BC0A-44D3-BE96-036879C7E8D9'
 name = 'Stack Overflow'
 requiresInput = true
 template = 'https://stackoverflow.com/search?q={{input}}'
 
 [[smartLinks.entries]]
 enabled = true
-id = '85602AF6-4559-4CC5-BC0C-F22DFFF9664C'
 name = 'Wikipedia'
 requiresInput = true
 template = 'https://en.wikipedia.org/wiki/Special:Search?search={{input}}'
 
 [[smartLinks.entries]]
 enabled = true
-id = '0A046F56-30FF-4A13-8139-8A969D3969B4'
 name = 'YouTube'
 requiresInput = true
 template = 'https://www.youtube.com/results?search_query={{input}}'
