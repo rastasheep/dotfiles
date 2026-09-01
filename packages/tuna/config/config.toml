@@ -1,3 +1,397 @@
+[actionPreferences]
+applicationOrderOverrides = []
+itemDefaultOverrides = []
+
+    [[actionPreferences.typeOrderOverrides]]
+    typeID = 'com.tuna.type.text-snippet'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'paste'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'paste-as-plain-text'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'copy-to-clipboard'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'type-text'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'speak-text-say'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'define'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'show-in-large-type'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'show-in-silly-type'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'add-to-custom-items'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'add-to-shelf'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'append-to-file'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'assign-alias'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'base64-decode'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'base64-encode'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'call'
+        catalogIdentifier = 'messages.actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'check-for-updates'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'collapse-whitespace'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'compose-e-mail'
+        catalogIdentifier = 'email.actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'compose-message'
+        catalogIdentifier = 'messages.actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'compress'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'compress-to-shelf'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'convert-to-display-p3'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'convert-to-hex'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'convert-to-hsla'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'convert-to-oklab'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'convert-to-rgba'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'copy-url'
+        catalogIdentifier = 'safari.actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'count-characters'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'count-lines'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'count-words'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'e-mail-item'
+        catalogIdentifier = 'email.actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'e-mail-to'
+        catalogIdentifier = 'email.actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'escape-html-entities'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'extract-tokens'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'load-more-results'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'make-alternating-caps'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'make-camelcase'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'make-constant_case'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'make-dot.case'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'make-header-case'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'make-kebab-case'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'make-kebab-upper-case'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'make-lowercase'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'make-pascal_snake_case'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'make-pascalcase'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'make-sentence-case'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'make-snake_case'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'make-swap-case'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'make-title-case'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'make-uppercase'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'message-item'
+        catalogIdentifier = 'messages.actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'message-to'
+        catalogIdentifier = 'messages.actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'modify-color'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'open-e-mail-url'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'open-in-messages'
+        catalogIdentifier = 'messages.actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'open-in-safari'
+        catalogIdentifier = 'safari.actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'open-url'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'open-url-in-background'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'open-url-with'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'open-with'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'pick'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'process-text-with-applescript'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'remove-blank-lines'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'remove-custom-item'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'remove-duplicate-lines'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'resolve'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'restore-expression'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'reverse-lines'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'reverse-text'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'run-as-prompt'
+        catalogIdentifier = 'tuna.prompts.actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'run-text-as-applescript'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'run-text-as-shell-command'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'save-to-file-in'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'search'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'send-feedback'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'send-global-keys'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'send-keys'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'send-keys-to'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'send-to-custom-prompt-on-shelf'
+        catalogIdentifier = 'tuna.prompts.actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'send-to-custom-prompt'
+        catalogIdentifier = 'tuna.prompts.actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'send-to-prompt-on-shelf'
+        catalogIdentifier = 'tuna.prompts.actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'send-to-prompt'
+        catalogIdentifier = 'tuna.prompts.actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'send-to-script'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'send-to-shortcut'
+        catalogIdentifier = 'tuna.shortcuts.actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'send-to-smart-link'
+        catalogIdentifier = 'tuna.smart-links.actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'share'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'show-onboarding'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'sort-lines-a-z'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'sort-lines-z-a'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'spotlight-search'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'spotlight-search-in'
+        catalogIdentifier = 'tuna.common-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'trim-whitespace'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'unescape-html-entities'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'url-decode'
+        catalogIdentifier = 'tuna.text-actions'
+
+        [[actionPreferences.typeOrderOverrides.actions]]
+        actionID = 'url-encode'
+        catalogIdentifier = 'tuna.text-actions'
+
+[[aliases.entries]]
+abbreviation = 'terminal'
+
+    [[aliases.entries.targets]]
+    catalogID = 'tuna.windows.search'
+    id = 'window:81149:-1:1'
+
 [catalogConfiguration]
 customItems = []
 folderDepthOverrides = []
