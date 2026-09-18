@@ -26,4 +26,4 @@ git status --porcelain | awk '{print $NF}' | fzf \
     fi
   ' \
   --preview-window=right:80%:border-left \
-  --bind 'enter:execute(hx {})'
+  --bind 'enter:execute(nvim {})'
