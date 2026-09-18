@@ -408,6 +408,28 @@ searchPriorities = []
 sortOrders = []
 
     [[catalogs.globalScopes]]
+    catalogIdentifier = 'tuna.applications'
+
+        [catalogs.globalScopes.scope]
+        itemIDs = [
+            '/Applications/1Password for Safari.app',
+            '/Applications/Wacom Tablet.localized/Wacom Center.app',
+            '/Applications/Wacom Tablet.localized/Wacom Display Settings.app',
+            '/Applications/Wacom Tablet.localized/Wacom Tablet Utility.app',
+            '/System/Applications/Utilities/Audio MIDI Setup.app',
+            '/System/Applications/Utilities/Grapher.app',
+            '/System/Applications/Utilities/Migration Assistant.app',
+            '/System/Applications/Utilities/VoiceOver Utility.app',
+            '/System/Library/CoreServices/Applications/Ticket Viewer.app',
+            '/System/Library/CoreServices/RemoteManagement/ARDAgent.app',
+            '/System/Library/CoreServices/TimeMachine/TMHelperAgent.app',
+            '/Users/rastasheep/Applications/Autodesk Fusion Service Utility.app',
+            '/Users/rastasheep/Applications/Claude Code URL Handler.app',
+            '/Users/rastasheep/Applications/Remove Autodesk Fusion.app'
+        ]
+        kind = 'excluding'
+
+    [[catalogs.globalScopes]]
     catalogIdentifier = 'tuna.effects'
 
         [catalogs.globalScopes.scope]
