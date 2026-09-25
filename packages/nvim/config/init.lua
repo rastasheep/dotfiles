@@ -9,6 +9,7 @@ vim.o.autowrite = true
 
 vim.o.number = true
 vim.o.signcolumn = 'yes'
+vim.o.laststatus = 3
 vim.o.statusline = '%f%M'
 
 vim.o.tabstop = 2
@@ -131,6 +132,97 @@ vim.keymap.set('v', '=', '=gv', { silent = true })
 -- base64 encode/decode
 vim.keymap.set('v', '<leader>en', [[c<c-r>=system('base64', @")<cr><esc>]], { silent = true })
 vim.keymap.set('v', '<leader>de', [[c<c-r>=system('base64 --decode', @")<cr><esc>]], { silent = true })
+
+-- focus mode (iA Writer-style distraction-free reading), goyo.vim-style:
+-- runs in its own tab so window-local options never touch the real window —
+-- closing the tab discards them, only true globals need save/restore
+local focus = { active = false, pad_wins = {} }
+
+-- real splits (not floats) so the main window actually narrows and centers;
+-- a float would only paint over the edges without moving the text
+local function focus_pad(cmd, width)
+  vim.cmd(cmd)
+  vim.cmd('vertical resize ' .. width)
+  vim.cmd('enew')
+  vim.bo.buftype = 'nofile'
+  vim.bo.bufhidden = 'wipe'
+  vim.bo.buflisted = false
+  vim.bo.modifiable = false
+  vim.wo.winfixwidth = true
+  vim.wo.number = false
+  vim.wo.signcolumn = 'no'
+  vim.wo.cursorline = false
+  vim.opt_local.fillchars:append({ eob = ' ' })
+  vim.opt_local.winhighlight = 'Normal:Normal,EndOfBuffer:Normal'
+  return vim.api.nvim_get_current_win()
+end
+
+local function focus_enable()
+  focus.orig_tab = vim.api.nvim_get_current_tabpage()
+  focus.laststatus = vim.o.laststatus
+  focus.showtabline = vim.o.showtabline
+  focus.fillchars = vim.opt.fillchars:get()
+  focus.pad_wins = {}
+
+  vim.cmd('tab split')
+  focus.tab = vim.api.nvim_get_current_tabpage()
+  focus.main_win = vim.api.nvim_get_current_win()
+
+  vim.o.laststatus = 0
+  vim.o.showtabline = 0
+  vim.wo.number = false
+  vim.wo.signcolumn = 'no'
+  vim.wo.list = false
+  vim.wo.cursorline = false
+  vim.opt.fillchars:append({ vert = ' ' })
+
+  local pad = math.floor((vim.o.columns - 80) / 2)
+  if pad > 2 then
+    for _, cmd in ipairs({ 'vsplit', 'leftabove vsplit' }) do
+      table.insert(focus.pad_wins, focus_pad(cmd, pad))
+      vim.api.nvim_set_current_win(focus.main_win)
+    end
+  end
+
+  focus.active = true
+end
+
+-- splits (unlike floats) can still be navigated into with <C-w> or a mouse
+-- click, so bounce back to the main window whenever one is entered
+vim.api.nvim_create_autocmd('WinEnter', {
+  callback = function()
+    if not focus.active then return end
+    if vim.tbl_contains(focus.pad_wins, vim.api.nvim_get_current_win())
+        and vim.api.nvim_win_is_valid(focus.main_win) then
+      vim.api.nvim_set_current_win(focus.main_win)
+    end
+  end,
+})
+
+local function focus_disable()
+  -- close the focus tab regardless of which tab <leader>z was pressed from
+  if vim.api.nvim_tabpage_is_valid(focus.tab) then
+    vim.api.nvim_set_current_tabpage(focus.tab)
+    vim.cmd('tabclose')
+  end
+  if vim.api.nvim_tabpage_is_valid(focus.orig_tab) then
+    vim.api.nvim_set_current_tabpage(focus.orig_tab)
+  end
+  focus.pad_wins = {}
+
+  vim.o.laststatus = focus.laststatus
+  vim.o.showtabline = focus.showtabline
+  vim.opt.fillchars = focus.fillchars
+
+  focus.active = false
+end
+
+local function focus_toggle()
+  if focus.active then focus_disable() else focus_enable() end
+end
+
+vim.api.nvim_create_user_command('Focus', focus_toggle, {})
+vim.keymap.set('n', '<leader>z', focus_toggle, { silent = true, desc = 'Toggle focus mode' })
 
 --
 -- plugins
