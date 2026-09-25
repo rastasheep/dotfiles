@@ -703,6 +703,32 @@ key = 'tab'
         subjectIdentifiers = [ 'tuna.windows.search/allWindows.search' ]
         type = 'savedCommand'
 
+[[comboMode.bindings]]
+key = "\u2192"
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/run'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'tuna.window-management/next-space' ]
+        type = 'savedCommand'
+
+[[comboMode.bindings]]
+key = "\u2190"
+
+    [comboMode.bindings.destination]
+    type = 'command'
+
+        [comboMode.bindings.destination.command]
+        actionIdentifier = 'tuna.common-actions/run'
+        behavior = 'run'
+        presentation = 'automatic'
+        subjectIdentifiers = [ 'tuna.window-management/previous-space' ]
+        type = 'savedCommand'
+
 [hotkeys]
 custom = []
 
