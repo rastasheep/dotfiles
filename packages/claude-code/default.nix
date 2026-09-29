@@ -9,6 +9,16 @@ let
     src = ./config;
   };
 
+  # Pin a newer Claude Code than nixpkgs currently ships by overriding the
+  # release manifest the upstream derivation reads (version + per-platform
+  # checksums). Refresh with:
+  #   curl -s https://downloads.claude.ai/claude-code-releases/<version>/manifest.zst.json \
+  #     | python3 -m json.tool > packages/claude-code/manifest.zst.json
+  # Drop this override once nixpkgs catches up to the desired version.
+  claudeCode = claudePkgs.claude-code.override {
+    manifest = lib.importJSON ./manifest.zst.json;
+  };
+
   # Common setup for both modes
   commonSetup = ''
     # Ensure ~/.claude directory exists as a writable directory
@@ -61,7 +71,7 @@ let
     ${commonSetup}
 
     # Execute claude with 1Password telemetry secrets loaded
-    exec op run -- script -q /dev/null ${claudePkgs.claude-code}/bin/claude "$@"
+    exec op run -- script -q /dev/null ${claudeCode}/bin/claude "$@"
   '';
 
   # AWS Bedrock wrapper (with 1Password credentials)
@@ -79,7 +89,7 @@ let
     export ANTHROPIC_DEFAULT_OPUS_MODEL="op://Private/claude-code-2/ANTHROPIC_DEFAULT_OPUS_MODEL"
 
     # Execute claude with secrets loaded via op run
-    exec op run -- script -q /dev/null ${claudePkgs.claude-code}/bin/claude "$@"
+    exec op run -- script -q /dev/null ${claudeCode}/bin/claude "$@"
   '';
 in
 pkgs.buildEnv {
@@ -92,8 +102,8 @@ pkgs.buildEnv {
   pathsToLink = [ "/bin" "/share" ];
 
   passthru = {
-    unwrapped = claudePkgs.claude-code;
-    version = claudePkgs.claude-code.version or "unknown";
+    unwrapped = claudeCode;
+    version = claudeCode.version or "unknown";
   };
 
   meta = {
