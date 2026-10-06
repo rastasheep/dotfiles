@@ -106,8 +106,12 @@ let
 
       # Wrap nvim to include bundled LSPs in PATH
       # Project LSPs (from parent PATH) are checked first, then bundled ones
+      # Default XDG_RUNTIME_DIR to /tmp: without it nvim puts its RPC socket
+      # under $TMPDIR, which nix-shell/direnv point at a long nix-shell.XXXXXX
+      # dir, pushing the socket path past macOS's 104-byte sun_path limit
       makeWrapper ${configuredNeovim}/bin/nvim $out/bin/nvim \
-        --prefix PATH : "$out/libexec/nvim-lsps"
+        --prefix PATH : "$out/libexec/nvim-lsps" \
+        --set-default XDG_RUNTIME_DIR /tmp
     '';
 in
 neovimWithLsps
