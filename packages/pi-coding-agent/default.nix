@@ -9,7 +9,7 @@ let
     src = ./config;
   };
 
-  piVersion = "0.87.1";
+  piVersion = "1.3.0";
 
   # Install pi-coding-agent using bun
   piPackage = pkgs.stdenvNoCC.mkDerivation {
