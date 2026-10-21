@@ -70,8 +70,10 @@ let
   claudePureWrapper = pkgs.writeShellScriptBin "claude" ''
     ${commonSetup}
 
-    # Execute claude with 1Password telemetry secrets loaded
-    exec op run -- script -q /dev/null ${claudeCode}/bin/claude "$@"
+    # Execute claude with 1Password telemetry secrets loaded.
+    # --no-masking lets op hand claude the real TTY; masking pipes stdout,
+    # and the old `script` workaround never forwarded window resizes.
+    exec op run --no-masking -- ${claudeCode}/bin/claude "$@"
   '';
 
   # AWS Bedrock wrapper (with 1Password credentials)
@@ -89,7 +91,7 @@ let
     export ANTHROPIC_DEFAULT_OPUS_MODEL="op://Private/claude-code-2/ANTHROPIC_DEFAULT_OPUS_MODEL"
 
     # Execute claude with secrets loaded via op run
-    exec op run -- script -q /dev/null ${claudeCode}/bin/claude "$@"
+    exec op run --no-masking -- ${claudeCode}/bin/claude "$@"
   '';
 in
 pkgs.buildEnv {
