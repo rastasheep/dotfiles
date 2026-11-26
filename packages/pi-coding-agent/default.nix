@@ -46,12 +46,12 @@ let
     };
   };
 
-  # Common setup for both modes
+  # Config sync, run on every launch
   commonSetup = ''
     set -euo pipefail
 
-    # Add 1Password CLI and bun to PATH
-    export PATH="${lib.makeBinPath [ pkgs._1password-cli pkgs.bun ]}:$PATH"
+    # Add bun to PATH
+    export PATH="${lib.makeBinPath [ pkgs.bun ]}:$PATH"
 
     # Ensure ~/.pi/agent directory exists as a writable directory
     mkdir -p "$HOME/.pi/agent"
@@ -87,42 +87,17 @@ let
     fi
   '';
 
-  # Pure mode wrapper (manual API key setup)
-  piPureWrapper = pkgs.writeShellScriptBin "pi" ''
+  # Provider and API key are set up interactively inside pi
+  piWrapper = pkgs.writeShellScriptBin "pi" ''
     ${commonSetup}
 
-    # Execute pi without AWS/Bedrock setup
     exec ${piPackage}/bin/pi "$@"
-  '';
-
-  # AWS Bedrock wrapper (with 1Password credentials)
-  piAwsWrapper = pkgs.writeShellScriptBin "pi-aws" ''
-    ${commonSetup}
-
-    # AWS Bedrock configuration from 1Password
-    export AWS_REGION="us-east-1"
-    export PI_CACHE_RETENTION="long"
-    export AWS_BEDROCK_FORCE_CACHE="1"
-    export AWS_ACCESS_KEY_ID="op://Private/claude-code-2/AWS_ACCESS_KEY_ID"
-    export AWS_SECRET_ACCESS_KEY="op://Private/claude-code-2/AWS_SECRET_ACCESS_KEY"
-
-    # Execute pi with 1Password secrets loaded via op run.
-    # op run pipes stdout to scan for secrets, which makes pi see a non-TTY
-    # stdout and fall back to non-interactive print mode. script allocates a
-    # pseudo-TTY so pi still detects an interactive terminal (same fix as claude-code).
-    # Set favorite models for Ctrl+P cycling (cross-region inference profile IDs,
-    # required since this AWS account has no direct on-demand model access)
-    exec op run -- script -q /dev/null ${piPackage}/bin/pi \
-      --provider amazon-bedrock \
-      --models "us.anthropic.claude-sonnet-5,us.anthropic.claude-opus-4-8,us.anthropic.claude-haiku-4-5-20251001-v1:0" \
-      "$@"
   '';
 in
 pkgs.buildEnv {
   name = "pi-coding-agent-configured";
   paths = [
-    piPureWrapper
-    piAwsWrapper
+    piWrapper
     piConfig
   ];
   pathsToLink = [ "/bin" "/share" ];
@@ -133,7 +108,7 @@ pkgs.buildEnv {
   };
 
   meta = {
-    description = "Pi coding agent with pure and AWS Bedrock modes";
+    description = "Pi coding agent with custom config";
     homepage = "https://github.com/earendil-works/pi-mono";
     platforms = lib.platforms.unix;
     mainProgram = "pi";

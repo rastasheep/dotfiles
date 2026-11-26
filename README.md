@@ -75,7 +75,7 @@ dotfiles-apply
 │   ├── scripts/                # Custom scripts (dev, git-*, etc.)
 │   ├── dircolors/              # GNU dircolors configuration
 │   ├── ghostty/                # Ghostty terminal with config
-│   ├── claude-code/            # Claude with 1Password + config
+│   ├── claude-code/            # Claude with config + local env
 │   ├── macos-defaults/         # macOS system defaults management
 │   ├── blender/                # Custom Blender build (optional, commented out)
 │   └── kicad/                  # Custom KiCad build (optional, commented out)
@@ -99,8 +99,10 @@ All packages are exposed individually and can be run or installed standalone.
 ### GUI Apps & Utilities
 - `ghostty` - Ghostty terminal with custom config
 - `tuna` - Tuna for bookmarks, leader mode, and window management
-- `claude-code` - Claude Code with 1Password integration and custom settings
-- `pi-coding-agent` - Pi coding agent with Bedrock integration
+- `claude-code` - Claude Code with custom settings (telemetry env written by `dotfiles-apply` from 1Password to
+  `~/.config/dotfiles/claude-code.env`), and
+  `claude-agent-acp` (its ACP adapter, running that same configured Claude) for editors
+- `pi-coding-agent` - Pi coding agent with custom config
 - `macos-defaults` - Declarative macOS system defaults management
 - `kicad` - Custom KiCad build
 

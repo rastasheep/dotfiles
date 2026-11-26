@@ -393,7 +393,6 @@ abbreviation = 'terminal'
     id = 'window:81149:-1:1'
 
 [catalogConfiguration]
-customItems = []
 folderDepthOverrides = []
 scriptsDirectories = []
 
@@ -402,6 +401,11 @@ scriptsDirectories = []
     entryType = 'directory'
     id = '5242EA7A-D7B1-4169-B548-711BA55534C6'
     path = '~/.nix-profile/bin'
+
+    [[catalogConfiguration.customItems]]
+    id = '164EE26B-24E8-4281-9B77-2023ACF1EBE2'
+    kind = 'text'
+    value = 'Clipboard History'
 
 [catalogs]
 searchPriorities = []

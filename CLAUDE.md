@@ -70,8 +70,8 @@ nix eval .#git.version
 │   ├── scripts/          # Custom shell scripts
 │   ├── ghostty/          # Terminal emulator
 │   ├── tuna/             # Bookmarks, leader mode, and window management
-│   ├── claude-code/      # Claude Code with 1Password integration
-│   ├── pi-coding-agent/  # Pi coding agent with Bedrock integration
+│   ├── claude-code/      # Claude Code with custom config and ACP adapter
+│   ├── pi-coding-agent/  # Pi coding agent with custom config
 │   ├── macos-defaults/   # Declarative macOS system defaults
 │   ├── dircolors/        # GNU dircolors configuration
 │   └── ...
@@ -151,8 +151,8 @@ The flake supports multiple systems via flake-utils:
 ### GUI Applications
 - **ghostty**: Terminal emulator with Flexoki theme
 - **tuna**: Bookmarks, leader mode, and window management
-- **claude-code**: Claude Code with 1Password integration for secrets
-- **pi-coding-agent**: Pi coding agent with Bedrock integration
+- **claude-code**: Claude Code with custom config; OTEL telemetry env written by `claude-code-env-sync` (its activationCommand) from 1Password to untracked `~/.config/dotfiles/claude-code.env`
+- **pi-coding-agent**: Pi coding agent with custom config and subagents
 - **macos-defaults**: Declarative macOS system defaults management
 
 ### Machine Bundle Includes
